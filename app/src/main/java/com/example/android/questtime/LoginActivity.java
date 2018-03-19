@@ -1,0 +1,93 @@
+package com.example.android.questtime;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+/**
+ * Created by fgrebenac on 3/8/18.
+ */
+
+public class LoginActivity extends AppCompatActivity{
+
+    private FirebaseAuth mAuth;
+    private Button registerNowBtn;
+    private Button forgotPasswordBtn;
+    private Button loginBtn;
+    private EditText emailLoginInput;
+    private EditText passwordLoginInput;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login_activity);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        registerNowBtn = (Button) findViewById(R.id.registerNowBtn);
+        forgotPasswordBtn = (Button) findViewById(R.id.forgotPasswordBtn);
+        loginBtn = (Button) findViewById(R.id.loginBtn);
+        emailLoginInput = (EditText) findViewById(R.id.emailLoginInput);
+        passwordLoginInput = (EditText) findViewById(R.id.passwordLoginInput);
+
+        registerNowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                login();
+            }
+        });
+
+        forgotPasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, PasswordResetActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void login(){
+        try {
+            mAuth.signInWithEmailAndPassword(emailLoginInput.getText().toString(),
+                    passwordLoginInput.getText().toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "User login failed. Please try again.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }catch (IllegalArgumentException e){
+                Toast.makeText(LoginActivity.this, "All fields are required.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+
+}

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/white_background"
+    android:weightSum="5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:weightSum="5"
+        android:orientation="vertical"
+        android:background="@drawable/blue_background">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:padding="16dp"
+            android:src="@drawable/example_logo"
+            android:textAlignment="center"
+            android:clickable="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Register"
+            android:textColor="#F4F1EC"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="12pt"
+            android:fontFamily="@font/avenir_black"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_weight="3"
+        android:weightSum="8">
+
+        <ImageView
+            android:id="@+id/profilePictureBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:src="@drawable/default_profile_pic" />
+
+        <EditText
+            android:id="@+id/registerUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:ems="10"
+            android:fontFamily="@font/avenir_black"
+            android:textStyle="bold"
+            android:hint="username"
+            android:backgroundTint="@color/textColorDarkBlue"
+            />
+
+        <EditText
+            android:id="@+id/registerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:ems="10"
+            android:fontFamily="@font/avenir_black"
+            android:textStyle="bold"
+            android:inputType="textEmailAddress"
+            android:hint="e-mail"
+            android:backgroundTint="@color/textColorDarkBlue"
+            />
+
+        <EditText
+            android:id="@+id/registerPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:ems="10"
+            android:fontFamily="@font/avenir_black"
+            android:textStyle="bold"
+            android:inputType="textPassword"
+            android:hint="password"
+            android:backgroundTint="@color/textColorDarkBlue"
+            />
+
+        <EditText
+            android:id="@+id/repeatRegisterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:ems="10"
+            android:fontFamily="@font/avenir_black"
+            android:textStyle="bold"
+            android:inputType="textPassword"
+            android:hint="repeat password"
+            android:backgroundTint="@color/textColorDarkBlue"
+            />
+
+        <Button
+            android:id="@+id/registerBtn"
+            android:layout_width="200dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:layout_marginTop="8dp"
+            android:textSize="10pt"
+            android:textAllCaps="false"
+            android:background="@drawable/login_btn_background"
+            android:textColor="@color/textColorDarkBlue"
+            android:fontFamily="@font/avenir_black"
+            android:textStyle="bold"
+            />
+
+
+    </LinearLayout>
+</LinearLayout>
