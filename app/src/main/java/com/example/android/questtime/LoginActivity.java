@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by fgrebenac on 3/8/18.
@@ -33,8 +34,19 @@ public class LoginActivity extends AppCompatActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        /*
+        Checking if user is already signed in. If so, proceed to MainActivity
+         */
+        if(user != null){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         registerNowBtn = (Button) findViewById(R.id.registerNowBtn);
         forgotPasswordBtn = (Button) findViewById(R.id.forgotPasswordBtn);

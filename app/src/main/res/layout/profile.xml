@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="5"
+    android:id="@+id/profileLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:weightSum="5"
+        android:orientation="vertical"
+        android:background="@drawable/blue_background">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:padding="16dp"
+            android:src="@drawable/example_logo"
+            android:textAlignment="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Profile"
+            android:textColor="#F4F1EC"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="12pt"
+            android:fontFamily="@font/avenir_black"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:weightSum="6"
+        android:orientation="vertical"
+        android:background="@drawable/white_background"
+        >
+
+        <ImageView
+            android:id="@+id/editProfilePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:src="@drawable/default_profile_pic"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            />
+
+        <TextView
+            android:id="@+id/profileUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_black"
+            android:text="username"
+            android:textSize="10pt"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            />
+
+        <TextView
+            android:id="@+id/profileEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_black"
+            android:text="e-mail"
+            android:textSize="10pt"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            />
+
+        <Button
+            android:id="@+id/changePasswordBtn"
+            android:layout_width="200dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/login_btn_background"
+            android:textSize="10pt"
+            android:layout_gravity="center"
+            android:fontFamily="@font/avenir_black"
+            android:textStyle="bold"
+            android:text="Change password"
+            android:textAllCaps="false"
+            />
+
+        <Button
+            android:id="@+id/logoutBtn"
+            android:layout_width="200dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/login_btn_background"
+            android:textSize="10pt"
+            android:layout_gravity="center"
+            android:fontFamily="@font/avenir_black"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:text="Log out"/>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

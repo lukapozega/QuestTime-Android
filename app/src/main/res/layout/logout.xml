@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:weightSum="2"
+    android:padding="8dp"
+    android:background="@drawable/popup_background"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Are you sure"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:fontFamily="@font/avenir_black"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="you want to log out?"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:fontFamily="@font/avenir_black"
+            android:layout_gravity="center"
+            />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+            <Button
+                android:id="@+id/confirmLogoutBtn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Log out"
+                android:textSize="10pt"
+                android:layout_gravity="center"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:fontFamily="@font/avenir_black"
+                android:background="@drawable/login_btn_background"
+                android:layout_margin="8dp"/>
+
+            <Button
+                android:id="@+id/cancelLogoutBtn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="8pt"
+                android:textAllCaps="false"
+                android:text="Cancel"
+                android:fontFamily="@font/avenir_black"
+                android:layout_gravity="center"
+                android:background="@drawable/login_btn_background"
+                android:layout_margin="8dp"/>
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@drawable/popup_background"
+    android:layout_gravity="center">
 
     <Button
         android:id="@+id/joinRoomBtn"
         android:background="@drawable/login_btn_background"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Join existing room" />
+        android:text="Join existing room"
+        android:textAllCaps="false"
+        android:textSize="10pt"
+        android:textStyle="bold"
+        android:fontFamily="@font/avenir_black"
+        android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/createNewRoomBtn"
         android:background="@drawable/login_btn_background"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Create new room" />
+        android:text="Create new room"
+        android:textAllCaps="false"
+        android:textSize="10pt"
+        android:textStyle="bold"
+        android:fontFamily="@font/avenir_black"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

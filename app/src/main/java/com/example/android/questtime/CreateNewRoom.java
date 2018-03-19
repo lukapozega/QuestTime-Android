@@ -13,5 +13,15 @@ public class CreateNewRoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_new_room);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 }

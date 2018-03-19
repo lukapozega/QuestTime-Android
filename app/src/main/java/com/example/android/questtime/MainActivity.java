@@ -47,24 +47,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                ViewGroup container = (ViewGroup) layoutInflater.inflate(R.layout.add_room_popup, null);
+                Intent intent = new Intent(MainActivity.this, PlusButtonActivity.class);
+                startActivity(intent);
 
-                addRoomPopup = new PopupWindow(container, 800, 800, true);
-                addRoomPopup.showAsDropDown(linearLayout, 300, 600);
-
-                createRoom = (Button) container.findViewById(R.id.createNewRoomBtn);
-                joinRoom = (Button) container.findViewById(R.id.joinRoomBtn);
-
-                createRoom.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(MainActivity.this, CreateNewRoom.class);
-                        startActivity(intent);
-                    }
-                });
             }
         });
 
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 }

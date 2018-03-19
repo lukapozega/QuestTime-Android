@@ -14,28 +14,27 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
- * Created by fgrebenac on 3/15/18.
+ * Created by fgrebenac on 3/19/18.
  */
 
-public class PasswordResetActivity extends AppCompatActivity {
+public class PasswordChangeActivity extends AppCompatActivity {
 
+    private EditText passwordChangeEmail;
+    private Button passwordChangeSendBtn;
     private FirebaseAuth mAuth;
-    private EditText emailInput;
-    private Button sendEmailBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.forgot_password_activity);
+        setContentView(R.layout.password_change);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        emailInput = (EditText) findViewById(R.id.passwordResetEmail);
-        sendEmailBtn = (Button) findViewById(R.id.sendEmailBtn);
+        passwordChangeEmail = (EditText) findViewById(R.id.passwordChangeEmail);
+        passwordChangeSendBtn = (Button) findViewById(R.id.sendPasswordChangeEmailBtn);
 
         mAuth = FirebaseAuth.getInstance();
 
-
-        sendEmailBtn.setOnClickListener(new View.OnClickListener() {
+        passwordChangeSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendEmail();
@@ -45,18 +44,18 @@ public class PasswordResetActivity extends AppCompatActivity {
 
     private void sendEmail(){
         try{
-            mAuth.sendPasswordResetEmail(emailInput.getText().toString())
+            mAuth.sendPasswordResetEmail(passwordChangeEmail.getText().toString())
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(PasswordResetActivity.this, "E-mail sent",
+                                Toast.makeText(PasswordChangeActivity.this, "E-mail sent",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
         } catch (IllegalArgumentException e){
-            Toast.makeText(PasswordResetActivity.this, "Please enter a valid e-mail address",
+            Toast.makeText(PasswordChangeActivity.this, "Please enter a valid e-mail address",
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -68,3 +67,4 @@ public class PasswordResetActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 }
+
