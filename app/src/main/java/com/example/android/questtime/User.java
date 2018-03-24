@@ -1,6 +1,8 @@
 package com.example.android.questtime;
 
 
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * This class represents one user, and is used for constructing a new user when registering to an application.
  */
@@ -16,6 +18,14 @@ public class User {
     public User(String username, String email) {
         this.username = username;
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
 }

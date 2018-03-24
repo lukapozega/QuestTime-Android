@@ -22,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity{
 
-    private ImageView profilePictureBtn;
     private EditText registerUsername;
     private EditText registerEmail;
     private EditText registerPassword;
@@ -44,7 +43,6 @@ public class RegisterActivity extends AppCompatActivity{
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        profilePictureBtn = (ImageView) findViewById(R.id.profilePictureBtn);
         registerUsername = (EditText) findViewById(R.id.registerUsername);
         registerEmail = (EditText) findViewById(R.id.registerEmail);
         registerPassword = (EditText) findViewById(R.id.registerPassword);

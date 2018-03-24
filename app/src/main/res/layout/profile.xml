@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="5"
-    android:id="@+id/profileLayout">
+    android:id="@+id/profileLayout"
+    android:background="@drawable/white_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,18 +46,7 @@
         android:layout_weight="3"
         android:weightSum="6"
         android:orientation="vertical"
-        android:background="@drawable/white_background"
         >
-
-        <ImageView
-            android:id="@+id/editProfilePicture"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:src="@drawable/default_profile_pic"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            />
 
         <TextView
             android:id="@+id/profileUsername"
@@ -68,7 +58,8 @@
             android:text="username"
             android:textSize="10pt"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"
             />
 
         <TextView
@@ -82,14 +73,15 @@
             android:textSize="10pt"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             />
 
         <Button
             android:id="@+id/changePasswordBtn"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/login_btn_background"
             android:textSize="10pt"
             android:layout_gravity="center"
@@ -101,11 +93,10 @@
 
         <Button
             android:id="@+id/logoutBtn"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_margin="16dp"
             android:background="@drawable/login_btn_background"
             android:textSize="10pt"
             android:layout_gravity="center"
