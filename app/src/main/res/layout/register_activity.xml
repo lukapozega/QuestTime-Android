@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_background"
+    android:background="@drawable/background"
     android:weightSum="5">
 
     <LinearLayout
@@ -12,7 +12,7 @@
         android:layout_weight="2"
         android:weightSum="5"
         android:orientation="vertical"
-        android:background="@drawable/blue_background">
+        >
 
         <ImageView
             android:id="@+id/logo"
@@ -26,19 +26,19 @@
             android:clickable="true"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Register"
-            android:textColor="#F4F1EC"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:textSize="12pt"
-            android:fontFamily="@font/avenir_black"
-            />
+
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/separator_background"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        >
+
+    </View>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,7 +60,8 @@
             android:fontFamily="@font/avenir_black"
             android:textStyle="bold"
             android:hint="username"
-            android:backgroundTint="@color/textColorDarkBlue"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
             />
 
         <EditText
@@ -70,11 +71,13 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:ems="10"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/avenir_black"
             android:textStyle="bold"
             android:inputType="textEmailAddress"
             android:hint="e-mail"
-            android:backgroundTint="@color/textColorDarkBlue"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
             />
 
         <EditText
@@ -84,11 +87,13 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:ems="10"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/avenir_black"
             android:textStyle="bold"
             android:inputType="textPassword"
             android:hint="password"
-            android:backgroundTint="@color/textColorDarkBlue"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
             />
 
         <EditText
@@ -98,11 +103,13 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:ems="10"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/avenir_black"
             android:textStyle="bold"
             android:inputType="textPassword"
             android:hint="repeat password"
-            android:backgroundTint="@color/textColorDarkBlue"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
             />
 
         <Button
@@ -112,10 +119,10 @@
             android:layout_height="wrap_content"
             android:text="Register"
             android:layout_marginTop="32dp"
-            android:textSize="10pt"
+            android:textSize="12pt"
             android:textAllCaps="false"
-            android:background="@drawable/login_btn_background"
-            android:textColor="@color/textColorDarkBlue"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/white"
             android:fontFamily="@font/avenir_black"
             android:textStyle="bold"
             />
