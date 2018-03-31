@@ -20,55 +20,55 @@
             android:layout_weight="2"
             >
 
-                <ImageView
-                    android:id="@+id/profileBtn"
-                    android:clickable="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_person_white_48dp"
-                    android:padding="4dp"
-                    android:layout_alignParentLeft="true"
-                    />
+            <ImageView
+                android:id="@+id/profileBtn"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_person_white_48dp"
+                android:padding="4dp"
+                android:layout_alignParentLeft="true"
+                />
 
-                <ImageView
-                    android:id="@+id/addRoomBtn"
-                    android:clickable="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_add_circle_outline_white_48dp"
-                    android:padding="4dp"
-                    android:layout_alignParentRight="true"
-                    />
+            <ImageView
+                android:id="@+id/addRoomBtn"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_add_circle_outline_white_48dp"
+                android:padding="4dp"
+                android:layout_alignParentRight="true"
+                />
 
         </RelativeLayout>
 
-            <TextView
-                android:id="@+id/questionsLeftNumber"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:gravity="center"
-                android:textColor="#F4F1EC"
-                android:textStyle="bold"
-                android:fontFamily="@font/avenir_black"
-                android:layout_gravity="center"
-                android:text="10"
-                android:layout_weight="4"
-                android:autoSizeTextType="uniform"
-                />
+        <TextView
+            android:id="@+id/questionsLeftNumber"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:textColor="#F4F1EC"
+            android:textStyle="bold"
+            android:fontFamily="@font/avenir_black"
+            android:layout_gravity="center"
+            android:text="10"
+            android:layout_weight="4"
+            android:autoSizeTextType="uniform"
+            />
 
-            <TextView
-                android:id="@+id/questionsLeftTodayTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:text="Questions left today"
-                android:textColor="#F4F1EC"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:textSize="12pt"
-                android:fontFamily="@font/avenir_black"
-                android:layout_marginBottom="20dp"
-                />
+        <TextView
+            android:id="@+id/questionsLeftTodayTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="Questions left today"
+            android:textColor="#F4F1EC"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="12pt"
+            android:fontFamily="@font/avenir_black"
+            android:layout_marginBottom="20dp"
+            />
 
     </LinearLayout>
 
@@ -76,7 +76,11 @@
         android:id="@+id/roomListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_weight="3"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:dividerHeight="8dp"
+        android:divider="@android:color/transparent">
 
 
     </ListView>

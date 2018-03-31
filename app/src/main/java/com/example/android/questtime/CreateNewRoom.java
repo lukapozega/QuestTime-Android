@@ -41,7 +41,7 @@ public class CreateNewRoom extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_new_room);
+        setContentView(R.layout.create_new_room_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
             difficultyLayout = (LinearLayout) findViewById(R.id.difficulty);

@@ -11,6 +11,22 @@ public class Room {
     private String roomName;
     private String difficulty;
     private String type;
+    private List<String> categories;
+    private int numberOfUsers;
+
+    public Room(String roomName, String difficulty, String type, List<String> categories) {
+        this.roomName = roomName;
+        this.difficulty = difficulty;
+        this.type = type;
+        this.categories = categories;
+    }
+
+    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers) {
+        this.roomName = roomName;
+        this.difficulty = difficulty;
+        this.categories = categories;
+        this.numberOfUsers = numberOfUsers;
+    }
 
     public String getRoomName() {
         return roomName;
@@ -44,13 +60,11 @@ public class Room {
         this.categories = categories;
     }
 
-    private List<String> categories;
+    public int getNumberOfUsers() {
+        return numberOfUsers;
+    }
 
-
-    public Room(String roomName, String difficulty, String type, List<String> categories) {
-        this.roomName = roomName;
-        this.difficulty = difficulty;
-        this.type = type;
-        this.categories = categories;
+    public void setNumberOfUsers(int numberOfUsers) {
+        this.numberOfUsers = numberOfUsers;
     }
 }
