@@ -14,15 +14,29 @@
         android:orientation="vertical"
         >
 
-        <ImageView
+        <TextView
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:gravity="center"
-            android:padding="16dp"
-            android:src="@drawable/example_logo"
-            android:textAlignment="center"
+            android:text="Q"
+            android:textColor="@android:color/white"
+            android:textSize="130sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto_black"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="QuestTime"
+            android:gravity="center"
+            android:textSize="50sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto_black"
             />
 
 
@@ -54,12 +68,12 @@
             android:layout_marginRight="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="8dp"
-            android:padding="5dp"
+            android:padding="8dp"
             android:ems="10"
             android:textStyle="bold"
             android:inputType="textEmailAddress"
             android:hint="email"
-            android:fontFamily="@font/avenir_black"
+            android:fontFamily="@font/roboto_black"
             android:background="@drawable/edittext_background"
             />
 
@@ -72,12 +86,12 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
-            android:fontFamily="@font/avenir_black"
+            android:fontFamily="@font/roboto_black"
             android:textStyle="bold"
             android:inputType="textPassword"
             android:hint="password"
             android:background="@drawable/edittext_background"
-            android:padding="5dp"
+            android:padding="8dp"
             android:layout_below="@+id/emailLoginInput"
             />
 
@@ -94,7 +108,7 @@
             android:layout_centerHorizontal="true"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:fontFamily="@font/avenir_black"
+            android:fontFamily="@font/roboto_black"
             android:layout_below="@+id/passwordLoginInput"
             />
 
@@ -111,7 +125,7 @@
             android:layout_centerHorizontal="true"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
-            android:fontFamily="@font/avenir_black"
+            android:fontFamily="@font/roboto_black"
             android:layout_below="@+id/loginBtn"
             />
 
@@ -124,7 +138,7 @@
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textColor="@color/textColorDarkBlue"
-            android:fontFamily="@font/avenir_black"
+            android:fontFamily="@font/roboto_black"
             android:layout_alignTop="@id/passwordLoginInput"
             android:layout_alignBottom="@+id/passwordLoginInput"
             android:layout_alignRight="@id/passwordLoginInput"

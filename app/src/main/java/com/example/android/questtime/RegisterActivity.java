@@ -53,16 +53,29 @@ public class RegisterActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 try {
-                    if (registerPassword.getText().toString().equals(repeatRegisterPassword.getText().toString())) {
+
+                    if (registerPassword.getText().toString().equals(repeatRegisterPassword.getText().toString()) && registerPassword.getText().toString().length() >= 6) {
                         register();
                         user = new User(registerUsername.getText().toString(), registerEmail.getText().toString());
+                    } else if(registerPassword.getText().toString().length() < 6) {
+                        Toast.makeText(RegisterActivity.this, "Password must be at least 6 characters.",
+                                Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(RegisterActivity.this, "Passwords do not match.",
                                 Toast.LENGTH_SHORT).show();
                     }
                 } catch (IllegalArgumentException e){
-                    Toast.makeText(RegisterActivity.this, "All fields are required.",
-                            Toast.LENGTH_SHORT).show();
+                    if(registerUsername.getText().toString().isEmpty()){
+                        Toast.makeText(RegisterActivity.this, "Please enter your username.",
+                                Toast.LENGTH_SHORT).show();
+                    } else if(registerEmail.getText().toString().isEmpty()){
+                        Toast.makeText(RegisterActivity.this, "Please enter valid email address.",
+                                Toast.LENGTH_SHORT).show();
+                    } else if(registerPassword.getText().toString().isEmpty()){
+                        Toast.makeText(RegisterActivity.this, "Password must be at least 6 characters.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         });

@@ -9,28 +9,28 @@
 
     <Button
         android:id="@+id/joinRoomBtn"
-        android:background="@drawable/login_btn_background"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
+        android:background="@android:color/transparent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="Join existing room"
         android:textAllCaps="false"
-        android:textSize="10pt"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:fontFamily="@font/avenir_black"
+        android:fontFamily="@font/roboto_black"
         android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/createNewRoomBtn"
-        android:background="@drawable/login_btn_background"
-        android:layout_width="200dp"
+        android:background="@android:color/transparent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:text="Create new room"
         android:textAllCaps="false"
-        android:textSize="10pt"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:fontFamily="@font/avenir_black"
+        android:fontFamily="@font/roboto_black"
         android:layout_gravity="center"/>
 
 </LinearLayout>

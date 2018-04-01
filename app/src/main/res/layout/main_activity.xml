@@ -5,72 +5,69 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:weightSum="5"
-    android:id="@+id/linear">
+    >
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:weightSum="8"
-        android:orientation="vertical"
         >
-        <RelativeLayout
+
+        <ImageView
+            android:id="@+id/settingsBtn"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/settings"
+            android:padding="15dp"
+            android:layout_alignParentLeft="true"
+            />
+
+        <ImageView
+            android:id="@+id/addRoomBtn"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/add"
+            android:padding="15dp"
+            android:layout_alignParentRight="true"
+            />
+
+
+
+        <TextView
+            android:id="@+id/questionsLeftNumber"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            >
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto_black"
+            android:layout_gravity="center"
+            android:text="10"
+            android:textSize="120sp"
+            android:layout_above="@+id/questionsLeftTodayTextView"
+            />
 
-                <ImageView
-                    android:id="@+id/profileBtn"
-                    android:clickable="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_person_white_48dp"
-                    android:padding="4dp"
-                    android:layout_alignParentLeft="true"
-                    />
-
-                <ImageView
-                    android:id="@+id/addRoomBtn"
-                    android:clickable="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_add_circle_outline_white_48dp"
-                    android:padding="4dp"
-                    android:layout_alignParentRight="true"
-                    />
+        <TextView
+            android:id="@+id/questionsLeftTodayTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Questions left today"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:fontFamily="@font/roboto_black"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            />
 
         </RelativeLayout>
 
-            <TextView
-                android:id="@+id/questionsLeftNumber"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:gravity="center"
-                android:textColor="#F4F1EC"
-                android:textStyle="bold"
-                android:fontFamily="@font/avenir_black"
-                android:layout_gravity="center"
-                android:text="10"
-                android:layout_weight="4"
-                android:autoSizeTextType="uniform"
-                />
 
-            <TextView
-                android:id="@+id/questionsLeftTodayTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:text="Questions left today"
-                android:textColor="#F4F1EC"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:textSize="12pt"
-                android:fontFamily="@font/avenir_black"
-                android:layout_marginBottom="20dp"
-                />
-
-    </LinearLayout>
 
     <ListView
         android:id="@+id/roomListView"

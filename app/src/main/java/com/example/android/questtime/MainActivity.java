@@ -17,17 +17,12 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LinearLayout linearLayout;
-    private ImageView profileBtn;
+    private ImageView settingsBtn;
     private ImageView addRoomBtn;
     private TextView questionsLeftNumber;
     private TextView questionsLeftTodayTextView;
     private ListView roomListView;
-    private Button joinRoom;
-    private Button createRoom;
 
-    private PopupWindow addRoomPopup;
-    private LayoutInflater layoutInflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        linearLayout = (LinearLayout) findViewById(R.id.linear);
-        profileBtn = (ImageView) findViewById(R.id.profileBtn);
+        settingsBtn = (ImageView) findViewById(R.id.settingsBtn);
         addRoomBtn = (ImageView) findViewById(R.id.addRoomBtn);
         questionsLeftNumber = (TextView) findViewById(R.id.questionsLeftNumber);
         questionsLeftTodayTextView = (TextView) findViewById(R.id.questionsLeftTodayTextView);
@@ -53,13 +47,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        profileBtn.setOnClickListener(new View.OnClickListener() {
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
         });
+
+
+
 
     }
     @Override

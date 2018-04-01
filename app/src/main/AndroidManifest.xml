@@ -24,14 +24,12 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".PasswordResetActivity"></activity>
         <activity android:name=".CreateNewRoom"></activity>
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".PasswordChangeActivity"></activity>
         <activity
             android:name=".PlusButtonActivity"
             android:theme="@style/TransparentTheme"
             ></activity>
         <activity
-            android:name=".LogoutActivity"
+            android:name=".SettingsActivity"
             android:theme="@style/TransparentTheme"></activity>
     </application>
 
