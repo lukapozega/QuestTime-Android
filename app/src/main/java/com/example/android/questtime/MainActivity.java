@@ -3,14 +3,9 @@ package com.example.android.questtime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,10 +57,17 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userRooms.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    Room addRoom = new Room(snapshot.child("roomName").getValue().toString(), snapshot.child("difficulty").getValue().toString(), Arrays.asList("Art", "Math"), 6);
+                    List<String> categories = new ArrayList<>();
+                    for (DataSnapshot snapshot1: snapshot.child("categories").getChildren()) {
+                        //Log.i("test", snapshot1.getValue().toString());
+                        categories.add(snapshot1.getValue().toString());
+                    }
+//                    for(String s: categories) {
+//                        Log.i("test", s);
+//                    }
+                    Room addRoom = new Room(snapshot.child("roomName").getValue().toString(), snapshot.child("difficulty").getValue().toString(), categories, 6);
                     userRooms.add(addRoom);
                 }
-                Log.i("Test", Integer.toString(userRooms.size()));
                 adapter.notifyDataSetChanged();
             }
 
