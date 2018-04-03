@@ -75,6 +75,9 @@
             android:hint="username"
             android:background="@drawable/edittext_background"
             android:padding="8dp"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             />
 
         <EditText

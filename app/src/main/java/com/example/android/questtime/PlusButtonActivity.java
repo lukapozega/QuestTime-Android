@@ -32,5 +32,8 @@ public class PlusButtonActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        setFinishOnTouchOutside(true);
+
     }
 }

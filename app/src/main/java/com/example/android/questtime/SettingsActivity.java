@@ -35,5 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        setFinishOnTouchOutside(true);
+
     }
 }

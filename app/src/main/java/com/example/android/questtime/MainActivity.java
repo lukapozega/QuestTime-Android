@@ -30,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView questionsLeftNumber;
     private TextView questionsLeftTodayTextView;
     private ListView roomListView;
-    private Button joinRoom;
-    private Button createRoom;
+
     private ArrayList<Room> userRooms = new ArrayList<>();
     private RoomAdapter adapter;
 

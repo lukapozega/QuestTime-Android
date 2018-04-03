@@ -20,7 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"></activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:windowSoftInputMode="adjustPan"
+            ></activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".PasswordResetActivity"></activity>
         <activity android:name=".CreateNewRoom"></activity>
