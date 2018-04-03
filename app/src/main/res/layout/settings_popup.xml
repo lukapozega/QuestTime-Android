@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="@drawable/popup_background"
+    android:layout_gravity="center"
+    android:weightSum="4">
+
+
+        <TextView
+            android:id="@+id/settingsTextView"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_black"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_margin="8dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/soundText"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sound"
+                android:textColor="#000000"
+                android:layout_marginStart="8dp"
+                android:layout_margin="4dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_black"
+                />
+
+            <Switch
+                android:id="@+id/soundSwitch"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"/>
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notifications"
+            android:textColor="#000000"
+            android:layout_marginStart="8dp"
+            android:layout_margin="4dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/roboto_black"
+            />
+
+        <Switch
+            android:id="@+id/notifSwitch"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="4dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:text="Logout"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="20sp"
+        android:fontFamily="@font/roboto_black"
+        />
+
+
+</LinearLayout>
