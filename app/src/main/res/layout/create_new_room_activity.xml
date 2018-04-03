@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create room"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:fontFamily="@font/avenir_black"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/separator_background"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        >
+
+    </View>
+
+    <EditText
+        android:id="@+id/roomName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:textStyle="bold"
+        android:hint="Room name"
+        android:background="@drawable/edittext_background"
+        android:padding="5dp"
+        android:fontFamily="@font/avenir_black"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="36dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Difficulty:"
+            android:fontFamily="@font/avenir_black"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="36dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/difficulty"
+            android:layout_weight="1"
+            android:paddingLeft="18dp"
+            android:paddingRight="36dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/circle_green"
+                android:scaleType="fitCenter"
+                android:padding="12dp"
+                android:tag="easy"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/circle_yellow"
+                android:scaleType="fitCenter"
+                android:padding="12dp"
+                android:tag="medium"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/circle_red"
+                android:scaleType="fitCenter"
+                android:padding="12dp"
+                android:tag="hard"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="Type:"
+            android:fontFamily="@font/avenir_black"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="36dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/type"
+            android:layout_weight="1"
+            android:paddingLeft="18dp"
+            android:paddingRight="36dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Private"
+                android:scaleType="fitCenter"
+                android:gravity="center"
+                android:fontFamily="@font/avenir_black"
+                android:textStyle="bold"
+                android:textColor="#3a86aa"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Public"
+                android:scaleType="fitCenter"
+                android:gravity="center"
+                android:fontFamily="@font/avenir_black"
+                android:textStyle="bold"
+                android:textColor="#3a86aa" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select up to three categories:"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/avenir_black"
+        android:layout_marginTop="36dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:id="@+id/cat_1"
+        android:paddingRight="36dp"
+        android:paddingLeft="36dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/paint_icon"
+            android:tag="art"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/ball_icon"
+            android:tag="sport"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/physics_icon"
+            android:tag="science"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/movie_icon"
+            android:tag="movie"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/music_icon"
+            android:tag="music"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:id="@+id/cat_2"
+        android:paddingRight="48dp"
+        android:paddingLeft="48dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/think_icon"
+            android:tag="bulb"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/plus_icon"
+            android:tag="math"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/hat_icon"
+            android:tag="hat"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/globe_icon"
+            android:tag="geography"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/create"
+        android:text="Create room"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:fontFamily="@font/avenir_black"
+        android:textStyle="bold"
+        android:layout_marginTop="44dp"/>
+
+</LinearLayout>
