@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView questionsLeftNumber;
     private TextView questionsLeftTodayTextView;
     private ListView roomListView;
+
+    private RotateAnimation rotateAnimation;
 
     private ArrayList<Room> userRooms = new ArrayList<>();
     private RoomAdapter adapter;
@@ -51,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         roomListView = findViewById(R.id.roomListView);
         adapter = new RoomAdapter(this, userRooms );
         roomListView.setAdapter(adapter);
+
+        rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setRepeatCount(0);
+        rotateAnimation.setDuration(1000);
 
         mDatabase.child("rooms").addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         addRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                addRoomBtn.startAnimation(rotateAnimation);
                 Intent intent = new Intent(MainActivity.this, PlusButtonActivity.class);
                 startActivity(intent);
 
@@ -91,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                settingsBtn.startAnimation(rotateAnimation);
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
@@ -106,4 +116,5 @@ public class MainActivity extends AppCompatActivity {
 
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
+
 }
