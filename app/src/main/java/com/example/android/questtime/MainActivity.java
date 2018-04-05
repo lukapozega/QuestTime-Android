@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity {
 
         settingsRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         settingsRotateAnimation.setRepeatCount(0);
-        settingsRotateAnimation.setDuration(1500);
+        settingsRotateAnimation.setDuration(700);
 
         addRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         addRotateAnimation.setRepeatCount(0);
-        addRotateAnimation.setDuration(1000);
+        addRotateAnimation.setDuration(700);
 
         mDatabase.child("rooms").addValueEventListener(new ValueEventListener() {
             @Override
