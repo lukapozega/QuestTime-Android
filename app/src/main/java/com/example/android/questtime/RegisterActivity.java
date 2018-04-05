@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,6 +14,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 /**
  * RegisterActivity is used for registering users to an application.
@@ -93,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity{
                         if (task.isSuccessful()) {
                             // Sign in success and add user values to database
                             mDatabase.child("users").child(mAuth.getUid()).setValue(user);
+                            mDatabase.child("users").child(mAuth.getUid()).child("registrationToken").setValue(FirebaseInstanceId.getInstance().getToken());
                             Toast.makeText(RegisterActivity.this,"User registration successfull",Toast.LENGTH_SHORT).show();
                         } else {
                             // If sign in fails, display a message to the user.

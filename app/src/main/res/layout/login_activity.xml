@@ -116,7 +116,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/create_room"
+            android:text="@string/register"
             android:textSize="8pt"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
