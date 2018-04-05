@@ -3,9 +3,9 @@ package com.example.android.questtime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RoomAdapter(this, userRooms );
         roomListView.setAdapter(adapter);
 
+        Log.i("token", FirebaseInstanceId.getInstance().getToken());
+
         settingsRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         settingsRotateAnimation.setRepeatCount(0);
         settingsRotateAnimation.setDuration(1500);
@@ -73,12 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     List<String> categories = new ArrayList<>();
                     for (DataSnapshot snapshot1: snapshot.child("categories").getChildren()) {
-                        //Log.i("test", snapshot1.getValue().toString());
                         categories.add(snapshot1.getValue().toString());
                     }
-//                    for(String s: categories) {
-//                        Log.i("test", s);
-//                    }
                     Room addRoom = new Room(snapshot.child("roomName").getValue().toString(), snapshot.child("difficulty").getValue().toString(), categories, 6);
                     userRooms.add(addRoom);
                 }
