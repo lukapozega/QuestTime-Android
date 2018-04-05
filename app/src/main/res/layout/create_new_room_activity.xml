@@ -8,11 +8,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create room"
+        android:text="@string/create_room"
         android:textColor="@android:color/white"
         android:gravity="center"
-        android:textSize="30dp"
-        android:fontFamily="@font/avenir_black"
+        android:textSize="30sp"
+        android:fontFamily="@font/roboto_black"
         android:textStyle="bold"
         android:layout_marginTop="4dp"/>
 
@@ -36,10 +36,10 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:textStyle="bold"
-        android:hint="Room name"
+        android:hint="@string/room_name_hint"
         android:background="@drawable/edittext_background"
         android:padding="5dp"
-        android:fontFamily="@font/avenir_black"
+        android:fontFamily="@font/roboto_black"
         />
 
 
@@ -53,20 +53,20 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Difficulty:"
-            android:fontFamily="@font/avenir_black"
+            android:text="@string/difficulty"
+            android:fontFamily="@font/roboto_black"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:gravity="center_vertical"
-            android:paddingLeft="36dp"/>
+            android:layout_marginStart="36dp"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/difficulty"
             android:layout_weight="1"
-            android:paddingLeft="18dp"
-            android:paddingRight="36dp">
+            android:paddingStart="18dp"
+            android:paddingEnd="36dp">
 
             <ImageView
                 android:layout_width="0dp"
@@ -109,29 +109,30 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="Type:"
-            android:fontFamily="@font/avenir_black"
+            android:text="@string/type"
+            android:fontFamily="@font/roboto_black"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:gravity="center_vertical"
-            android:paddingLeft="36dp"/>
+            android:layout_marginStart="36dp"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/type"
             android:layout_weight="1"
-            android:paddingLeft="18dp"
-            android:paddingRight="36dp">
+            android:paddingStart="18dp"
+            android:paddingEnd="36dp"
+            >
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Private"
+                android:text="@string/private_string"
                 android:scaleType="fitCenter"
                 android:gravity="center"
-                android:fontFamily="@font/avenir_black"
+                android:fontFamily="@font/roboto_black"
                 android:textStyle="bold"
                 android:textColor="#3a86aa"/>
 
@@ -139,10 +140,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Public"
+                android:text="@string/public_string"
                 android:scaleType="fitCenter"
                 android:gravity="center"
-                android:fontFamily="@font/avenir_black"
+                android:fontFamily="@font/roboto_black"
                 android:textStyle="bold"
                 android:textColor="#3a86aa" />
 
@@ -153,10 +154,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select up to three categories:"
+        android:text="@string/select_categories"
         android:layout_gravity="center"
         android:textColor="@android:color/white"
-        android:fontFamily="@font/avenir_black"
+        android:fontFamily="@font/roboto_black"
         android:layout_marginTop="36dp"/>
 
     <LinearLayout
@@ -247,12 +248,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/create"
-        android:text="Create room"
+        android:text="@string/create_room"
         android:textColor="@android:color/white"
         android:gravity="center"
-        android:textSize="20dp"
-        android:fontFamily="@font/avenir_black"
+        android:textSize="25sp"
+        android:fontFamily="@font/roboto_black"
         android:textStyle="bold"
-        android:layout_marginTop="44dp"/>
+        android:layout_marginTop="44dp"
+        android:textAllCaps="false"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        />
 
 </LinearLayout>

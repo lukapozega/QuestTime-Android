@@ -16,17 +16,18 @@
         <ImageView
             android:id="@+id/settingsBtn"
             android:clickable="true"
+            android:focusable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/settings"
             android:padding="15dp"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="QuestTime"
+            android:text="@string/app_name"
             android:layout_centerHorizontal="true"
             android:textColor="@android:color/white"
             android:textSize="25sp"
@@ -38,11 +39,12 @@
         <ImageView
             android:id="@+id/addRoomBtn"
             android:clickable="true"
+            android:focusable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/add"
             android:padding="15dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             />
 
         <TextView
@@ -65,7 +67,7 @@
             android:id="@+id/questionsLeftTodayTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Questions left today"
+            android:text="@string/questions_left"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:layout_gravity="center"
