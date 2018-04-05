@@ -3,7 +3,6 @@ package com.example.android.questtime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -17,7 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,15 +57,13 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RoomAdapter(this, userRooms );
         roomListView.setAdapter(adapter);
 
-        Log.i("token", FirebaseInstanceId.getInstance().getToken());
-
         settingsRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         settingsRotateAnimation.setRepeatCount(0);
-        settingsRotateAnimation.setDuration(1500);
+        settingsRotateAnimation.setDuration(700);
 
         addRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         addRotateAnimation.setRepeatCount(0);
-        addRotateAnimation.setDuration(1000);
+        addRotateAnimation.setDuration(700);
 
         mDatabase.child("rooms").addValueEventListener(new ValueEventListener() {
             @Override
