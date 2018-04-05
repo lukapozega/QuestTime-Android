@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView questionsLeftTodayTextView;
     private ListView roomListView;
 
-    private RotateAnimation rotateAnimation;
+    private RotateAnimation settingsRotateAnimation;
+    private RotateAnimation addRotateAnimation;
 
     private ArrayList<Room> userRooms = new ArrayList<>();
     private RoomAdapter adapter;
@@ -57,9 +58,13 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RoomAdapter(this, userRooms );
         roomListView.setAdapter(adapter);
 
-        rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimation.setRepeatCount(0);
-        rotateAnimation.setDuration(1000);
+        settingsRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        settingsRotateAnimation.setRepeatCount(0);
+        settingsRotateAnimation.setDuration(1000);
+
+        addRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        addRotateAnimation.setRepeatCount(0);
+        addRotateAnimation.setDuration(1000);
 
         mDatabase.child("rooms").addValueEventListener(new ValueEventListener() {
             @Override
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         addRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addRoomBtn.startAnimation(rotateAnimation);
+                addRoomBtn.startAnimation(addRotateAnimation);
                 Intent intent = new Intent(MainActivity.this, PlusButtonActivity.class);
                 startActivity(intent);
 
@@ -100,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                settingsBtn.startAnimation(rotateAnimation);
+                settingsBtn.startAnimation(settingsRotateAnimation);
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
