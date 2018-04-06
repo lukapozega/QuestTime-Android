@@ -50,7 +50,7 @@
         <TextView
             android:id="@+id/questionsLeftNumber"
             android:layout_width="match_parent"
-            android:layout_height="121dp"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/questionsLeftTodayTextView"
             android:layout_gravity="center"
             android:layout_marginBottom="0dp"
@@ -61,7 +61,8 @@
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="90sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
 
         <TextView
             android:id="@+id/questionsLeftTodayTextView"
@@ -71,11 +72,12 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:layout_gravity="center"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:fontFamily="@font/roboto_black"
             android:layout_marginBottom="20dp"
             android:layout_alignParentBottom="true"
             android:gravity="center"
+            android:textAllCaps="true"
             />
 
         </RelativeLayout>
