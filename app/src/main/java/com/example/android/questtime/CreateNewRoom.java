@@ -37,6 +37,8 @@ public class CreateNewRoom extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    int padding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,9 @@ public class CreateNewRoom extends AppCompatActivity {
 
             for (int i=0; i<3;++i) {
                 View v = difficultyLayout.getChildAt(i);
+                if (i==0) {
+                    padding=v.getPaddingBottom();
+                }
                 v.setOnClickListener(diffClick);
             }
             for (int i=0; i<2;++i) {
@@ -114,10 +119,10 @@ public class CreateNewRoom extends AppCompatActivity {
         public void onClick(View view) {
             for (int i=0; i<3;++i) {
                 View v = difficultyLayout.getChildAt(i);
-                v.setPadding(36,36,36,36);
+                v.setPadding(padding,padding,padding,padding);
             }
             difficulty = (String) view.getTag();
-            view.setPadding(20 ,20,20,20);
+            view.setPadding(padding-10 ,padding-10,padding-10,padding-10);
         }
     };
 
