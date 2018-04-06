@@ -58,6 +58,11 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                try{
+                    intent.putExtra("email", emailLoginInput.getText().toString());
+                }catch (IllegalArgumentException e){
+
+                }
                 startActivity(intent);
             }
         });
