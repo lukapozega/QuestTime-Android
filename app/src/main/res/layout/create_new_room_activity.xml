@@ -14,7 +14,7 @@
         android:textSize="30sp"
         android:fontFamily="@font/roboto_black"
         android:textStyle="bold"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="8dp"/>
 
     <View
         android:layout_width="match_parent"
@@ -32,13 +32,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:textStyle="bold"
         android:hint="@string/room_name_hint"
         android:background="@drawable/edittext_background"
-        android:padding="5dp"
+        android:padding="8dp"
         android:fontFamily="@font/roboto_black"
         />
 

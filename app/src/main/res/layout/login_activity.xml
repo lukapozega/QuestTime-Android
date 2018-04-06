@@ -22,7 +22,7 @@
             android:gravity="center"
             android:text="@string/q"
             android:textColor="@android:color/white"
-            android:textSize="130sp"
+            android:textSize="120sp"
             android:textStyle="bold"
             android:fontFamily="@font/roboto_black"
             />
