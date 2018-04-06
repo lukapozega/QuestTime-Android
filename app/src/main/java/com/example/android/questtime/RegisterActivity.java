@@ -1,5 +1,6 @@
 package com.example.android.questtime;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -95,6 +96,8 @@ public class RegisterActivity extends AppCompatActivity{
                             mDatabase.child("users").child(mAuth.getUid()).setValue(user);
                             mDatabase.child("users").child(mAuth.getUid()).child("registrationToken").setValue(FirebaseInstanceId.getInstance().getToken());
                             Toast.makeText(RegisterActivity.this,"User registration successfull",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(RegisterActivity.this, "User registration failed. Please try again.",
