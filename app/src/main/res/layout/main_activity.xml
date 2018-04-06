@@ -1,111 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:weightSum="5"
-    >
+    android:orientation="vertical">
 
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/settingsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="15dp"
+        android:src="@mipmap/settings" />
+
+    <TextView
+        android:id="@+id/questTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/roboto_black"
+        android:layout_marginTop="15dp"
+        android:text="@string/app_name"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/addRoomBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="15dp"
+        android:src="@mipmap/add" />
+
+    <TextView
+        android:id="@+id/questionsLeftNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questTime"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/roboto_black"
+        android:gravity="center"
+        android:text="10"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="80sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/questionsLeftTodayTextView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        >
-        <ImageView
-            android:id="@+id/settingsBtn"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/settings"
-            android:padding="15dp"
-            android:layout_alignParentStart="true"
-            />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questionsLeftNumber"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/roboto_black"
+        android:gravity="center"
+        android:text="@string/questions_left"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:layout_centerHorizontal="true"
-            android:textColor="@android:color/white"
-            android:textSize="25sp"
-            android:fontFamily="@font/roboto_black"
-            android:textStyle="bold"
-            android:padding="15dp"
-            />
-
-        <ImageView
-            android:id="@+id/addRoomBtn"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/add"
-            android:padding="15dp"
-            android:layout_alignParentEnd="true"
-            />
-
-        <TextView
-            android:id="@+id/questionsLeftNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/questionsLeftTodayTextView"
-            android:layout_gravity="center"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/roboto_black"
-            android:gravity="center"
-            android:text="10"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="90sp"
-            android:textStyle="bold"
-            />
-
-        <TextView
-            android:id="@+id/questionsLeftTodayTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/questions_left"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:textSize="25sp"
-            android:fontFamily="@font/roboto_black"
-            android:layout_marginBottom="10dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:textAllCaps="true"
-            />
-
-        </RelativeLayout>
 
     <View
+        android:id="@+id/mainSeparator"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="@drawable/separator_background"
+        android:layout_below="@id/questionsLeftTodayTextView"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
-        >
+        android:background="@drawable/separator_background">
 
     </View>
 
 
-
     <ListView
         android:id="@+id/roomListView"
+        android:layout_below="@id/mainSeparator"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
-        android:dividerHeight="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="3"
         android:divider="@android:color/transparent"
-        >
+        android:dividerHeight="8dp">
 
     </ListView>
 
-</LinearLayout>
+</RelativeLayout>
