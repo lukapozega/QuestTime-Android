@@ -28,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity{
     private EditText registerPassword;
     private EditText repeatRegisterPassword;
     private Button registerBtn;
+    private Bundle extras;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -40,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity{
         setContentView(R.layout.register_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
+        extras = getIntent().getExtras();
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -49,6 +51,11 @@ public class RegisterActivity extends AppCompatActivity{
         registerPassword = (EditText) findViewById(R.id.registerPassword);
         repeatRegisterPassword = (EditText) findViewById(R.id.repeatRegisterPassword);
         registerBtn = (Button) findViewById(R.id.registerBtn);
+
+        if(extras != null){
+            String loginEmail = extras.getString("email");
+            registerEmail.setText(loginEmail);
+        }
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
