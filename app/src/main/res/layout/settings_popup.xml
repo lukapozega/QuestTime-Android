@@ -89,14 +89,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@android:color/transparent"
         android:text="@string/logout"
         android:textAllCaps="false"
         android:layout_gravity="center"
         android:textStyle="bold"
         android:textColor="@android:color/holo_red_light"
         android:textSize="20sp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         android:fontFamily="@font/roboto_black"
+        style="?android:borderlessButtonStyle"
         />
 
 
