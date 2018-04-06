@@ -3,43 +3,75 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:weightSum="5">
+    android:background="@drawable/background">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
         <TextView
+            android:id="@+id/roomNameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/room_name"
             android:layout_centerHorizontal="true"
             android:textColor="@android:color/white"
-            android:textSize="25sp"
+            android:textSize="30sp"
             android:fontFamily="@font/roboto_black"
-            android:textStyle="bold"
-            android:padding="15dp"
-            />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/addRoomBtn"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/add"
-            android:padding="15dp"
+            android:src="@mipmap/people"
             android:layout_alignParentEnd="true"
-            />
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="4dp"/>
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:weightSum="2">
 
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:src="@drawable/lock"
+            android:adjustViewBounds="true"
+            android:padding="1dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B8XJ3LS9"
+            android:textSize="20sp"
+            android:layout_marginLeft="12dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/roboto_black"
+            android:textStyle="bold"/>
 
+    </LinearLayout>
 
+    <ListView
+        android:id="@+id/questions_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:dividerHeight="8dp"
+        android:divider="@android:color/transparent">
+
+    </ListView>
 
 </LinearLayout>

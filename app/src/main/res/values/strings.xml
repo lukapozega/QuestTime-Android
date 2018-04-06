@@ -25,4 +25,6 @@
     <string name="sound">Sound</string>
     <string name="notifications">Notifications</string>
     <string name="logout">Logout</string>
+    <string name="date">19. Mar 2018. 20:13</string>
+    <string name="question">Question to answer</string>
 </resources>
