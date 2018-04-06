@@ -33,6 +33,13 @@ public class PlusButtonActivity extends AppCompatActivity {
             }
         });
 
+        joinRoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setContentView(R.layout.join_room_popup);
+            }
+        });
+
         setFinishOnTouchOutside(true);
 
     }

@@ -28,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity{
     private EditText registerPassword;
     private EditText repeatRegisterPassword;
     private Button registerBtn;
+    private Bundle extras;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -40,8 +41,7 @@ public class RegisterActivity extends AppCompatActivity{
         setContentView(R.layout.register_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        Bundle extras = getIntent().getExtras();
-
+        extras = getIntent().getExtras();
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
