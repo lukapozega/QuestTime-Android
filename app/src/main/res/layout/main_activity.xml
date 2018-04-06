@@ -74,7 +74,7 @@
             android:layout_gravity="center"
             android:textSize="25sp"
             android:fontFamily="@font/roboto_black"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_alignParentBottom="true"
             android:gravity="center"
             android:textAllCaps="true"
@@ -82,12 +82,24 @@
 
         </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/separator_background"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        >
+
+    </View>
+
+
 
     <ListView
         android:id="@+id/roomListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:dividerHeight="8dp"
