@@ -23,7 +23,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/addRoomBtn"
+            android:id="@+id/peopleBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/people"
@@ -49,6 +49,7 @@
             android:padding="1dp"/>
 
         <TextView
+            android:id="@+id/roomKey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="B8XJ3LS9"
