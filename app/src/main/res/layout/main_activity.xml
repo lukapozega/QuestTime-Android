@@ -89,7 +89,8 @@
         android:layout_marginTop="10dp"
         android:layout_weight="3"
         android:divider="@android:color/transparent"
-        android:dividerHeight="8dp">
+        android:dividerHeight="8dp"
+        >
 
     </ListView>
 

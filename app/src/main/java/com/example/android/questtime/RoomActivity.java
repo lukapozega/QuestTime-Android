@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,8 @@ public class RoomActivity extends AppCompatActivity {
     String randomQuestion = "jbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsd";
     ArrayList<String> questions = new ArrayList<>();
     ArrayAdapter<String> adapter;
+    TextView roomNameTitle;
+    String roomName;
 
     ImageView peopleButton;
 
@@ -27,6 +30,7 @@ public class RoomActivity extends AppCompatActivity {
         setContentView(R.layout.room_activity);
 
         peopleButton = (ImageView) findViewById(R.id.peopleBtn);
+        roomNameTitle = (TextView) findViewById(R.id.roomNameTitle);
 
         questions.add(randomQuestion);
         questions.add(randomQuestion);
@@ -36,6 +40,10 @@ public class RoomActivity extends AppCompatActivity {
         questionsList = findViewById(R.id.questions_list_view);
         adapter = new QuestionAdapter(this, questions);
         questionsList.setAdapter(adapter);
+
+        roomName = getIntent().getStringExtra("roomName");
+
+        roomNameTitle.setText(roomName);
 
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override

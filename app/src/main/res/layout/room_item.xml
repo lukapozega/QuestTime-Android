@@ -27,7 +27,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/room_name"
                 android:fontFamily="@font/roboto_black"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:singleLine="true"
+                />
 
             <ImageView
                 android:id="@+id/underline"
@@ -57,7 +59,7 @@
                 android:id="@+id/difficulty_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/paint_icon"
+                android:src="@drawable/circle_green"
                 android:adjustViewBounds="true"
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="1dp"

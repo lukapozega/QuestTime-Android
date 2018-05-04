@@ -20,7 +20,11 @@
             android:textColor="@android:color/white"
             android:textSize="30sp"
             android:fontFamily="@font/roboto_black"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            />
 
         <ImageView
             android:id="@+id/peopleBtn"

@@ -61,7 +61,10 @@ public class MainActivity extends AppCompatActivity {
         roomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Room room = (Room) roomListView.getItemAtPosition(i);
+
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
+                intent.putExtra("roomName", room.getRoomName());
                 startActivity(intent);
             }
         });
