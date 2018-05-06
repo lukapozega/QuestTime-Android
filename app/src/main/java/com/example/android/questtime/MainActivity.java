@@ -77,19 +77,29 @@ public class MainActivity extends AppCompatActivity {
         addRotateAnimation.setRepeatCount(0);
         addRotateAnimation.setDuration(700);
 
-        mDatabase.child("rooms").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("users").child(mAuth.getUid()).child("rooms").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userRooms.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    List<String> categories = new ArrayList<>();
-                    for (DataSnapshot snapshot1: snapshot.child("categories").getChildren()) {
-                        categories.add(snapshot1.getValue().toString());
-                    }
-                    Room addRoom = new Room(snapshot.child("roomName").getValue().toString(), snapshot.child("difficulty").getValue().toString(), categories, 6);
-                    userRooms.add(addRoom);
+                    mDatabase.child("rooms").child(snapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot2) {
+                            List<String> categories = new ArrayList<>();
+                            for (DataSnapshot snapshot1: dataSnapshot2.child("categories").getChildren()) {
+                                categories.add(snapshot1.getValue().toString());
+                            }
+                            Room addRoom = new Room("Proba", dataSnapshot2.child("difficulty").getValue().toString(), categories, Integer.parseInt(dataSnapshot2.child("numberOfUsers").getValue().toString()));
+                            userRooms.add(addRoom);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -97,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
         addRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override

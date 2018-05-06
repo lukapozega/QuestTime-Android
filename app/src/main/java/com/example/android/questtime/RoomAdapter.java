@@ -39,6 +39,9 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         TextView nameTextView = (TextView) listItemView.findViewById(R.id.roomNameText);
         nameTextView.setText(currentRoom.getRoomName());
 
+        TextView peopleTextView = (TextView) listItemView.findViewById(R.id.numberOfUsers);
+        peopleTextView.setText("People: " + currentRoom.getNumberOfUsers());
+
         ImageView difficultyIW = (ImageView) listItemView.findViewById(R.id.difficulty_icon);
         switch (currentRoom.getDifficulty()) {
             case "easy":
