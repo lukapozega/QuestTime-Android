@@ -45,11 +45,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        settingsBtn = (ImageView) findViewById(R.id.settingsBtn);
-
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        settingsBtn = (ImageView) findViewById(R.id.settingsBtn);
         addRoomBtn = (ImageView) findViewById(R.id.addRoomBtn);
         questionsLeftNumber = (TextView) findViewById(R.id.questionsLeftNumber);
         questionsLeftTodayTextView = (TextView) findViewById(R.id.questionsLeftTodayTextView);
@@ -62,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Room room = (Room) roomListView.getItemAtPosition(i);
-
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 intent.putExtra("roomName", room.getRoomName());
+                intent.putExtra("privateKey", room.getPrivateKey());
                 startActivity(intent);
             }
         });
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabase.child("users").child(mAuth.getUid()).child("rooms").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(final DataSnapshot dataSnapshot) {
                 userRooms.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     mDatabase.child("rooms").child(snapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -89,7 +88,11 @@ public class MainActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot1: dataSnapshot2.child("categories").getChildren()) {
                                 categories.add(snapshot1.getValue().toString());
                             }
-                            Room addRoom = new Room("Proba", dataSnapshot2.child("difficulty").getValue().toString(), categories, Integer.parseInt(dataSnapshot2.child("numberOfUsers").getValue().toString()));
+                            Room addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
+                                    dataSnapshot2.child("difficulty").getValue().toString(),
+                                    categories,
+                                    Integer.parseInt(dataSnapshot2.child("numberOfUsers").getValue().toString()),
+                                    dataSnapshot2.child("privateKey").getValue().toString());
                             userRooms.add(addRoom);
                             adapter.notifyDataSetChanged();
                         }
