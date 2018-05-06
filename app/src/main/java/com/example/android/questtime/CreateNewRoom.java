@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by fgrebenac on 3/18/18.
@@ -39,6 +40,9 @@ public class CreateNewRoom extends AppCompatActivity {
 
     int padding;
 
+    StringBuilder privateKey = new StringBuilder();
+    Random random = new Random();
+    String alphaNumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,10 @@ public class CreateNewRoom extends AppCompatActivity {
                     room = new Room(roomName,difficulty,type,categories);
                     String key = mDatabase.child("rooms").push().getKey();
                     mDatabase.child("rooms").child(key).setValue(room);
+                    for (int i=0; i<8; ++i) {
+                        privateKey.append(alphaNumeric.charAt(random.nextInt(62)));
+                    }
+                    mDatabase.child("rooms").child(key).child("privateKey").setValue(privateKey.toString());
                     mDatabase.child("rooms").child(key).child("members").child(mAuth.getUid()).setValue("1");
                     Toast.makeText(CreateNewRoom.this, "Room successfully created!", Toast.LENGTH_SHORT).show();
                     finish();
