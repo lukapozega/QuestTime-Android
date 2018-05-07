@@ -9,8 +9,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -49,11 +52,20 @@ public class RoomActivity extends AppCompatActivity {
         adapter = new QuestionAdapter(this, questions);
         questionsList.setAdapter(adapter);
 
-        roomName = getIntent().getStringExtra("roomName");
-        roomKey = getIntent().getStringExtra("privateKey");
+        roomKey = getIntent().getStringExtra("key");
 
-        roomNameTitle.setText(roomName);
-        roomKeyTextView.setText(roomKey);
+        mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                roomNameTitle.setText(dataSnapshot.child("roomName").getValue().toString());
+                roomKeyTextView.setText(dataSnapshot.child("privateKey").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
