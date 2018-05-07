@@ -7,17 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Luka on 06/04/2018.
  */
 
-public class QuestionAdapter extends ArrayAdapter<String> {
+public class QuestionAdapter extends ArrayAdapter<Question> {
 
     TextView questionText;
+    TextView timeText;
+    TextView pointsText;
 
-    public QuestionAdapter(Context context, ArrayList<String> questions) {
+    public QuestionAdapter(Context context, ArrayList<Question> questions) {
         super(context,0, questions);
     }
 
@@ -29,8 +34,18 @@ public class QuestionAdapter extends ArrayAdapter<String> {
                     R.layout.question_item, parent, false);
         }
 
+        Question currentQuestion = getItem(position);
+
         questionText = listItemView.findViewById(R.id.question_text);
-        questionText.setText(getItem(position));
+        questionText.setText(currentQuestion.getText());
+
+        timeText = listItemView.findViewById(R.id.questionDate);
+        Date date = new Date(currentQuestion.getTimestamp()*1000);
+        Format format = new SimpleDateFormat("dd. MM. yyyy HH:mm");
+        timeText.setText(format.format(date));
+
+        pointsText = listItemView.findViewById(R.id.points);
+        pointsText.setText(Integer.toString(currentQuestion.getPoints()));
 
         return listItemView;
 

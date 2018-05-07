@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,17 +20,16 @@ import java.util.ArrayList;
 public class RoomActivity extends AppCompatActivity {
 
     ListView questionsList;
-    String randomQuestion = "jbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsd";
-    ArrayList<String> questions = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    ArrayList<Question> questions = new ArrayList<>();
+    QuestionAdapter adapter;
     TextView roomNameTitle;
     TextView roomKeyTextView;
-    String roomName;
     String roomKey;
 
     ImageView peopleButton;
 
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +37,49 @@ public class RoomActivity extends AppCompatActivity {
         setContentView(R.layout.room_activity);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         peopleButton = (ImageView) findViewById(R.id.peopleBtn);
         roomNameTitle = (TextView) findViewById(R.id.roomNameTitle);
         roomKeyTextView = (TextView) findViewById(R.id.roomKey);
 
-        questions.add(randomQuestion);
-        questions.add(randomQuestion);
-        questions.add(randomQuestion);
-        questions.add(randomQuestion);
 
         questionsList = findViewById(R.id.questions_list_view);
         adapter = new QuestionAdapter(this, questions);
         questionsList.setAdapter(adapter);
 
         roomKey = getIntent().getStringExtra("key");
+
+        mDatabase.child("rooms").child(roomKey).child("questions").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                questions.clear();
+                for (final DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    mDatabase.child("questions")
+                            .child(snapshot.child("category").getValue().toString())
+                            .child(snapshot.getKey().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot1) {
+                            Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
+                                    Long.parseLong(snapshot.child("timestamp").getValue().toString()),
+                                    Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()));
+                            questions.add(addQuestion);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
