@@ -80,13 +80,17 @@ public class RoomActivity extends AppCompatActivity {
                             .child(snapshot.getKey().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot1) {
-                            Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
-                                    Long.parseLong(snapshot.child("timestamp").getValue().toString()),
-                                    Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()),
-                                    snapshot.getKey().toString(),
-                                    snapshot.child("category").getValue().toString());
-                            questions.add(addQuestion);
-                            adapter.notifyDataSetChanged();
+                            try {
+                                Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
+                                        Long.parseLong(snapshot.child("timestamp").getValue().toString()),
+                                        Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()),
+                                        snapshot.getKey().toString(),
+                                        snapshot.child("category").getValue().toString());
+                                questions.add(addQuestion);
+                                adapter.notifyDataSetChanged();
+                            }catch (NullPointerException e){
+
+                            }
                         }
 
                         @Override
