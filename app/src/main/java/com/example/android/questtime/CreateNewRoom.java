@@ -88,6 +88,7 @@ public class CreateNewRoom extends AppCompatActivity {
                     }
                     mDatabase.child("rooms").child(key).child("privateKey").setValue(privateKey.toString());
                     mDatabase.child("rooms").child(key).child("members").child(mAuth.getUid()).setValue("1");
+                    mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(key).setValue(true);
                     Toast.makeText(CreateNewRoom.this, "Room successfully created!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
