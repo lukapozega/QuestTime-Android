@@ -22,9 +22,7 @@
         android:background="@drawable/separator_background"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
-        >
-
-    </View>
+        />
 
     <EditText
         android:id="@+id/roomName"
