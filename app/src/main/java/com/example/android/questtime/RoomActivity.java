@@ -25,6 +25,8 @@ public class RoomActivity extends AppCompatActivity {
     TextView roomNameTitle;
     TextView roomKeyTextView;
     String roomKey;
+    String roomName;
+    String roomPrivateKey;
 
     ImageView peopleButton;
 
@@ -49,6 +51,11 @@ public class RoomActivity extends AppCompatActivity {
         questionsList.setAdapter(adapter);
 
         roomKey = getIntent().getStringExtra("key");
+        roomName = getIntent().getStringExtra("name");
+        roomPrivateKey = getIntent().getStringExtra("privateKey");
+
+        roomNameTitle.setText(roomName);
+        roomKeyTextView.setText(roomPrivateKey);
 
         mDatabase.child("rooms").child(roomKey).child("questions").addValueEventListener(new ValueEventListener() {
             @Override
@@ -73,19 +80,6 @@ public class RoomActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                roomNameTitle.setText(dataSnapshot.child("roomName").getValue().toString());
-                roomKeyTextView.setText(dataSnapshot.child("privateKey").getValue().toString());
             }
 
             @Override
