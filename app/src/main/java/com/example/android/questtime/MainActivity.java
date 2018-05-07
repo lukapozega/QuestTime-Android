@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 Room room = (Room) roomListView.getItemAtPosition(i);
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 intent.putExtra("key", room.getKey());
+                intent.putExtra("name", room.getRoomName());
+                intent.putExtra("privateKey", room.getPrivateKey());
                 startActivity(intent);
             }
         });
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                                     dataSnapshot2.child("difficulty").getValue().toString(),
                                     categories,
                                     Integer.parseInt(dataSnapshot2.child("numberOfUsers").getValue().toString()),
-                                    snapshot.getKey());
+                                    snapshot.getKey(), dataSnapshot2.child("privateKey").getValue().toString());
                             userRooms.add(addRoom);
                             adapter.notifyDataSetChanged();
                         }

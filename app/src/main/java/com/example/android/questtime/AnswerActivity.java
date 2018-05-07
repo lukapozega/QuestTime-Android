@@ -11,8 +11,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Random;
-
 public class AnswerActivity extends AppCompatActivity {
 
     private String questionId;
@@ -47,8 +45,6 @@ public class AnswerActivity extends AppCompatActivity {
                         questionId,
                         dataSnapshot.child("correct_answer").getValue().toString(),
                         wrongAnswers);
-                Random random 
-
             }
 
             @Override

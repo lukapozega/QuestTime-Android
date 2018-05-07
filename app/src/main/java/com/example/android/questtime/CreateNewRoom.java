@@ -64,6 +64,11 @@ public class CreateNewRoom extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     roomName = roomNameEditText.getText().toString();
+
+                    for (int i=0; i<8; ++i) {
+                        privateKey.append(alphaNumeric.charAt(random.nextInt(62)));
+                    }
+
                     if(roomName.matches("")) {
                         Toast.makeText(CreateNewRoom.this, "You have to choose room name!", Toast.LENGTH_SHORT).show();
                         return;
@@ -80,14 +85,15 @@ public class CreateNewRoom extends AppCompatActivity {
                         Toast.makeText(CreateNewRoom.this, "You have to choose at least one category!", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    room = new Room(roomName,difficulty,type,categories);
+
+
+
+                    room = new Room(roomName, difficulty, type, categories, privateKey.toString());
                     String key = mDatabase.child("rooms").push().getKey();
                     mDatabase.child("rooms").child(key).setValue(room);
-                    for (int i=0; i<8; ++i) {
-                        privateKey.append(alphaNumeric.charAt(random.nextInt(62)));
-                    }
-                    mDatabase.child("rooms").child(key).child("privateKey").setValue(privateKey.toString());
+
                     mDatabase.child("rooms").child(key).child("members").child(mAuth.getUid()).setValue("1");
+                    mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(key).setValue(true);
                     Toast.makeText(CreateNewRoom.this, "Room successfully created!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
