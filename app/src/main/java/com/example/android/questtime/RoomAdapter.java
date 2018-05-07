@@ -10,6 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -26,6 +32,9 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         super(context, 0, rooms);
     }
 
+    private DatabaseReference mDatabase;
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
@@ -34,13 +43,26 @@ public class RoomAdapter extends ArrayAdapter<Room> {
                     R.layout.room_item, parent, false);
         }
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         currentRoom = getItem(position);
+
+        final TextView peopleTextView = (TextView) listItemView.findViewById(R.id.numberOfUsers);
+
+        mDatabase.child("rooms").child(currentRoom.getKey()).child("members").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                 peopleTextView.setText("People: " + dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         TextView nameTextView = (TextView) listItemView.findViewById(R.id.roomNameText);
         nameTextView.setText(currentRoom.getRoomName());
-
-        TextView peopleTextView = (TextView) listItemView.findViewById(R.id.numberOfUsers);
-        peopleTextView.setText("People: " + currentRoom.getNumberOfUsers());
 
         ImageView difficultyIW = (ImageView) listItemView.findViewById(R.id.difficulty_icon);
         switch (currentRoom.getDifficulty()) {
