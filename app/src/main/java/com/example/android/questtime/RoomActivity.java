@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,6 +49,18 @@ public class RoomActivity extends AppCompatActivity {
         adapter = new QuestionAdapter(this, questions);
         questionsList.setAdapter(adapter);
 
+        questionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Question question = (Question) questionsList.getItemAtPosition(i);
+                Intent intent = new Intent(RoomActivity.this, AnswerActivity.class);
+                intent.putExtra("key", question.getId());
+                intent.putExtra("points", question.getPoints());
+                intent.putExtra("category", question.getCategory());
+                startActivity(intent);
+            }
+        });
+
         roomKey = getIntent().getStringExtra("key");
 
         mDatabase.child("rooms").child(roomKey).child("questions").addValueEventListener(new ValueEventListener() {
@@ -62,7 +75,9 @@ public class RoomActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot1) {
                             Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
                                     Long.parseLong(snapshot.child("timestamp").getValue().toString()),
-                                    Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()));
+                                    Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()),
+                                    snapshot.getKey().toString(),
+                                    snapshot.child("category").getValue().toString());
                             questions.add(addQuestion);
                             adapter.notifyDataSetChanged();
                         }
