@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,11 +84,9 @@ public class PlusButtonActivity extends AppCompatActivity {
                                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                                     if (snapshot.hasChild("privateKey")) {
                                         if (privateKey.equals(snapshot.child("privateKey").getValue().toString())) {
-                                            mDatabase.child("rooms").child(snapshot.getKey()).child("members").child(mAuth.getUid()).setValue("1");
+                                            mDatabase.child("rooms").child(snapshot.getKey()).child("members").child(mAuth.getUid()).setValue(System.currentTimeMillis()/1000);
                                             numberOfUsers = Integer.parseInt(snapshot.child("numberOfUsers").getValue().toString());
-                                            Log.i("broj", ""+ numberOfUsers);
                                             if(!snapshot.child("members").hasChild(mAuth.getUid())) {
-                                                Log.i("broj1", ""+ numberOfUsers);
                                                 mDatabase.child("rooms").child(snapshot.getKey()).child("numberOfUsers").setValue(++numberOfUsers);
                                             }
                                             mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(snapshot.getKey()).setValue(true);

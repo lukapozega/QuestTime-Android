@@ -3,6 +3,7 @@ package com.example.android.questtime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -28,6 +29,8 @@ public class RoomActivity extends AppCompatActivity {
     String roomKey;
     String roomName;
     String roomPrivateKey;
+    Long joined;
+    Long created;
 
     ImageView peopleButton;
 
@@ -70,26 +73,32 @@ public class RoomActivity extends AppCompatActivity {
         roomNameTitle.setText(roomName);
         roomKeyTextView.setText(roomPrivateKey);
 
-        mDatabase.child("rooms").child(roomKey).child("questions").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("rooms").child(roomKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 questions.clear();
-                for (final DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                joined = Long.parseLong(dataSnapshot.child("members").child(mAuth.getUid()).getValue().toString());
+                for (final DataSnapshot snapshot: dataSnapshot.child("questions").getChildren()) {
                     mDatabase.child("questions")
                             .child(snapshot.child("category").getValue().toString())
                             .child(snapshot.getKey().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot1) {
                             try {
+                                created = Long.parseLong(snapshot.child("timestamp").getValue().toString());
                                 Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
-                                        Long.parseLong(snapshot.child("timestamp").getValue().toString()),
+                                        created,
                                         Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()),
                                         snapshot.getKey().toString(),
                                         snapshot.child("category").getValue().toString());
-                                questions.add(addQuestion);
-                                adapter.notifyDataSetChanged();
+                                Log.i("test",created.toString());
+                                if (created>joined) {
+                                    Log.i(created.toString(), joined.toString());
+                                    questions.add(addQuestion);
+                                    adapter.notifyDataSetChanged();
+                                }
                             }catch (NullPointerException e){
-
+                                
                             }
                         }
 
