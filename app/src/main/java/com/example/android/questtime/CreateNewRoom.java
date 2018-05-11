@@ -92,7 +92,7 @@ public class CreateNewRoom extends AppCompatActivity {
                     String key = mDatabase.child("rooms").push().getKey();
                     mDatabase.child("rooms").child(key).setValue(room);
 
-                    mDatabase.child("rooms").child(key).child("members").child(mAuth.getUid()).setValue("1");
+                    mDatabase.child("rooms").child(key).child("members").child(mAuth.getUid()).setValue(System.currentTimeMillis()/1000);
                     mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(key).setValue(true);
                     Toast.makeText(CreateNewRoom.this, "Room successfully created!", Toast.LENGTH_SHORT).show();
                     finish();
@@ -128,7 +128,7 @@ public class CreateNewRoom extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
-    View.OnClickListener diffClick = new View.OnClickListener() {
+    private View.OnClickListener diffClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             for (int i=0; i<3;++i) {
@@ -140,7 +140,7 @@ public class CreateNewRoom extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener typeClick = new View.OnClickListener() {
+    private View.OnClickListener typeClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             for (int i=0; i<2;++i) {
@@ -152,7 +152,7 @@ public class CreateNewRoom extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener catClick = new View.OnClickListener() {
+    private View.OnClickListener catClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (view.getAlpha()==1) {

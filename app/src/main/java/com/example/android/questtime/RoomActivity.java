@@ -3,7 +3,6 @@ package com.example.android.questtime;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -18,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class RoomActivity extends AppCompatActivity {
 
@@ -31,6 +31,7 @@ public class RoomActivity extends AppCompatActivity {
     String roomPrivateKey;
     Long joined;
     Long created;
+    Set<Question> helpSet;
 
     ImageView peopleButton;
 
@@ -60,8 +61,9 @@ public class RoomActivity extends AppCompatActivity {
                 Question question = (Question) questionsList.getItemAtPosition(i);
                 Intent intent = new Intent(RoomActivity.this, AnswerActivity.class);
                 intent.putExtra("key", question.getId());
-                intent.putExtra("points", question.getPoints());
+                intent.putExtra("points", String.valueOf(question.getPoints()));
                 intent.putExtra("category", question.getCategory());
+                intent.putExtra("roomId", roomKey);
                 startActivity(intent);
             }
         });
@@ -73,7 +75,7 @@ public class RoomActivity extends AppCompatActivity {
         roomNameTitle.setText(roomName);
         roomKeyTextView.setText(roomPrivateKey);
 
-        mDatabase.child("rooms").child(roomKey).addValueEventListener(new ValueEventListener() {
+        mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 questions.clear();
@@ -91,14 +93,14 @@ public class RoomActivity extends AppCompatActivity {
                                         Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()),
                                         snapshot.getKey().toString(),
                                         snapshot.child("category").getValue().toString());
-                                Log.i("test",created.toString());
                                 if (created>joined) {
-                                    Log.i(created.toString(), joined.toString());
-                                    questions.add(addQuestion);
+                                    if(!questions.contains(addQuestion)) {
+                                        questions.add(addQuestion);
+                                    }
                                     adapter.notifyDataSetChanged();
                                 }
                             }catch (NullPointerException e){
-                                
+
                             }
                         }
 

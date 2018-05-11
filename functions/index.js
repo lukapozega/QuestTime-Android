@@ -43,6 +43,9 @@ exports.createDatabase = functions.https.onRequest((request, response) => {
             case 'Vehic':
                 category = 'Vehicles' 
                 break;
+            case 'Mytho':
+                category = 'Mythology'
+                break;
         }
         return admin.database().ref('questions').child(category).push(rez).then((snapshot) => {
             // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
