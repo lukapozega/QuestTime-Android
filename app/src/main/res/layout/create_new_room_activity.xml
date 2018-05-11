@@ -162,8 +162,8 @@
         android:layout_width="match_parent"
         android:layout_height="26dp"
         android:id="@+id/cat_1"
-        android:paddingRight="36dp"
-        android:paddingLeft="36dp"
+        android:paddingRight="48dp"
+        android:paddingLeft="48dp"
         android:layout_marginTop="20dp">
 
         <ImageView
@@ -171,36 +171,30 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
-            android:src="@drawable/paint_icon"
+            android:src="@drawable/animals"
+            android:tag="animals"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/art"
             android:tag="art"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
-            android:src="@drawable/ball_icon"
-            android:tag="sport"/>
+            android:src="@drawable/celebrities"
+            android:tag="celebrities"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
-            android:src="@drawable/physics_icon"
-            android:tag="science"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:alpha="0.4"
-            android:src="@drawable/movie_icon"
-            android:tag="movie"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:alpha="0.4"
-            android:src="@drawable/music_icon"
-            android:tag="music"/>
+            android:src="@drawable/entertainment"
+            android:tag="entertainment"/>
+
 
     </LinearLayout>
 
@@ -217,29 +211,73 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
-            android:src="@drawable/think_icon"
-            android:tag="bulb"/>
+            android:src="@drawable/general"
+            android:tag="general"/>
+
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
-            android:src="@drawable/plus_icon"
-            android:tag="math"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:alpha="0.4"
-            android:src="@drawable/hat_icon"
-            android:tag="hat"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:alpha="0.4"
-            android:src="@drawable/globe_icon"
+            android:src="@drawable/geography"
             android:tag="geography"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/history"
+            android:tag="history"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/mythology"
+            android:tag="mythology"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:id="@+id/cat_3"
+        android:paddingRight="48dp"
+        android:paddingLeft="48dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/politics"
+            android:tag="politics"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/science"
+            android:tag="science"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/sports"
+            android:tag="sports"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/vehicles"
+            android:tag="vehicles"/>
+
     </LinearLayout>
 
     <TextView
@@ -252,7 +290,7 @@
         android:textSize="25sp"
         android:fontFamily="@font/roboto_black"
         android:textStyle="bold"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="30dp"
         android:textAllCaps="false"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         />

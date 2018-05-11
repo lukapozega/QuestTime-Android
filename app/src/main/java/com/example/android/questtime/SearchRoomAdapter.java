@@ -1,15 +1,19 @@
 package com.example.android.questtime;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,40 +28,53 @@ import java.util.Random;
  * Created by Luka on 31/03/2018.
  */
 
-public class RoomAdapter extends ArrayAdapter<Room> {
+public class SearchRoomAdapter extends ArrayAdapter<Room> {
 
     private Room currentRoom;
-
-    public RoomAdapter(Context context, ArrayList<Room> rooms) {
-        super(context, 0, rooms);
-    }
-
+    private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
 
+    public SearchRoomAdapter(Context context, ArrayList<Room> rooms) {
+        super(context, 0, rooms);
+    }
+
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.room_item, parent, false);
+                    R.layout.search_room_item, parent, false);
         }
-
+        mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
         currentRoom = getItem(position);
 
+        final Button joinBtn = (Button) listItemView.findViewById(R.id.joinBtn);
         final TextView peopleTextView = (TextView) listItemView.findViewById(R.id.numberOfUsers);
 
         mDatabase.child("rooms").child(currentRoom.getKey()).child("members").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                 peopleTextView.setText("People: " + dataSnapshot.getChildrenCount());
+                peopleTextView.setText("People: " + dataSnapshot.getChildrenCount());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        joinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDatabase.child("rooms").child(getItem(position).getKey()).child("members").child(mAuth.getUid()).setValue(System.currentTimeMillis()/1000);
+                mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(getItem(position).getKey()).setValue(true);
+                joinBtn.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+                joinBtn.setText("Joined");
             }
         });
 
@@ -79,44 +96,36 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         List<Integer> categoryIcons = new ArrayList<>();
         for (String category: currentRoom.getCategories()) {
             switch (category) {
-                case "Art":
-                    categoryIcons.add(R.drawable.art);
+                case "art":
+                    categoryIcons.add(R.drawable.paint_icon);
                     break;
-                case "Animals":
-                    categoryIcons.add(R.drawable.animals);
+                case "sport":
+                    categoryIcons.add(R.drawable.ball_icon);
                     break;
-                case "Celebrities":
-                    categoryIcons.add(R.drawable.celebrities);
+                case "science":
+                    categoryIcons.add(R.drawable.physics_icon);
                     break;
-                case "Entertainment":
-                    categoryIcons.add(R.drawable.entertainment);
+                case "movie":
+                    categoryIcons.add(R.drawable.movie_icon);
                     break;
-                case "General Knowledge":
-                    categoryIcons.add(R.drawable.general);
+                case "music":
+                    categoryIcons.add(R.drawable.music_icon);
                     break;
-                case "Geography":
-                    categoryIcons.add(R.drawable.geography);
+                case "bulb":
+                    categoryIcons.add(R.drawable.think_icon);
                     break;
-                case "History":
-                    categoryIcons.add(R.drawable.history);
+                case "math":
+                    categoryIcons.add(R.drawable.plus_icon);
                     break;
-                case "Mythology":
-                    categoryIcons.add(R.drawable.mythology);
+                case "hat":
+                    categoryIcons.add(R.drawable.hat_icon);
                     break;
-                case "Politics":
-                    categoryIcons.add(R.drawable.politics);
-                    break;
-                case "Science":
-                    categoryIcons.add(R.drawable.science);
-                    break;
-                case "Sports":
-                    categoryIcons.add(R.drawable.sports);
-                    break;
-                case "Vehicles":
-                    categoryIcons.add(R.drawable.vehicles);
-                    break;
+                case "geography":
+                    categoryIcons.add(R.drawable.globe_icon);
             }
         }
+
+
 
         LinearLayout categoryLayout = (LinearLayout) listItemView.findViewById(R.id.category_layout);
         for (int i=0; i<3;++i) {

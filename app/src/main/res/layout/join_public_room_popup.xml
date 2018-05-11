@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/popup_background"
+    >
+
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Room name"
+        android:fontFamily="@font/roboto_black"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        />
+
+    <LinearLayout
+        android:layout_below="@id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:id="@+id/cat_1"
+        android:paddingRight="36dp"
+        android:paddingLeft="36dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/animals"
+            android:tag="animals"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/art"
+            android:tag="art"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/celebrities"
+            android:tag="celebrities"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/entertainment"
+            android:tag="entertainment"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/cat_1"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:id="@+id/cat_2"
+        android:paddingRight="36dp"
+        android:paddingLeft="36dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/general"
+            android:tag="general"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/geography"
+            android:tag="geography"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/history"
+            android:tag="history"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/mythology"
+            android:tag="mythology"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/cat_2"
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:id="@+id/cat_3"
+        android:paddingRight="36dp"
+        android:paddingLeft="36dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/politics"
+            android:tag="politics"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/science"
+            android:tag="science"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/sports"
+            android:tag="sports"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/vehicles"
+            android:tag="vehicles"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_below="@id/cat_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:text="Search"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_black"
+        android:padding="20dp"
+        android:textSize="20sp"
+        />
+
+</RelativeLayout>

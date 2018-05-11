@@ -43,6 +43,7 @@
         <activity android:name=".AnswerActivity"></activity>
 
         <activity android:name=".PeopleActivity"></activity>
+        <activity android:name=".SearchResultsActivity"></activity>
     </application>
 
 </manifest>
