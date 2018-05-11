@@ -120,6 +120,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
+                intent.putExtra("roomKey", roomKey);
                 startActivity(intent);
             }
         });
