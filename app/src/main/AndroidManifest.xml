@@ -40,7 +40,9 @@
         </service>
 
         <activity android:name=".RoomActivity" />
-        <activity android:name=".AnswerActivity"></activity>
+        <activity
+            android:name=".AnswerActivity"
+            android:theme="@style/TransparentTheme"/>
 
         <activity android:name=".PeopleActivity"></activity>
     </application>
