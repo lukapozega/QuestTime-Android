@@ -1,10 +1,12 @@
 package com.example.android.questtime;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by Luka on 07/05/2018.
  */
 
-public class Question {
+public class Question implements Comparable<Question>{
 
     private String text;
     private double timestamp;
@@ -72,4 +74,10 @@ public class Question {
         return hash;
     }
 
+    @Override
+    public int compareTo(@NonNull Question question) {
+        double compareDate = question.getTimestamp();
+        double d = compareDate - this.getTimestamp();
+        return (int) d;
+    }
 }

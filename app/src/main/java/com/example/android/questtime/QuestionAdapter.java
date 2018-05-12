@@ -30,8 +30,13 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.question_item, parent, false);
+            if(getItem(position).getPoints() < 0){
+                listItemView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.unanswered_question_item, parent, false);
+            } else {
+                listItemView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.question_item, parent, false);
+            }
         }
 
         Question currentQuestion = getItem(position);
@@ -44,8 +49,10 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         Format format = new SimpleDateFormat("dd. MM. yyyy HH:mm");
         timeText.setText(format.format(date));
 
-        pointsText = listItemView.findViewById(R.id.points);
-        pointsText.setText(Integer.toString(currentQuestion.getPoints()));
+        if(currentQuestion.getPoints() >= 0) {
+            pointsText = listItemView.findViewById(R.id.points);
+            pointsText.setText(Integer.toString(currentQuestion.getPoints()));
+        }
 
         return listItemView;
 

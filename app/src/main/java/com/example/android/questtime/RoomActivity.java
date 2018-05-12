@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 
 public class RoomActivity extends AppCompatActivity {
@@ -39,6 +40,7 @@ public class RoomActivity extends AppCompatActivity {
     double joined;
     double created;
     Set<Question> helpSet;
+    int bodovi;
 
     TextView noQuestionsTxt;
 
@@ -117,23 +119,24 @@ public class RoomActivity extends AppCompatActivity {
                             .child(snapshot.getKey().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot1) {
-                            try {
-                                created = Double.parseDouble(snapshot.child("timestamp").getValue().toString());
-                                Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
-                                        created,
-                                        Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()),
-                                        snapshot.getKey().toString(),
-                                        snapshot.child("category").getValue().toString());
-                                if (created > joined) {
-                                    if(!questions.contains(addQuestion)) {
-                                        questions.add(addQuestion);
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                    noQuestionsTxt.setVisibility(View.GONE);
-
+                            created = Double.parseDouble(snapshot.child("timestamp").getValue().toString());
+                            try{
+                                bodovi = Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString());
+                            } catch (NullPointerException e){
+                                bodovi = -1;
+                            }
+                            Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
+                                    created,
+                                    bodovi,
+                                    snapshot.getKey(),
+                                    snapshot.child("category").getValue().toString());
+                            if (created > joined && created < System.currentTimeMillis()/1000) {
+                                if(!questions.contains(addQuestion)) {
+                                    questions.add(addQuestion);
+                                    Collections.sort(questions);
                                 }
-                            }catch (NullPointerException e){
-
+                                adapter.notifyDataSetChanged();
+                                noQuestionsTxt.setVisibility(View.GONE);
                             }
                         }
 
