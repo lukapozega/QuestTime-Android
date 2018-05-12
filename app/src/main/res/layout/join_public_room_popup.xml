@@ -32,28 +32,28 @@
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/animals"
-            android:tag="animals"/>
+            android:tag="Animals"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/art"
-            android:tag="art"/>
+            android:tag="Art"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/celebrities"
-            android:tag="celebrities"/>
+            android:tag="Celebrities"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/entertainment"
-            android:tag="entertainment"/>
+            android:tag="Entertainment"/>
 
 
     </LinearLayout>
@@ -73,7 +73,7 @@
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/general"
-            android:tag="general"/>
+            android:tag="General Knowledge"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -81,21 +81,21 @@
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/geography"
-            android:tag="geography"/>
+            android:tag="Geography"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/history"
-            android:tag="history"/>
+            android:tag="History"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/mythology"
-            android:tag="mythology"/>
+            android:tag="Mythology"/>
 
     </LinearLayout>
 
@@ -114,7 +114,7 @@
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/politics"
-            android:tag="politics"/>
+            android:tag="Politics"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -122,7 +122,7 @@
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/science"
-            android:tag="science"/>
+            android:tag="Science"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -130,7 +130,7 @@
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/sports"
-            android:tag="sports"/>
+            android:tag="Sports"/>
 
         <ImageView
             android:layout_width="0dp"
@@ -138,7 +138,7 @@
             android:layout_weight="1"
             android:alpha="0.4"
             android:src="@drawable/vehicles"
-            android:tag="vehicles"/>
+            android:tag="Vehicles"/>
 
     </LinearLayout>
 

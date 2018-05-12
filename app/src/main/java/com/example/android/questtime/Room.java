@@ -25,13 +25,14 @@ public class Room {
         this.privateKey = privateKey;
     }
 
-    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers, String key, String privateKey) {
+    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers, String key, String privateKey, String type) {
         this.roomName = roomName;
         this.difficulty = difficulty;
         this.categories = categories;
         this.numberOfUsers = numberOfUsers;
         this.key = key;
         this.privateKey = privateKey;
+        this.type = type;
     }
 
     public Room(String roomName, String difficulty, List<String> categories, String key, List<String> userIds){
@@ -40,6 +41,14 @@ public class Room {
         this.categories = categories;
         this.key = key;
         this.userIds = userIds;
+    }
+
+    public Room(String roomName, String difficulty, List<String> categories, String key, String type){
+        this.roomName = roomName;
+        this.difficulty = difficulty;
+        this.categories = categories;
+        this.key = key;
+        this.type = type;
     }
 
     public String getRoomName() {

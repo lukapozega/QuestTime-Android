@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Room> userRooms = new ArrayList<>();
     private RoomAdapter adapter;
 
+    private Room addRoom;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -64,7 +65,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 intent.putExtra("key", room.getKey());
                 intent.putExtra("name", room.getRoomName());
-                intent.putExtra("privateKey", room.getPrivateKey());
+                if(room.getType().equals("private")){
+                    intent.putExtra("type", room.getType());
+                    intent.putExtra("privateKey", room.getPrivateKey());
+                } else {
+                    intent.putExtra("type", room.getType());
+                }
                 startActivity(intent);
             }
         });
@@ -89,11 +95,23 @@ public class MainActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot1: dataSnapshot2.child("categories").getChildren()) {
                                 categories.add(snapshot1.getValue().toString());
                             }
-                            Room addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
-                                    dataSnapshot2.child("difficulty").getValue().toString(),
-                                    categories,
-                                    Integer.parseInt(dataSnapshot2.child("numberOfUsers").getValue().toString()),
-                                    snapshot.getKey(), dataSnapshot2.child("privateKey").getValue().toString());
+
+                            try{
+                                addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
+                                        dataSnapshot2.child("difficulty").getValue().toString(),
+                                        categories,
+                                        Integer.parseInt(dataSnapshot2.child("numberOfUsers").getValue().toString()),
+                                        snapshot.getKey(),
+                                        dataSnapshot2.child("privateKey").getValue().toString(),
+                                        dataSnapshot2.child("type").getValue().toString());
+                            } catch (NullPointerException e){
+                                addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
+                                        dataSnapshot2.child("difficulty").getValue().toString(),
+                                        categories,
+                                        snapshot.getKey(),
+                                        dataSnapshot2.child("type").getValue().toString());
+                            }
+
                             userRooms.add(addRoom);
                             adapter.notifyDataSetChanged();
                         }

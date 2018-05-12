@@ -96,32 +96,42 @@ public class SearchRoomAdapter extends ArrayAdapter<Room> {
         List<Integer> categoryIcons = new ArrayList<>();
         for (String category: currentRoom.getCategories()) {
             switch (category) {
-                case "art":
-                    categoryIcons.add(R.drawable.paint_icon);
+                case "Art":
+                    categoryIcons.add(R.drawable.art);
                     break;
-                case "sport":
-                    categoryIcons.add(R.drawable.ball_icon);
+                case "Animals":
+                    categoryIcons.add(R.drawable.animals);
                     break;
-                case "science":
-                    categoryIcons.add(R.drawable.physics_icon);
+                case "Celebrities":
+                    categoryIcons.add(R.drawable.celebrities);
                     break;
-                case "movie":
-                    categoryIcons.add(R.drawable.movie_icon);
+                case "Entertainment":
+                    categoryIcons.add(R.drawable.entertainment);
                     break;
-                case "music":
-                    categoryIcons.add(R.drawable.music_icon);
+                case "General Knowledge":
+                    categoryIcons.add(R.drawable.general);
                     break;
-                case "bulb":
-                    categoryIcons.add(R.drawable.think_icon);
+                case "Geography":
+                    categoryIcons.add(R.drawable.geography);
                     break;
-                case "math":
-                    categoryIcons.add(R.drawable.plus_icon);
+                case "History":
+                    categoryIcons.add(R.drawable.history);
                     break;
-                case "hat":
-                    categoryIcons.add(R.drawable.hat_icon);
+                case "Mythology":
+                    categoryIcons.add(R.drawable.mythology);
                     break;
-                case "geography":
-                    categoryIcons.add(R.drawable.globe_icon);
+                case "Politics":
+                    categoryIcons.add(R.drawable.politics);
+                    break;
+                case "Science":
+                    categoryIcons.add(R.drawable.science);
+                    break;
+                case "Sports":
+                    categoryIcons.add(R.drawable.sports);
+                    break;
+                case "Vehicles":
+                    categoryIcons.add(R.drawable.vehicles);
+                    break;
             }
         }
 

@@ -132,7 +132,7 @@ public class PlusButtonActivity extends AppCompatActivity {
                     View v = cat2Layout.getChildAt(i);
                     v.setOnClickListener(catClick);
                 }
-                for (int i=0; i<1; ++i){
+                for (int i=0; i<4; ++i){
                     View v = cat3Layout.getChildAt(i);
                     v.setOnClickListener(catClick);
                 }

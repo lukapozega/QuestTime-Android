@@ -29,10 +29,12 @@ public class RoomActivity extends AppCompatActivity {
     String roomKey;
     String roomName;
     String roomPrivateKey;
+    String roomType;
     Long joined;
     Long created;
     Set<Question> helpSet;
 
+    ImageView lock;
     ImageView peopleButton;
 
     private DatabaseReference mDatabase;
@@ -50,6 +52,7 @@ public class RoomActivity extends AppCompatActivity {
         roomNameTitle = (TextView) findViewById(R.id.roomNameTitle);
         roomKeyTextView = (TextView) findViewById(R.id.roomKey);
 
+        lock = (ImageView) findViewById(R.id.lock);
 
         questionsList = findViewById(R.id.questions_list_view);
         adapter = new QuestionAdapter(this, questions);
@@ -70,10 +73,18 @@ public class RoomActivity extends AppCompatActivity {
 
         roomKey = getIntent().getStringExtra("key");
         roomName = getIntent().getStringExtra("name");
-        roomPrivateKey = getIntent().getStringExtra("privateKey");
+        roomType = getIntent().getStringExtra("type");
+
+        if(roomType.equals("public")){
+            roomKeyTextView.setVisibility(View.GONE);
+            lock.setVisibility(View.GONE);
+        } else {
+            roomPrivateKey = getIntent().getStringExtra("privateKey");
+            roomKeyTextView.setText(roomPrivateKey);
+        }
 
         roomNameTitle.setText(roomName);
-        roomKeyTextView.setText(roomPrivateKey);
+
 
         mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
