@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class ExitRoomActivity extends AppCompatActivity {
 
@@ -47,6 +48,7 @@ public class ExitRoomActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mDatabase.child("rooms").child(roomKey).child("members").child(mAuth.getUid()).removeValue();
                 mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(roomKey).removeValue();
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(roomKey);
                 mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

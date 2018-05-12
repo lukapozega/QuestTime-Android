@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,7 @@ public class SearchRoomAdapter extends ArrayAdapter<Room> {
             public void onClick(View view) {
                 mDatabase.child("rooms").child(getItem(position).getKey()).child("members").child(mAuth.getUid()).setValue(System.currentTimeMillis()/1000);
                 mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(getItem(position).getKey()).setValue(true);
+                FirebaseMessaging.getInstance().subscribeToTopic(getItem(position).getKey());
                 joinBtn.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
                 joinBtn.setText("Joined");
             }

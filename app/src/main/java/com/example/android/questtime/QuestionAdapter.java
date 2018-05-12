@@ -40,7 +40,7 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         questionText.setText(currentQuestion.getText());
 
         timeText = listItemView.findViewById(R.id.questionDate);
-        Date date = new Date(currentQuestion.getTimestamp()*1000);
+        Date date = new Date((long)currentQuestion.getTimestamp()*1000);
         Format format = new SimpleDateFormat("dd. MM. yyyy HH:mm");
         timeText.setText(format.format(date));
 

@@ -36,8 +36,8 @@ public class RoomActivity extends AppCompatActivity {
     String roomName;
     String roomPrivateKey;
     String roomType;
-    Long joined;
-    Long created;
+    double joined;
+    double created;
     Set<Question> helpSet;
 
     TextView noQuestionsTxt;
@@ -110,7 +110,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 questions.clear();
-                joined = Long.parseLong(dataSnapshot.child("members").child(mAuth.getUid()).getValue().toString());
+                joined = Double.parseDouble(dataSnapshot.child("members").child(mAuth.getUid()).getValue().toString());
                 for (final DataSnapshot snapshot: dataSnapshot.child("questions").getChildren()) {
                     mDatabase.child("questions")
                             .child(snapshot.child("category").getValue().toString())
@@ -118,13 +118,13 @@ public class RoomActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot1) {
                             try {
-                                created = Long.parseLong(snapshot.child("timestamp").getValue().toString());
+                                created = Double.parseDouble(snapshot.child("timestamp").getValue().toString());
                                 Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
                                         created,
                                         Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()),
                                         snapshot.getKey().toString(),
                                         snapshot.child("category").getValue().toString());
-                                if (created>joined) {
+                                if (created > joined) {
                                     if(!questions.contains(addQuestion)) {
                                         questions.add(addQuestion);
                                     }

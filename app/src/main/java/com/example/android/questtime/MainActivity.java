@@ -170,11 +170,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-    }
 
 }

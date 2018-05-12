@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +92,7 @@ public class PlusButtonActivity extends AppCompatActivity {
                                                 mDatabase.child("rooms").child(snapshot.getKey()).child("numberOfUsers").setValue(++numberOfUsers);
                                             }
                                             mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(snapshot.getKey()).setValue(true);
+                                            FirebaseMessaging.getInstance().subscribeToTopic(snapshot.getKey());
                                             added = true;
                                         }
                                     }

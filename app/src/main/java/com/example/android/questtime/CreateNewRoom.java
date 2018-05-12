@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,7 @@ public class CreateNewRoom extends AppCompatActivity {
 
                     mDatabase.child("rooms").child(key).child("members").child(mAuth.getUid()).setValue(System.currentTimeMillis()/1000);
                     mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(key).setValue(true);
+                    FirebaseMessaging.getInstance().subscribeToTopic(key);
                     Toast.makeText(CreateNewRoom.this, "Room successfully created!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
