@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="74dp"
-    android:background="@drawable/edittext_background"
+    android:background="@drawable/unanswered_question_background"
     android:paddingTop="4dp"
     android:paddingLeft="18dp"
     android:paddingBottom="4dp">
@@ -21,7 +21,8 @@
             android:text="jbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsdjbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsdjbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsdjbdfbsjvjsdh sjdh svdjsdvsdjvs "
             android:fontFamily="@font/roboto_black"
             android:textSize="12sp"
-            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="25dp"
             android:maxLines="2"
             android:ellipsize="end"
             />
@@ -57,17 +58,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/points"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="10"
-        android:textSize="30sp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginEnd="12dp"
-        android:fontFamily="@font/roboto_black"/>
 
 </LinearLayout>

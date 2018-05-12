@@ -40,9 +40,13 @@
         </service>
 
         <activity android:name=".RoomActivity" />
-        <activity android:name=".AnswerActivity"></activity>
+        <activity android:name=".AnswerActivity"
+            android:theme="@style/TransparentTheme"></activity>
 
         <activity android:name=".PeopleActivity"></activity>
+        <activity android:name=".SearchResultsActivity"></activity>
+        <activity android:name=".ExitRoomActivity"
+                  android:theme="@style/TransparentTheme"/>
     </application>
 
 </manifest>
