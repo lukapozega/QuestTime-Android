@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,19 +34,33 @@ public class RoomAdapter extends ArrayAdapter<Room> {
     }
 
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
 
+    private double joined;
+    private double created;
+
+    private int bodovi;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
-        if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.room_item, parent, false);
-        }
 
+        mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         currentRoom = getItem(position);
+
+        if (listItemView == null) {
+            if(currentRoom.getZastavica() == -1) {
+                listItemView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.room_item, parent, false);
+            } else {
+                listItemView = LayoutInflater.from(getContext()).inflate(
+                        R.layout.clean_room_item, parent, false);
+            }
+        }
+
+
 
         final TextView peopleTextView = (TextView) listItemView.findViewById(R.id.numberOfUsers);
 

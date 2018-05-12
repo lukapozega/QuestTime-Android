@@ -16,6 +16,7 @@ public class Room {
     private int numberOfUsers;
     private String key;
     private String privateKey;
+    private int zastavica;
 
     public Room(String roomName, String difficulty, String type, List<String> categories, String privateKey) {
         this.roomName = roomName;
@@ -25,7 +26,7 @@ public class Room {
         this.privateKey = privateKey;
     }
 
-    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers, String key, String privateKey, String type) {
+    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers, String key, String privateKey, String type, int zastavica) {
         this.roomName = roomName;
         this.difficulty = difficulty;
         this.categories = categories;
@@ -33,6 +34,7 @@ public class Room {
         this.key = key;
         this.privateKey = privateKey;
         this.type = type;
+        this.zastavica = zastavica;
     }
 
     public Room(String roomName, String difficulty, List<String> categories, String key, List<String> userIds){
@@ -43,12 +45,14 @@ public class Room {
         this.userIds = userIds;
     }
 
-    public Room(String roomName, String difficulty, List<String> categories, String key, String type){
+    public Room(String roomName, String difficulty, List<String> categories, String key, String type, int zastavica){
         this.roomName = roomName;
         this.difficulty = difficulty;
         this.categories = categories;
         this.key = key;
         this.type = type;
+        this.zastavica = zastavica;
+
     }
 
     public String getRoomName() {
@@ -106,4 +110,14 @@ public class Room {
     public void setUserIds(List<String> userIds) {
         this.userIds = userIds;
     }
+
+    public int getZastavica() {
+        return zastavica;
+    }
+
+    public void setZastavica(int zastavica) {
+        this.zastavica = zastavica;
+    }
+
+
 }

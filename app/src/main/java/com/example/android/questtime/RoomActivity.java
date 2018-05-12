@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import java.util.Set;
 
 public class RoomActivity extends AppCompatActivity {
 
+    private static final String TAG = "tag";
     ListView questionsList;
     ArrayList<Question> questions = new ArrayList<>();
     QuestionAdapter adapter;
@@ -108,12 +110,25 @@ public class RoomActivity extends AppCompatActivity {
 
         roomNameTitle.setText(roomName);
 
+        peopleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
+                intent.putExtra("roomKey", roomKey);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(final DataSnapshot dataSnapshot) {
                 questions.clear();
-                joined = Double.parseDouble(dataSnapshot.child("members").child(mAuth.getUid()).getValue().toString());
                 for (final DataSnapshot snapshot: dataSnapshot.child("questions").getChildren()) {
+                    joined = Double.parseDouble(dataSnapshot.child("members").child(mAuth.getUid()).getValue().toString());
                     mDatabase.child("questions")
                             .child(snapshot.child("category").getValue().toString())
                             .child(snapshot.getKey().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -130,13 +145,15 @@ public class RoomActivity extends AppCompatActivity {
                                     bodovi,
                                     snapshot.getKey(),
                                     snapshot.child("category").getValue().toString());
+
                             if (created > joined && created < System.currentTimeMillis()/1000) {
                                 if(!questions.contains(addQuestion)) {
                                     questions.add(addQuestion);
-                                    Collections.sort(questions);
                                 }
+                                Collections.sort(questions);
                                 adapter.notifyDataSetChanged();
                                 noQuestionsTxt.setVisibility(View.GONE);
+
                             }
                         }
 
@@ -157,16 +174,5 @@ public class RoomActivity extends AppCompatActivity {
 
             }
         });
-
-        peopleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
-                intent.putExtra("roomKey", roomKey);
-                startActivity(intent);
-            }
-        });
     }
-
-
 }

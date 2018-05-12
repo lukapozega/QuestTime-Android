@@ -36,7 +36,12 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Room> userRooms = new ArrayList<>();
     private RoomAdapter adapter;
 
+    private int brojPitanja = 0;
     private Room addRoom;
+
+    private double joined;
+    private double created;
+    private int zastavica;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -96,6 +101,33 @@ public class MainActivity extends AppCompatActivity {
         addRotateAnimation.setRepeatCount(0);
         addRotateAnimation.setDuration(700);
 
+
+
+        addRoomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addRoomBtn.startAnimation(addRotateAnimation);
+                Intent intent = new Intent(MainActivity.this, PlusButtonActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                settingsBtn.startAnimation(settingsRotateAnimation);
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        brojPitanja = 0;
         mDatabase.child("users").child(mAuth.getUid()).child("rooms").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -104,11 +136,26 @@ public class MainActivity extends AppCompatActivity {
                     mDatabase.child("rooms").child(snapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot2) {
+                            joined = Double.parseDouble(dataSnapshot2.child("members").child(mAuth.getUid()).getValue().toString());
                             List<String> categories = new ArrayList<>();
                             for (DataSnapshot snapshot1: dataSnapshot2.child("categories").getChildren()) {
                                 categories.add(snapshot1.getValue().toString());
                             }
-
+                            for (DataSnapshot questions : dataSnapshot2.child("questions").getChildren()){
+                                created = Double.parseDouble(questions.child("timestamp").getValue().toString());
+                                try{
+                                    zastavica = Integer.parseInt(questions.child("points").child(mAuth.getUid()).getValue().toString());
+                                } catch (NullPointerException e){
+                                    if(created > joined && created < System.currentTimeMillis()/1000 && !questions.child("points").hasChild(mAuth.getUid())) {
+                                        zastavica = -1;
+                                        brojPitanja++;
+                                        questionsLeftNumber.setText(String.valueOf(brojPitanja));
+                                        if(brojPitanja == 1){
+                                            questionsLeftTodayTextView.setText("QUESTION LEFT TODAY");
+                                        }
+                                    }
+                                }
+                            }
                             try{
                                 addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
                                         dataSnapshot2.child("difficulty").getValue().toString(),
@@ -116,13 +163,15 @@ public class MainActivity extends AppCompatActivity {
                                         Integer.parseInt(dataSnapshot2.child("numberOfUsers").getValue().toString()),
                                         snapshot.getKey(),
                                         dataSnapshot2.child("privateKey").getValue().toString(),
-                                        dataSnapshot2.child("type").getValue().toString());
+                                        dataSnapshot2.child("type").getValue().toString(),
+                                        zastavica);
                             } catch (NullPointerException e){
                                 addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
                                         dataSnapshot2.child("difficulty").getValue().toString(),
                                         categories,
                                         snapshot.getKey(),
-                                        dataSnapshot2.child("type").getValue().toString());
+                                        dataSnapshot2.child("type").getValue().toString(),
+                                        zastavica);
                             }
 
                             userRooms.add(addRoom);
@@ -146,29 +195,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        addRoomBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addRoomBtn.startAnimation(addRotateAnimation);
-                Intent intent = new Intent(MainActivity.this, PlusButtonActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-        settingsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                settingsBtn.startAnimation(settingsRotateAnimation);
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-
     }
-
 }
