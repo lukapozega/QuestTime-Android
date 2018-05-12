@@ -42,9 +42,9 @@
         <activity android:name=".RoomActivity" />
         <activity
             android:name=".AnswerActivity"
-            android:theme="@style/TransparentTheme"/>
-
-        <activity android:name=".PeopleActivity"></activity>
+            android:theme="@style/TransparentTheme" />
+        <activity android:name=".PeopleActivity" />
+        <activity android:name=".ResultActivity"></activity>
     </application>
 
 </manifest>

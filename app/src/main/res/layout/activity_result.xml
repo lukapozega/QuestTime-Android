@@ -9,12 +9,36 @@
     android:padding="20dp">
 
     <TextView
-        android:id="@+id/quesText"
+        android:id="@+id/correct_wrong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginBottom="12dp"
-        android:textSize="12sp"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:fontFamily="@font/roboto_black"
+        />
+
+    <TextView
+        android:id="@+id/youScored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="You scored"
+        android:gravity="center"
+        android:layout_marginBottom="12dp"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:fontFamily="@font/roboto_black"
+        />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginBottom="12dp"
+        android:textSize="40sp"
         android:textColor="#000000"
         android:fontFamily="@font/roboto_black"
         />
@@ -26,8 +50,19 @@
 
         />
 
+    <TextView
+        android:id="@+id/questionText_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginBottom="12dp"
+        android:textSize="12sp"
+        android:textColor="#000000"
+        android:fontFamily="@font/roboto_black"
+        />
+
     <LinearLayout
-        android:id="@+id/answers"
+        android:id="@+id/answers_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -98,6 +133,7 @@
             android:background="@drawable/popup_background"
             android:minHeight="0dp"
             android:minWidth="0dp"
+            android:layout_marginBottom="6dp"
             />
 
     </LinearLayout>

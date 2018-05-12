@@ -17,7 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class RoomActivity extends AppCompatActivity {
 
@@ -31,7 +30,7 @@ public class RoomActivity extends AppCompatActivity {
     String roomPrivateKey;
     Long joined;
     Long created;
-    Set<Question> helpSet;
+    int points;
 
     ImageView peopleButton;
 
@@ -64,7 +63,16 @@ public class RoomActivity extends AppCompatActivity {
                 intent.putExtra("points", String.valueOf(question.getPoints()));
                 intent.putExtra("category", question.getCategory());
                 intent.putExtra("roomId", roomKey);
-                startActivity(intent);
+                Intent intentResult = new Intent(RoomActivity.this, AnswerActivity.class);
+                intentResult.putExtra("key", question.getId());
+                intentResult.putExtra("points", String.valueOf(question.getPoints()));
+                intentResult.putExtra("category", question.getCategory());
+                intentResult.putExtra("roomId", roomKey);
+                if (question.getPoints()==-1) {
+                    startActivity(intent);
+                } else {
+                    startActivity(intentResult);
+                }
             }
         });
 
@@ -88,9 +96,14 @@ public class RoomActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot1) {
                             try {
                                 created = Long.parseLong(snapshot.child("timestamp").getValue().toString());
+                                if (snapshot.child("points").hasChild(mAuth.getUid())) {
+                                    points = Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString());
+                                } else {
+                                    points = -1;
+                                }
                                 Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
                                         created,
-                                        Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString()),
+                                        points,
                                         snapshot.getKey().toString(),
                                         snapshot.child("category").getValue().toString());
                                 if (created>joined) {

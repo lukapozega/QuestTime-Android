@@ -45,7 +45,12 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         timeText.setText(format.format(date));
 
         pointsText = listItemView.findViewById(R.id.points);
-        pointsText.setText(Integer.toString(currentQuestion.getPoints()));
+        if (currentQuestion.getPoints()==-1) {
+            pointsText.setText("N/A");
+        } else {
+            pointsText.setText(Integer.toString(currentQuestion.getPoints()));
+        }
+
 
         return listItemView;
 

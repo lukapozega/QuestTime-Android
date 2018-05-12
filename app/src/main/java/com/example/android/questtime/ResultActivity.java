@@ -2,7 +2,6 @@ package com.example.android.questtime;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,7 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
-public class AnswerActivity extends AppCompatActivity {
+public class ResultActivity extends AppCompatActivity {
 
     private String questionId;
     private String category;
@@ -25,6 +24,9 @@ public class AnswerActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private LinearLayout answers;
     private TextView questionText;
+    private TextView correct;
+    private TextView score;
+
     int i;
     private String roomId;
     int nextPoints;
@@ -32,7 +34,7 @@ public class AnswerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_answer);
+        setContentView(R.layout.activity_result);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -42,8 +44,11 @@ public class AnswerActivity extends AppCompatActivity {
         points = Integer.parseInt(getIntent().getStringExtra("points"));
         roomId = getIntent().getStringExtra("roomId");
 
-        answers = findViewById(R.id.answers);
+        //TREBA POPUNIT OVA ČETIRI VIEW-A
+        answers = findViewById(R.id.answers_result);
         questionText = findViewById(R.id.questionText_result);
+        correct = findViewById(R.id.correct_wrong);
+        score = findViewById(R.id.score);
 
         mDatabase.child("rooms").child(roomId).child("questions").child(questionId).child("next_points").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -67,16 +72,21 @@ public class AnswerActivity extends AppCompatActivity {
                         questionId,
                         dataSnapshot.child("correct_answer").getValue().toString(),
                         wrongAnswers);
+                score.setText(points);
+                if (points!=0) {
+                    correct.setText("Correct!");
+                } else {
+                    correct.setText("Wrong!");
+                }
                 questionText.setText(question.getText());
+                //random postavljanje odgovora da ne bude tocan odgovor na istom mjestu uvije
                 Random random = new Random();
                 int k = random.nextInt(4);
                 TextView answer = (TextView) answers.getChildAt(k%4);
                 answer.setText(question.getCorrect());
-                answer.setOnClickListener(submitAnswer);
                 for (i = 1; i < 4; ++i){
                     answer = (TextView) answers.getChildAt((k+i)%4);
                     answer.setText(wrongAnswers[i-1]);
-                    answer.setOnClickListener(submitAnswer);
                 }
             }
 
@@ -89,19 +99,4 @@ public class AnswerActivity extends AppCompatActivity {
         setFinishOnTouchOutside(true);
 
     }
-
-    private View.OnClickListener submitAnswer = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            TextView answer = (TextView) view;
-            DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
-            dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());
-            if(answer.getText().equals(question.getCorrect())) {
-                dbReference.child("points").child(mAuth.getUid()).setValue(nextPoints);
-                dbReference.child("next_points").setValue(--nextPoints);
-            } else {
-                dbReference.child("points").child(mAuth.getUid()).setValue(0);
-            }
-        }
-    };
 }
