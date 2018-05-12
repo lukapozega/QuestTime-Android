@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private double joined;
     private double created;
-    private int zastavica;
+    private int answered;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -141,13 +141,14 @@ public class MainActivity extends AppCompatActivity {
                             for (DataSnapshot snapshot1: dataSnapshot2.child("categories").getChildren()) {
                                 categories.add(snapshot1.getValue().toString());
                             }
+                            answered = 1;
                             for (DataSnapshot questions : dataSnapshot2.child("questions").getChildren()){
                                 created = Double.parseDouble(questions.child("timestamp").getValue().toString());
                                 try{
-                                    zastavica = Integer.parseInt(questions.child("points").child(mAuth.getUid()).getValue().toString());
+                                    answered = Integer.parseInt(questions.child("points").child(mAuth.getUid()).getValue().toString());
                                 } catch (NullPointerException e){
-                                    if(created > joined && created < System.currentTimeMillis()/1000 && !questions.child("points").hasChild(mAuth.getUid())) {
-                                        zastavica = -1;
+                                    if(created > joined && created < System.currentTimeMillis()/1000) {
+                                        answered = -1;
                                         brojPitanja++;
                                         questionsLeftNumber.setText(String.valueOf(brojPitanja));
                                         if(brojPitanja == 1){
@@ -164,14 +165,14 @@ public class MainActivity extends AppCompatActivity {
                                         snapshot.getKey(),
                                         dataSnapshot2.child("privateKey").getValue().toString(),
                                         dataSnapshot2.child("type").getValue().toString(),
-                                        zastavica);
+                                        answered);
                             } catch (NullPointerException e){
                                 addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
                                         dataSnapshot2.child("difficulty").getValue().toString(),
                                         categories,
                                         snapshot.getKey(),
                                         dataSnapshot2.child("type").getValue().toString(),
-                                        zastavica);
+                                        answered);
                             }
 
                             userRooms.add(addRoom);

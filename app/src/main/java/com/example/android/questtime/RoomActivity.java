@@ -24,11 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
-=======
 import java.util.Collections;
 import java.util.Set;
->>>>>>> 3efb2513904c541d960b434ee6859602a82ecc8e
 
 public class RoomActivity extends AppCompatActivity {
 
@@ -41,19 +38,15 @@ public class RoomActivity extends AppCompatActivity {
     String roomKey;
     String roomName;
     String roomPrivateKey;
-<<<<<<< HEAD
-    Long joined;
-    Long created;
-    int points;
-=======
+
     String roomType;
+    int points;
     double joined;
     double created;
     Set<Question> helpSet;
     int bodovi;
 
     TextView noQuestionsTxt;
->>>>>>> 3efb2513904c541d960b434ee6859602a82ecc8e
 
     ImageView lock;
     ImageView peopleButton;
@@ -94,7 +87,7 @@ public class RoomActivity extends AppCompatActivity {
                 intentResult.putExtra("points", String.valueOf(question.getPoints()));
                 intentResult.putExtra("category", question.getCategory());
                 intentResult.putExtra("roomId", roomKey);
-                if (question.getPoints()==-1) {
+                if (question.getPoints() == -1) {
                     startActivity(intent);
                 } else {
                     startActivity(intentResult);
@@ -152,25 +145,7 @@ public class RoomActivity extends AppCompatActivity {
                             .child(snapshot.getKey().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot1) {
-<<<<<<< HEAD
-                            try {
-                                created = Long.parseLong(snapshot.child("timestamp").getValue().toString());
-                                if (snapshot.child("points").hasChild(mAuth.getUid())) {
-                                    points = Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString());
-                                } else {
-                                    points = -1;
-                                }
-                                Question addQuestion = new Question(dataSnapshot1.child("question").getValue().toString(),
-                                        created,
-                                        points,
-                                        snapshot.getKey().toString(),
-                                        snapshot.child("category").getValue().toString());
-                                if (created>joined) {
-                                    if(!questions.contains(addQuestion)) {
-                                        questions.add(addQuestion);
-                                    }
-                                    adapter.notifyDataSetChanged();
-=======
+
                             created = Double.parseDouble(snapshot.child("timestamp").getValue().toString());
                             try{
                                 bodovi = Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString());
@@ -186,12 +161,10 @@ public class RoomActivity extends AppCompatActivity {
                             if (created > joined && created < System.currentTimeMillis()/1000) {
                                 if(!questions.contains(addQuestion)) {
                                     questions.add(addQuestion);
->>>>>>> 3efb2513904c541d960b434ee6859602a82ecc8e
                                 }
                                 Collections.sort(questions);
                                 adapter.notifyDataSetChanged();
                                 noQuestionsTxt.setVisibility(View.GONE);
-
                             }
                         }
 

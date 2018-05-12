@@ -54,20 +54,13 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
         Format format = new SimpleDateFormat("dd. MM. yyyy HH:mm");
         timeText.setText(format.format(date));
 
-<<<<<<< HEAD
-        pointsText = listItemView.findViewById(R.id.points);
-        if (currentQuestion.getPoints()==-1) {
-            pointsText.setText("N/A");
-        } else {
-            pointsText.setText(Integer.toString(currentQuestion.getPoints()));
-        }
 
-=======
+        pointsText = listItemView.findViewById(R.id.points);
+
         if(currentQuestion.getPoints() != -1) {
             pointsText = listItemView.findViewById(R.id.points);
             pointsText.setText(Integer.toString(currentQuestion.getPoints()));
         }
->>>>>>> 3efb2513904c541d960b434ee6859602a82ecc8e
 
         return listItemView;
 
