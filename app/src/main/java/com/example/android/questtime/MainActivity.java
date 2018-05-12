@@ -75,6 +75,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        roomListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Room room = (Room) roomListView.getItemAtPosition(i);
+                Intent intent = new Intent(MainActivity.this, ExitRoomActivity.class);
+                intent.putExtra("key", room.getKey());
+                startActivity(intent);
+                return true;
+            }
+        });
+
         settingsRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         settingsRotateAnimation.setRepeatCount(0);
         settingsRotateAnimation.setDuration(700);

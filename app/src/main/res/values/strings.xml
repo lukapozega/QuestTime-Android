@@ -29,4 +29,7 @@
     <string name="date">19. Mar 2018. 20:13</string>
     <string name="question">Question to answer</string>
     <string name="search">Search</string>
+    <string name="leave_room">Leave this room?</string>
+    <string name="leave">Leave</string>
+    <string name="stay">Stay</string>
 </resources>
