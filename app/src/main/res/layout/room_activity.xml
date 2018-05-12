@@ -63,7 +63,8 @@
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/white"
             android:fontFamily="@font/roboto_black"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            />
 
     </LinearLayout>
 

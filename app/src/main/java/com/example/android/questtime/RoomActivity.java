@@ -1,5 +1,8 @@
 package com.example.android.questtime;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -81,10 +85,21 @@ public class RoomActivity extends AppCompatActivity {
         } else {
             roomPrivateKey = getIntent().getStringExtra("privateKey");
             roomKeyTextView.setText(roomPrivateKey);
-        }
+
+            roomKeyTextView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData cd = ClipData.newPlainText("Key", roomKeyTextView.getText());
+                    cm.setPrimaryClip(cd);
+                    Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
+
+                    return true;
+                }
+            });
+        }   
 
         roomNameTitle.setText(roomName);
-
 
         mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
