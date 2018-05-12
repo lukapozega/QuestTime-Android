@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView questionsLeftNumber;
     private TextView questionsLeftTodayTextView;
     private ListView roomListView;
+    private TextView noRoomsTxt;
 
     private RotateAnimation settingsRotateAnimation;
     private RotateAnimation addRotateAnimation;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         addRoomBtn = (ImageView) findViewById(R.id.addRoomBtn);
         questionsLeftNumber = (TextView) findViewById(R.id.questionsLeftNumber);
         questionsLeftTodayTextView = (TextView) findViewById(R.id.questionsLeftTodayTextView);
+        noRoomsTxt = (TextView) findViewById(R.id.no_rooms_txt);
 
         roomListView = findViewById(R.id.roomListView);
         adapter = new RoomAdapter(this, userRooms );
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
                             userRooms.add(addRoom);
                             adapter.notifyDataSetChanged();
+                            noRoomsTxt.setVisibility(View.GONE);
                         }
 
                         @Override
@@ -132,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
+                }
+                if(userRooms.isEmpty()){
+                    noRoomsTxt.setVisibility(View.VISIBLE);
                 }
             }
 

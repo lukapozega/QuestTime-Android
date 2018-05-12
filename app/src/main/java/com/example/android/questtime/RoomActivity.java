@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -38,6 +40,8 @@ public class RoomActivity extends AppCompatActivity {
     Long created;
     Set<Question> helpSet;
 
+    TextView noQuestionsTxt;
+
     ImageView lock;
     ImageView peopleButton;
 
@@ -55,6 +59,7 @@ public class RoomActivity extends AppCompatActivity {
         peopleButton = (ImageView) findViewById(R.id.peopleBtn);
         roomNameTitle = (TextView) findViewById(R.id.roomNameTitle);
         roomKeyTextView = (TextView) findViewById(R.id.roomKey);
+        noQuestionsTxt = (TextView) findViewById(R.id.no_questions_txt);
 
         lock = (ImageView) findViewById(R.id.lock);
 
@@ -97,7 +102,7 @@ public class RoomActivity extends AppCompatActivity {
                     return true;
                 }
             });
-        }   
+        }
 
         roomNameTitle.setText(roomName);
 
@@ -124,6 +129,8 @@ public class RoomActivity extends AppCompatActivity {
                                         questions.add(addQuestion);
                                     }
                                     adapter.notifyDataSetChanged();
+                                    noQuestionsTxt.setVisibility(View.GONE);
+
                                 }
                             }catch (NullPointerException e){
 
@@ -136,6 +143,10 @@ public class RoomActivity extends AppCompatActivity {
                         }
                     });
                 }
+                if(questions.isEmpty()){
+                    noQuestionsTxt.setVisibility(View.VISIBLE);
+                }
+
             }
 
             @Override

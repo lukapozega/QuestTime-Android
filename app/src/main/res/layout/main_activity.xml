@@ -78,6 +78,21 @@
         android:background="@drawable/separator_background">
 
     </View>
+
+    <TextView
+        android:id="@+id/no_rooms_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/no_rooms_yet"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:layout_margin="25dp"
+        android:visibility="gone"
+        android:alpha="0.85"
+        />
     
     <ListView
         android:id="@+id/roomListView"

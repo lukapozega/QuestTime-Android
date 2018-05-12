@@ -3,7 +3,9 @@ package com.example.android.questtime;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +25,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     private ArrayList<String> categories = new ArrayList<>();
     private ArrayList<String> userIds = new ArrayList<>();
     private String searchString;
+    private TextView noFilteredRoomsTxt;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -38,6 +41,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         roomList = (ListView) findViewById(R.id.searchResultsList);
         adapter = new SearchRoomAdapter(this, searchResultRooms);
         roomList.setAdapter(adapter);
+
+        noFilteredRoomsTxt = (TextView) findViewById(R.id.no_filtered_rooms);
 
         categories = getIntent().getStringArrayListExtra("categories");
         searchString = getIntent().getStringExtra("searchText");
@@ -66,11 +71,14 @@ public class SearchResultsActivity extends AppCompatActivity {
                         if(addRoom.getRoomName().contains(searchString) && (checkCategories(categories, roomCategories) || categories.isEmpty()) && !userIds.contains(mAuth.getUid())){
                             searchResultRooms.add(addRoom);
                             adapter.notifyDataSetChanged();
+                            noFilteredRoomsTxt.setVisibility(View.GONE);
                         }
 
                     }
                 }
-
+                if(searchResultRooms.isEmpty()){
+                    noFilteredRoomsTxt.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
