@@ -1,5 +1,6 @@
 package com.example.android.questtime;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,11 +24,15 @@ public class PasswordResetActivity extends AppCompatActivity {
     private EditText emailInput;
     private Button sendEmailBtn;
 
+    private MediaPlayer mp;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_password_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+
+        mp = MediaPlayer.create(this, R.raw.sound);
 
         emailInput = (EditText) findViewById(R.id.passwordResetEmail);
         sendEmailBtn = (Button) findViewById(R.id.sendEmailBtn);
@@ -38,6 +43,7 @@ public class PasswordResetActivity extends AppCompatActivity {
         sendEmailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 sendEmail();
             }
         });

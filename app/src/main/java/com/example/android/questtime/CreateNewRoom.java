@@ -1,6 +1,7 @@
 package com.example.android.questtime;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -39,6 +40,8 @@ public class CreateNewRoom extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private MediaPlayer mp;
+
     int padding;
 
     StringBuilder privateKey = new StringBuilder();
@@ -51,7 +54,9 @@ public class CreateNewRoom extends AppCompatActivity {
         setContentView(R.layout.create_new_room_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-            difficultyLayout = (LinearLayout) findViewById(R.id.difficulty);
+        mp = MediaPlayer.create(this, R.raw.sound);
+
+        difficultyLayout = (LinearLayout) findViewById(R.id.difficulty);
             typeLayout = (LinearLayout) findViewById(R.id.type);
             cat1Layout = (LinearLayout) findViewById(R.id.cat_1);
             cat2Layout = (LinearLayout) findViewById(R.id.cat_2);
@@ -64,6 +69,7 @@ public class CreateNewRoom extends AppCompatActivity {
             createRoomText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    mp.start();
                     roomName = roomNameEditText.getText().toString();
 
                     for (int i=0; i<8; ++i) {
@@ -133,6 +139,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private View.OnClickListener diffClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            mp.start();
             for (int i=0; i<3;++i) {
                 View v = difficultyLayout.getChildAt(i);
                 v.setPadding(padding,padding,padding,padding);
@@ -145,6 +152,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private View.OnClickListener typeClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            mp.start();
             for (int i=0; i<2;++i) {
                 TextView v = (TextView) typeLayout.getChildAt(i);
                 v.setTextColor(Color.parseColor("#3a86aa"));
@@ -157,6 +165,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private View.OnClickListener catClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            mp.start();
             if (view.getAlpha()==1) {
                 categories.remove((String) view.getTag());
                 view.setAlpha(0.4f);

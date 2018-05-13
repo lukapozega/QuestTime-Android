@@ -93,9 +93,14 @@ public class PeopleActivity extends AppCompatActivity{
                     mDatabase.child("users").child(entry.getKey()).child("username").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            pp = new PeoplePoints(dataSnapshot.getValue().toString(), entry.getValue());
-                            lista.add(pp);
-                            Collections.sort(lista);
+                            try {
+                                pp = new PeoplePoints(dataSnapshot.getValue().toString(), entry.getValue());
+                                lista.add(pp);
+                                Collections.sort(lista);
+                            }catch (NullPointerException e){
+
+                            }
+
                             try {
                                 goldName.setText(lista.get(0).getUsername());
                                 goldPoints.setText(String.valueOf(lista.get(0).getPoints()));
@@ -106,6 +111,8 @@ public class PeopleActivity extends AppCompatActivity{
                                 bronzeName.setText(lista.get(2).getUsername());
                                 bronzePoints.setText(String.valueOf(lista.get(2).getPoints()));
                             }catch (IndexOutOfBoundsException e){
+
+                            }catch (NullPointerException e){
 
                             }
 

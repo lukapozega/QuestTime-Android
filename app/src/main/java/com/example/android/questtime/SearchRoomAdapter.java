@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class SearchRoomAdapter extends ArrayAdapter<Room> {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private MediaPlayer mp;
 
     public SearchRoomAdapter(Context context, ArrayList<Room> rooms) {
         super(context, 0, rooms);
@@ -51,6 +53,7 @@ public class SearchRoomAdapter extends ArrayAdapter<Room> {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        mp = MediaPlayer.create(getContext(), R.raw.sound);
 
         currentRoom = getItem(position);
 
@@ -72,6 +75,7 @@ public class SearchRoomAdapter extends ArrayAdapter<Room> {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 mDatabase.child("rooms").child(getItem(position).getKey()).child("members").child(mAuth.getUid()).setValue(System.currentTimeMillis()/1000);
                 mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(getItem(position).getKey()).setValue(true);
                 FirebaseMessaging.getInstance().subscribeToTopic(getItem(position).getKey());

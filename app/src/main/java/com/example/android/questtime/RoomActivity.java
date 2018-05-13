@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -53,10 +54,14 @@ public class RoomActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
+    private MediaPlayer mp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_activity);
+
+        mp = MediaPlayer.create(this, R.raw.sound);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -75,6 +80,7 @@ public class RoomActivity extends AppCompatActivity {
         questionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mp.start();
                 final Question question = (Question) questionsList.getItemAtPosition(i);
                 if (question.getPoints() == -1) {
                     Intent intent = new Intent(RoomActivity.this, AnswerActivity.class);
@@ -138,6 +144,7 @@ public class RoomActivity extends AppCompatActivity {
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
                 intent.putExtra("roomKey", roomKey);
                 startActivity(intent);

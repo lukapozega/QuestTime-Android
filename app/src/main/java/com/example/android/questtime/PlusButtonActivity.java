@@ -1,6 +1,7 @@
 package com.example.android.questtime;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -46,10 +47,14 @@ public class PlusButtonActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
+    private MediaPlayer mp;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_room_popup);
+
+        mp = MediaPlayer.create(this, R.raw.sound);
 
         joinPrivateRoomButton = (Button) findViewById(R.id.joinPrivateRoomBtn);
         joinPublicRoomButton = (Button) findViewById(R.id.joinPublicRoomBtn);
@@ -61,6 +66,7 @@ public class PlusButtonActivity extends AppCompatActivity {
         createNewRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(PlusButtonActivity.this, CreateNewRoom.class);
                 startActivity(intent);
                 finish();
@@ -70,6 +76,7 @@ public class PlusButtonActivity extends AppCompatActivity {
         joinPrivateRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 setContentView(R.layout.join_room_popup);
                 privateKeyEnter = (EditText) findViewById(R.id.privateKeyEnter);
                 joinRoom = (Button) findViewById(R.id.joinButton);
@@ -77,6 +84,7 @@ public class PlusButtonActivity extends AppCompatActivity {
                 joinRoom.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mp.start();
                         privateKey = privateKeyEnter.getText().toString();
                         mDatabase.child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -115,6 +123,7 @@ public class PlusButtonActivity extends AppCompatActivity {
         joinPublicRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 setContentView(R.layout.join_public_room_popup);
                 searchBtn = (Button) findViewById(R.id.searchBtn);
                 searchRoomsEditText = (EditText) findViewById(R.id.searchEditText);
@@ -138,6 +147,7 @@ public class PlusButtonActivity extends AppCompatActivity {
                 searchBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mp.start();
                         Intent intent = new Intent(PlusButtonActivity.this, SearchResultsActivity.class);
                         intent.putExtra("searchText", searchRoomsEditText.getText().toString());
                         intent.putStringArrayListExtra("categories", categories);
@@ -156,6 +166,7 @@ public class PlusButtonActivity extends AppCompatActivity {
     View.OnClickListener catClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            mp.start();
             if (view.getAlpha()==1) {
                 categories.remove((String) view.getTag());
                 view.setAlpha(0.4f);

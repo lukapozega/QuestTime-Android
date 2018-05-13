@@ -1,6 +1,7 @@
 package com.example.android.questtime;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -32,11 +33,14 @@ public class AnswerActivity extends AppCompatActivity {
     int nextPoints;
     int saljiBodove;
 
+    private MediaPlayer mp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
 
+        mp = MediaPlayer.create(this, R.raw.sound);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -103,6 +107,7 @@ public class AnswerActivity extends AppCompatActivity {
     private View.OnClickListener submitAnswer = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            mp.start();
             TextView answer = (TextView) view;
             final DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
             dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());

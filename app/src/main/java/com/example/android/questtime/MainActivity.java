@@ -1,6 +1,7 @@
 package com.example.android.questtime;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -46,11 +47,15 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private MediaPlayer mp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+
+        mp = MediaPlayer.create(this, R.raw.sound);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         roomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mp.start();
                 Room room = (Room) roomListView.getItemAtPosition(i);
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 intent.putExtra("key", room.getKey());
@@ -85,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         roomListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mp.start();
                 Room room = (Room) roomListView.getItemAtPosition(i);
                 Intent intent = new Intent(MainActivity.this, ExitRoomActivity.class);
                 intent.putExtra("key", room.getKey());
@@ -106,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         addRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 addRoomBtn.startAnimation(addRotateAnimation);
                 Intent intent = new Intent(MainActivity.this, PlusButtonActivity.class);
                 startActivity(intent);
@@ -116,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 settingsBtn.startAnimation(settingsRotateAnimation);
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);

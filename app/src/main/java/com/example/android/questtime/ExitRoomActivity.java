@@ -1,6 +1,7 @@
 package com.example.android.questtime;
 
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -27,10 +28,14 @@ public class ExitRoomActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private MediaPlayer mp;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exit_room_activity);
+
+        mp = MediaPlayer.create(this, R.raw.sound);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -46,6 +51,7 @@ public class ExitRoomActivity extends AppCompatActivity {
         leaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 mDatabase.child("rooms").child(roomKey).child("members").child(mAuth.getUid()).removeValue();
                 mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(roomKey).removeValue();
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(roomKey);
@@ -69,6 +75,7 @@ public class ExitRoomActivity extends AppCompatActivity {
         stayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 finish();
             }
         });

@@ -1,7 +1,9 @@
 package com.example.android.questtime;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,6 +35,8 @@ public class RegisterActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private MediaPlayer mp;
+
     User user;
 
     @Override
@@ -42,6 +46,8 @@ public class RegisterActivity extends AppCompatActivity{
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
         extras = getIntent().getExtras();
+
+        mp = MediaPlayer.create(this, R.raw.sound);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -60,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity{
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 try {
 
                     if (registerPassword.getText().toString().equals(repeatRegisterPassword.getText().toString()) && registerPassword.getText().toString().length() >= 6) {

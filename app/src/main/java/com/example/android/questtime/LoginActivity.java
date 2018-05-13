@@ -2,6 +2,7 @@ package com.example.android.questtime;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -30,11 +31,15 @@ public class LoginActivity extends AppCompatActivity{
     private EditText emailLoginInput;
     private EditText passwordLoginInput;
 
+    private MediaPlayer mp;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+
+        mp = MediaPlayer.create(this, R.raw.sound);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -57,6 +62,7 @@ public class LoginActivity extends AppCompatActivity{
         registerNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 try{
                     intent.putExtra("email", emailLoginInput.getText().toString());
@@ -70,6 +76,8 @@ public class LoginActivity extends AppCompatActivity{
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                mp.start();
                 login();
             }
         });
@@ -77,6 +85,7 @@ public class LoginActivity extends AppCompatActivity{
         forgotPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mp.start();
                 Intent intent = new Intent(LoginActivity.this, PasswordResetActivity.class);
                 startActivity(intent);
             }
