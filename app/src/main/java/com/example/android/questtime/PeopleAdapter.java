@@ -36,7 +36,7 @@ public class PeopleAdapter extends ArrayAdapter<PeoplePoints> {
         }
 
         playerPosition = listItemView.findViewById(R.id.playerPosition);
-        playerPosition.setText(position + ".");
+        playerPosition.setText(position+1 + ".");
 
         username = listItemView.findViewById(R.id.username);
         username.setText(getItem(position).getUsername());

@@ -1,141 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="250dp"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:background="@drawable/popup_background"
     android:layout_gravity="center"
-    android:weightSum="2"
     android:padding="20dp">
 
     <TextView
         android:id="@+id/correct_wrong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginBottom="12dp"
-        android:textSize="20sp"
+        android:textSize="35sp"
         android:textColor="#000000"
         android:fontFamily="@font/roboto_black"
+        android:gravity="center"
         />
 
     <TextView
+        android:layout_below="@id/correct_wrong"
         android:id="@+id/youScored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="You scored"
         android:gravity="center"
-        android:layout_marginBottom="12dp"
         android:textSize="16sp"
         android:textColor="#000000"
         android:fontFamily="@font/roboto_black"
         />
 
     <TextView
+        android:layout_below="@id/correct_wrong"
         android:id="@+id/score"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginBottom="12dp"
-        android:textSize="40sp"
+        android:textSize="80sp"
+        android:layout_marginTop="10dp"
         android:textColor="#000000"
+        android:textStyle="bold"
         android:fontFamily="@font/roboto_black"
+        android:layout_centerHorizontal="true"
+        android:text="0"
         />
 
     <View
+        android:id="@+id/black_separator"
+        android:layout_below="@id/score"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="@drawable/background"
-
+        android:background="@drawable/black_separator"
         />
 
     <TextView
+        android:layout_below="@id/black_separator"
         android:id="@+id/questionText_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginBottom="12dp"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:textColor="#000000"
         android:fontFamily="@font/roboto_black"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="6dp"
         />
 
     <LinearLayout
+        android:layout_below="@id/questionText_result"
         android:id="@+id/answers_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_toStartOf="@id/percentLayout"
+        >
 
-        <Button
+        <TextView
             android:id="@+id/answerOne"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_marginTop="12dp"
+            android:padding="10dp"
             android:textAllCaps="false"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:textSize="15sp"
             android:textColor="#000000"
             android:fontFamily="@font/roboto_black"
             android:layout_gravity="center"
-            android:background="@drawable/popup_background"
+            android:background="@drawable/edittext_background"
             android:minHeight="0dp"
             android:minWidth="0dp"
             />
 
-        <Button
+        <TextView
             android:id="@+id/answerTwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:layout_marginTop="12dp"
             android:textAllCaps="false"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:textSize="15sp"
             android:textColor="#000000"
             android:fontFamily="@font/roboto_black"
             android:layout_gravity="center"
-            android:background="@drawable/popup_background"
+            android:background="@drawable/edittext_background"
             android:minHeight="0dp"
             android:minWidth="0dp"
             />
 
-        <Button
+        <TextView
             android:id="@+id/answerThree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:layout_marginTop="12dp"
             android:textAllCaps="false"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:textSize="15sp"
             android:textColor="#000000"
             android:fontFamily="@font/roboto_black"
             android:layout_gravity="center"
-            android:background="@drawable/popup_background"
+            android:background="@drawable/edittext_background"
             android:minHeight="0dp"
             android:minWidth="0dp"
             />
 
-        <Button
+        <TextView
             android:id="@+id/answerFour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="10dp"
             android:layout_marginTop="12dp"
             android:textAllCaps="false"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:textSize="15sp"
             android:textColor="#000000"
             android:fontFamily="@font/roboto_black"
             android:layout_gravity="center"
-            android:background="@drawable/popup_background"
+            android:background="@drawable/edittext_background"
             android:minHeight="0dp"
             android:minWidth="0dp"
             android:layout_marginBottom="6dp"
             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/percentLayout"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/questionText_result"
+        android:layout_alignParentEnd="true"
+        >
+        <TextView
+            android:id="@+id/percentOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:fontFamily="@font/roboto_black"
+            android:layout_gravity="center"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/percentTwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="12dp"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:fontFamily="@font/roboto_black"
+            android:layout_gravity="center"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/percentThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="12dp"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:fontFamily="@font/roboto_black"
+            android:layout_gravity="center"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/percentFour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="12dp"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:fontFamily="@font/roboto_black"
+            android:layout_gravity="center"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center"
+            />
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

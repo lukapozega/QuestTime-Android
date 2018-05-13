@@ -128,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         brojPitanja = 0;
-        userRooms.clear();
-        mDatabase.child("users").child(mAuth.getUid()).child("rooms").addValueEventListener(new ValueEventListener() {
+        mDatabase.child("users").child(mAuth.getUid()).child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
+                userRooms.clear();
                 for (final DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     mDatabase.child("rooms").child(snapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                                 try{
                                     answered = Integer.parseInt(questions.child("points").child(mAuth.getUid()).getValue().toString());
                                 } catch (NullPointerException e){
-                                    if(created > joined && created < System.currentTimeMillis()/1000) {
+                                    if(created > joined) {
                                         answered = -1;
                                         brojPitanja++;
                                         questionsLeftNumber.setText(String.valueOf(brojPitanja));

@@ -87,10 +87,6 @@ public class PlusButtonActivity extends AppCompatActivity {
                                     if (snapshot.hasChild("privateKey")) {
                                         if (privateKey.equals(snapshot.child("privateKey").getValue().toString())) {
                                             mDatabase.child("rooms").child(snapshot.getKey()).child("members").child(mAuth.getUid()).setValue(System.currentTimeMillis()/1000);
-                                            numberOfUsers = Integer.parseInt(snapshot.child("numberOfUsers").getValue().toString());
-                                            if(!snapshot.child("members").hasChild(mAuth.getUid())) {
-                                                mDatabase.child("rooms").child(snapshot.getKey()).child("numberOfUsers").setValue(++numberOfUsers);
-                                            }
                                             mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(snapshot.getKey()).setValue(true);
                                             FirebaseMessaging.getInstance().subscribeToTopic(snapshot.getKey());
                                             added = true;

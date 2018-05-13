@@ -50,15 +50,10 @@ public class RoomAdapter extends ArrayAdapter<Room> {
 
         currentRoom = getItem(position);
 
-        if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.room_item, parent, false);
-        }
-
         if(currentRoom.getZastavica() != -1) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.clean_room_item, parent, false);
-        } else {
+        } else if(currentRoom.getZastavica() == -1){
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.room_item, parent, false);
         }
@@ -152,4 +147,5 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         return listItemView;
 
     }
+
 }

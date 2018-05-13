@@ -43,7 +43,6 @@ public class RoomActivity extends AppCompatActivity {
     int points;
     double joined;
     double created;
-    Set<Question> helpSet;
     int bodovi;
 
     TextView noQuestionsTxt;
@@ -76,21 +75,36 @@ public class RoomActivity extends AppCompatActivity {
         questionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Question question = (Question) questionsList.getItemAtPosition(i);
-                Intent intent = new Intent(RoomActivity.this, AnswerActivity.class);
-                intent.putExtra("key", question.getId());
-                intent.putExtra("points", String.valueOf(question.getPoints()));
-                intent.putExtra("category", question.getCategory());
-                intent.putExtra("roomId", roomKey);
-                Intent intentResult = new Intent(RoomActivity.this, AnswerActivity.class);
-                intentResult.putExtra("key", question.getId());
-                intentResult.putExtra("points", String.valueOf(question.getPoints()));
-                intentResult.putExtra("category", question.getCategory());
-                intentResult.putExtra("roomId", roomKey);
+                final Question question = (Question) questionsList.getItemAtPosition(i);
                 if (question.getPoints() == -1) {
+                    Intent intent = new Intent(RoomActivity.this, AnswerActivity.class);
+                    intent.putExtra("key", question.getId());
+                    intent.putExtra("points", String.valueOf(question.getPoints()));
+                    intent.putExtra("category", question.getCategory());
+                    intent.putExtra("roomId", roomKey);
                     startActivity(intent);
                 } else {
-                    startActivity(intentResult);
+                    mDatabase.child("rooms").child(roomKey).child("questions").child(question.getId()).child("answers")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            final String myAnswer = dataSnapshot.child(mAuth.getUid()).getValue().toString();
+                            final int numberOfAnswers = (int) dataSnapshot.getChildrenCount();
+                            Intent intentResult = new Intent(RoomActivity.this, ResultActivity.class);
+                            intentResult.putExtra("key", question.getId());
+                            intentResult.putExtra("points", String.valueOf(question.getPoints()));
+                            intentResult.putExtra("category", question.getCategory());
+                            intentResult.putExtra("roomId", roomKey);
+                            intentResult.putExtra("myAnswer", myAnswer);
+                            intentResult.putExtra("numberOfAnswers", numberOfAnswers);
+                            startActivity(intentResult);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             }
         });

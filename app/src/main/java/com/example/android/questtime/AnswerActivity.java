@@ -2,6 +2,7 @@ package com.example.android.questtime;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,12 +44,17 @@ public class AnswerActivity extends AppCompatActivity {
         roomId = getIntent().getStringExtra("roomId");
 
         answers = findViewById(R.id.answers);
-        questionText = findViewById(R.id.questionText_result);
+        questionText = findViewById(R.id.quesText);
 
-        mDatabase.child("rooms").child(roomId).child("questions").child(questionId).child("next_points").addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                nextPoints = Integer.parseInt(dataSnapshot.getValue().toString());
+
+                try {
+                    nextPoints = Integer.parseInt( dataSnapshot.child("questions").child(questionId).child("next_points").getValue().toString());
+                } catch (NullPointerException e){
+                    nextPoints = (int)dataSnapshot.child("members").getChildrenCount();
+                }
             }
 
             @Override
@@ -67,6 +73,7 @@ public class AnswerActivity extends AppCompatActivity {
                         questionId,
                         dataSnapshot.child("correct_answer").getValue().toString(),
                         wrongAnswers);
+                Log.i("tag", question.getText());
                 questionText.setText(question.getText());
                 Random random = new Random();
                 int k = random.nextInt(4);
@@ -94,11 +101,11 @@ public class AnswerActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             TextView answer = (TextView) view;
-            DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
+            final DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
             dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());
             if(answer.getText().equals(question.getCorrect())) {
-                dbReference.child("points").child(mAuth.getUid()).setValue(nextPoints);
-                dbReference.child("next_points").setValue(--nextPoints);
+                    dbReference.child("points").child(mAuth.getUid()).setValue(nextPoints);
+                    dbReference.child("next_points").setValue(--nextPoints);
             } else {
                 dbReference.child("points").child(mAuth.getUid()).setValue(0);
             }

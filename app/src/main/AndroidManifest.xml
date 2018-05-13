@@ -47,6 +47,8 @@
         <activity android:name=".SearchResultsActivity"></activity>
         <activity android:name=".ExitRoomActivity"
                   android:theme="@style/TransparentTheme"/>
+        <activity android:name=".ResultActivity"
+            android:theme="@style/TransparentTheme"></activity>
     </application>
 
 </manifest>
