@@ -35,4 +35,5 @@
     <string name="no_rooms_yet">You are not part of any rooms yet. Press + to join or create a room.</string>
     <string name="no_questions_yet">There are no questions yet. The question will appear at a random time of day.</string>
     <string name="no_filter">No rooms match your filter.</string>
+    <string name="default_notification_channel_id">Channel ID</string>
 </resources>

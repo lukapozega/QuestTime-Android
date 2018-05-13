@@ -1,5 +1,6 @@
 package com.example.android.questtime;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,11 +30,13 @@ public class AnswerActivity extends AppCompatActivity {
     int i;
     private String roomId;
     int nextPoints;
+    int saljiBodove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -104,11 +107,36 @@ public class AnswerActivity extends AppCompatActivity {
             final DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
             dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());
             if(answer.getText().equals(question.getCorrect())) {
+                    saljiBodove = nextPoints;
                     dbReference.child("points").child(mAuth.getUid()).setValue(nextPoints);
                     dbReference.child("next_points").setValue(--nextPoints);
             } else {
                 dbReference.child("points").child(mAuth.getUid()).setValue(0);
+                saljiBodove = 0;
             }
+
+            mDatabase.child("rooms").child(roomId).child("questions").child(question.getId()).child("answers")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            final String myAnswer = dataSnapshot.child(mAuth.getUid()).getValue().toString();
+                            final int numberOfAnswers = (int) dataSnapshot.getChildrenCount();
+                            Intent intentResult = new Intent(AnswerActivity.this, ResultActivity.class);
+                            intentResult.putExtra("key", questionId);
+                            intentResult.putExtra("points", String.valueOf(saljiBodove));
+                            intentResult.putExtra("category", category);
+                            intentResult.putExtra("roomId", roomId);
+                            intentResult.putExtra("myAnswer", myAnswer);
+                            intentResult.putExtra("numberOfAnswers", numberOfAnswers);
+                            startActivity(intentResult);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+            finish();
         }
     };
 }
