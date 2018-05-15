@@ -33,6 +33,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private LinearLayout typeLayout;
     private LinearLayout cat1Layout;
     private LinearLayout cat2Layout;
+    private LinearLayout cat3Layout;
     private EditText roomNameEditText;
     private TextView createRoomText;
     private Room room;
@@ -60,6 +61,7 @@ public class CreateNewRoom extends AppCompatActivity {
             typeLayout = (LinearLayout) findViewById(R.id.type);
             cat1Layout = (LinearLayout) findViewById(R.id.cat_1);
             cat2Layout = (LinearLayout) findViewById(R.id.cat_2);
+            cat3Layout = (LinearLayout) findViewById(R.id.cat_3);
             createRoomText = (TextView) findViewById(R.id.create);
             roomNameEditText = (EditText) findViewById(R.id.roomName);
 
@@ -118,12 +120,16 @@ public class CreateNewRoom extends AppCompatActivity {
                 View v = typeLayout.getChildAt(i);
                 v.setOnClickListener(typeClick);
             }
-            for (int i=0; i<5;++i) {
+            for (int i=0; i<4;++i) {
                 View v = cat1Layout.getChildAt(i);
                 v.setOnClickListener(catClick);
             }
             for (int i=0; i<4;++i) {
                 View v = cat2Layout.getChildAt(i);
+                v.setOnClickListener(catClick);
+            }
+            for (int i=0; i<4;++i) {
+                View v = cat3Layout.getChildAt(i);
                 v.setOnClickListener(catClick);
             }
 
