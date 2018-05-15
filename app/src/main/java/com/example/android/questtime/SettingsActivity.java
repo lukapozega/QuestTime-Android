@@ -1,7 +1,11 @@
 package com.example.android.questtime;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,11 +19,15 @@ public class SettingsActivity extends AppCompatActivity {
     private Switch soundSwitch;
     private Switch notifSwitch;
     private Button logoutBtn;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_popup);
+
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
         logoutBtn = (Button) findViewById(R.id.logoutBtn);
         soundSwitch = (Switch) findViewById(R.id.soundSwitch);
@@ -34,6 +42,24 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        soundSwitch.setChecked(sharedPreferences.getBoolean("Sound", true));
+
+        soundSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(soundSwitch.isChecked()) {
+                    SharedPreferences.Editor editor = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE).edit();
+                    editor.putBoolean("Sound", true);
+                    editor.commit();
+                } else {
+                    SharedPreferences.Editor editor = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE).edit();
+                    editor.putBoolean("Sound", false);
+                    editor.commit();
+                }
+            }
+        });
+
 
         setFinishOnTouchOutside(true);
 

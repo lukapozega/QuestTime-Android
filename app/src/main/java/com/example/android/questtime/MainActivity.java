@@ -1,6 +1,7 @@
 package com.example.android.questtime;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private MediaPlayer mp;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    private SharedPreferences sharedPreferences;
+    private boolean sound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
         mp = MediaPlayer.create(this, R.raw.sound);
+
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);

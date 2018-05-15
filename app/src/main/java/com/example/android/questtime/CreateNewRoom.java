@@ -37,6 +37,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private EditText roomNameEditText;
     private TextView createRoomText;
     private Room room;
+    private TextView categoryNames;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -56,19 +57,19 @@ public class CreateNewRoom extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
         mp = MediaPlayer.create(this, R.raw.sound);
-
+        categoryNames = (TextView) findViewById(R.id.category_names);
         difficultyLayout = (LinearLayout) findViewById(R.id.difficulty);
-            typeLayout = (LinearLayout) findViewById(R.id.type);
-            cat1Layout = (LinearLayout) findViewById(R.id.cat_1);
-            cat2Layout = (LinearLayout) findViewById(R.id.cat_2);
-            cat3Layout = (LinearLayout) findViewById(R.id.cat_3);
-            createRoomText = (TextView) findViewById(R.id.create);
-            roomNameEditText = (EditText) findViewById(R.id.roomName);
+        typeLayout = (LinearLayout) findViewById(R.id.type);
+        cat1Layout = (LinearLayout) findViewById(R.id.cat_1);
+        cat2Layout = (LinearLayout) findViewById(R.id.cat_2);
+        cat3Layout = (LinearLayout) findViewById(R.id.cat_3);
+        createRoomText = (TextView) findViewById(R.id.create);
+        roomNameEditText = (EditText) findViewById(R.id.roomName);
 
-            mAuth = FirebaseAuth.getInstance();
-            mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-            createRoomText.setOnClickListener(new View.OnClickListener() {
+        createRoomText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mp.start();
@@ -175,12 +176,20 @@ public class CreateNewRoom extends AppCompatActivity {
             if (view.getAlpha()==1) {
                 categories.remove((String) view.getTag());
                 view.setAlpha(0.4f);
+                categoryNames.setText("");
+                for(String category : categories){
+                    categoryNames.append(category);
+                    categoryNames.append(" ");
+                }
+
             } else {
                 if (categories.size() < 3) {
                     view.setAlpha(1f);
                     categories.add((String) view.getTag());
+                    categoryNames.append((String) view.getTag() + " ");
                 }
             }
+
         }
     };
 
