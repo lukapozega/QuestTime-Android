@@ -1,9 +1,12 @@
 package com.example.android.questtime;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -22,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private ImageView settingsBtn;
     private ImageView addRoomBtn;
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     private MediaPlayer mp;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
         mp = MediaPlayer.create(this, R.raw.sound);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
+                Color.RED, Color.CYAN);
+        swipeRefreshLayout.setDistanceToTriggerSync(20);// in dips
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -137,10 +148,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         brojPitanja = 0;
+        userRooms.clear();
         mDatabase.child("users").child(mAuth.getUid()).child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                userRooms.clear();
                 for (final DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     mDatabase.child("rooms").child(snapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -157,11 +168,15 @@ public class MainActivity extends AppCompatActivity {
                                     answered = Integer.parseInt(questions.child("points").child(mAuth.getUid()).getValue().toString());
                                 } catch (NullPointerException e){
                                     if(created > joined) {
-                                        answered = -1;
+                                        if(created*1000 < System.currentTimeMillis()){
+                                            answered = -1;
+                                        }
                                         brojPitanja++;
                                         questionsLeftNumber.setText(String.valueOf(brojPitanja));
                                         if(brojPitanja == 1){
                                             questionsLeftTodayTextView.setText("QUESTION LEFT TODAY");
+                                        } else {
+                                            questionsLeftTodayTextView.setText("QUESTIONS LEFT TODAY");
                                         }
                                     }
                                 }
@@ -170,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
                                 addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
                                         dataSnapshot2.child("difficulty").getValue().toString(),
                                         categories,
-                                        Integer.parseInt(dataSnapshot2.child("numberOfUsers").getValue().toString()),
                                         snapshot.getKey(),
                                         dataSnapshot2.child("privateKey").getValue().toString(),
                                         dataSnapshot2.child("type").getValue().toString(),
@@ -183,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
                                         dataSnapshot2.child("type").getValue().toString(),
                                         answered);
                             }
-
                             userRooms.add(addRoom);
                             adapter.notifyDataSetChanged();
                             noRoomsTxt.setVisibility(View.GONE);
@@ -198,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 if(userRooms.isEmpty()){
                     noRoomsTxt.setVisibility(View.VISIBLE);
                 }
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -205,5 +219,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        onResume();
     }
 }

@@ -99,17 +99,26 @@
         android:alpha="0.85"
         />
 
-    <ListView
-        android:layout_below="@id/mainSeparator"
-        android:id="@+id/questions_list_view"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/questionSwipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
-        android:dividerHeight="8dp"
-        android:divider="@android:color/transparent">
+        android:layout_below="@id/mainSeparator"
+        >
 
-    </ListView>
+        <ListView
+            android:id="@+id/questions_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="8dp"
+            android:divider="@android:color/transparent">
+
+        </ListView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

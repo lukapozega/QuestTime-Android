@@ -4,8 +4,10 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
 
-public class RoomActivity extends AppCompatActivity {
+public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private static final String TAG = "tag";
     ListView questionsList;
@@ -55,11 +57,19 @@ public class RoomActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private MediaPlayer mp;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_activity);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.questionSwipeLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
+                Color.RED, Color.CYAN);
+        swipeRefreshLayout.setDistanceToTriggerSync(20);// in dips
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
 
         mp = MediaPlayer.create(this, R.raw.sound);
 
@@ -155,10 +165,10 @@ public class RoomActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        questions.clear();
         mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
-                questions.clear();
                 for (final DataSnapshot snapshot: dataSnapshot.child("questions").getChildren()) {
                     joined = Double.parseDouble(dataSnapshot.child("members").child(mAuth.getUid()).getValue().toString());
                     mDatabase.child("questions")
@@ -198,7 +208,7 @@ public class RoomActivity extends AppCompatActivity {
                 if(questions.isEmpty()){
                     noQuestionsTxt.setVisibility(View.VISIBLE);
                 }
-
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -206,5 +216,11 @@ public class RoomActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        onResume();
     }
 }

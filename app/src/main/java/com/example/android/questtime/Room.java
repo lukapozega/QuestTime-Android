@@ -26,11 +26,10 @@ public class Room {
         this.privateKey = privateKey;
     }
 
-    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers, String key, String privateKey, String type, int zastavica) {
+    public Room(String roomName, String difficulty, List<String> categories, String key, String privateKey, String type, int zastavica) {
         this.roomName = roomName;
         this.difficulty = difficulty;
         this.categories = categories;
-        this.numberOfUsers = numberOfUsers;
         this.key = key;
         this.privateKey = privateKey;
         this.type = type;
