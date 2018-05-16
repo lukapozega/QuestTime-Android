@@ -55,23 +55,6 @@ public class AnswerActivity extends AppCompatActivity {
         answers = findViewById(R.id.answers);
         questionText = findViewById(R.id.quesText);
 
-        mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                try {
-                    nextPoints = Integer.parseInt( dataSnapshot.child("questions").child(questionId).child("next_points").getValue().toString());
-                } catch (NullPointerException e){
-                    nextPoints = (int)dataSnapshot.child("members").getChildrenCount();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
         mDatabase.child("questions").child(category).child(questionId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -109,39 +92,56 @@ public class AnswerActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             mp.start();
-            TextView answer = (TextView) view;
+            final TextView answer = (TextView) view;
             final DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
             dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());
-            if(answer.getText().equals(question.getCorrect())) {
-                    saljiBodove = nextPoints;
-                    dbReference.child("points").child(mAuth.getUid()).setValue(nextPoints);
-                    dbReference.child("next_points").setValue(--nextPoints);
-            } else {
-                dbReference.child("points").child(mAuth.getUid()).setValue(0);
-                saljiBodove = 0;
-            }
+            mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    try {
+                        nextPoints = Integer.parseInt( dataSnapshot.child("questions").child(questionId).child("next_points").getValue().toString());
+                    } catch (NullPointerException e){
+                        nextPoints = (int)dataSnapshot.child("members").getChildrenCount();
+                    }
+                    if(answer.getText().equals(question.getCorrect())) {
+                        saljiBodove = nextPoints;
+                        dbReference.child("points").child(mAuth.getUid()).setValue(nextPoints);
+                        dbReference.child("next_points").setValue(--nextPoints);
+                    } else {
+                        dbReference.child("points").child(mAuth.getUid()).setValue(0);
+                        saljiBodove = 0;
+                    }
 
-            mDatabase.child("rooms").child(roomId).child("questions").child(question.getId()).child("answers")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            final String myAnswer = dataSnapshot.child(mAuth.getUid()).getValue().toString();
-                            final int numberOfAnswers = (int) dataSnapshot.getChildrenCount();
-                            Intent intentResult = new Intent(AnswerActivity.this, ResultActivity.class);
-                            intentResult.putExtra("key", questionId);
-                            intentResult.putExtra("points", String.valueOf(saljiBodove));
-                            intentResult.putExtra("category", category);
-                            intentResult.putExtra("roomId", roomId);
-                            intentResult.putExtra("myAnswer", myAnswer);
-                            intentResult.putExtra("numberOfAnswers", numberOfAnswers);
-                            startActivity(intentResult);
-                        }
+                    mDatabase.child("rooms").child(roomId).child("questions").child(question.getId()).child("answers")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    final String myAnswer = dataSnapshot.child(mAuth.getUid()).getValue().toString();
+                                    final int numberOfAnswers = (int) dataSnapshot.getChildrenCount();
+                                    Intent intentResult = new Intent(AnswerActivity.this, ResultActivity.class);
+                                    intentResult.putExtra("key", questionId);
+                                    intentResult.putExtra("points", String.valueOf(saljiBodove));
+                                    intentResult.putExtra("category", category);
+                                    intentResult.putExtra("roomId", roomId);
+                                    intentResult.putExtra("myAnswer", myAnswer);
+                                    intentResult.putExtra("numberOfAnswers", numberOfAnswers);
+                                    startActivity(intentResult);
+                                }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
+                                }
+                            });
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
             finish();
         }
     };
