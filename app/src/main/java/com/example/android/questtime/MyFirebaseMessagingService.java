@@ -12,10 +12,21 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
+    private DatabaseReference mDatabase;
+    private String roomId;
+    private String privateKey;
+    private String type;
+    private String name;
+
 
     private static final String TAG = "MyFirebaseMsgService";
 
@@ -26,15 +37,31 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     // [START receive_message]
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(final RemoteMessage remoteMessage) {
 
-        sendNotification(remoteMessage.getNotification().getBody());
+        roomId = remoteMessage.getData().get("roomId");
+        mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                type = dataSnapshot.child("type").getValue().toString();
+                name = dataSnapshot.child("roomName").getValue().toString();
+                if(type.equals("private")){
+                    privateKey = dataSnapshot.child("privateKey").getValue().toString();
+                }
+                sendNotification(remoteMessage.getNotification().getBody());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
         // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
 
@@ -49,9 +76,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
-    // [END receive_message]
 
-  
+
+
     private void handleNow() {
         Log.d(TAG, "Short lived task is done.");
     }
@@ -62,8 +89,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
+
+
+
+        Intent intent = new Intent(this, RoomActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("key", roomId);
+        intent.putExtra("name", name);
+        intent.putExtra("type", type);
+        if(type.equals("private")){
+            intent.putExtra("privateKey", privateKey);
+        }
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 

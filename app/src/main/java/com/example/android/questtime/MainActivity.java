@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private double joined;
     private double created;
     private int answered;
+    private int bodovi;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                             for (DataSnapshot questions : dataSnapshot2.child("questions").getChildren()){
                                 created = Double.parseDouble(questions.child("timestamp").getValue().toString());
                                 try{
-                                    answered = Integer.parseInt(questions.child("points").child(mAuth.getUid()).getValue().toString());
+                                    bodovi = Integer.parseInt(questions.child("points").child(mAuth.getUid()).getValue().toString());
                                 } catch (NullPointerException e){
                                     if(created > joined) {
                                         if(created*1000 < System.currentTimeMillis()){
@@ -203,7 +204,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                         dataSnapshot2.child("type").getValue().toString(),
                                         answered);
                             }
-                            userRooms.add(addRoom);
+                            if(addRoom.getZastavica() == -1){
+                                userRooms.add(0, addRoom);
+                            } else {
+                                userRooms.add(addRoom);
+                            }
                             adapter.notifyDataSetChanged();
                             noRoomsTxt.setVisibility(View.GONE);
                         }
