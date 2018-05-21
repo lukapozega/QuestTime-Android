@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +37,8 @@ public class PlusButtonActivity extends AppCompatActivity {
     private String privateKey;
     private EditText searchRoomsEditText;
     private Button searchBtn;
+    private TextView categoryNames;
+    private StringBuilder categoryNamesString;
 
     private ArrayList<String> categories = new ArrayList();
 
@@ -130,6 +133,9 @@ public class PlusButtonActivity extends AppCompatActivity {
                 cat1Layout = (LinearLayout) findViewById(R.id.cat_1);
                 cat2Layout = (LinearLayout) findViewById(R.id.cat_2);
                 cat3Layout = (LinearLayout) findViewById(R.id.cat_3);
+                categoryNames = (TextView) findViewById(R.id.search_category_names);
+                categoryNamesString = new StringBuilder();
+
 
                 for (int i=0; i<4;++i) {
                     View v = cat1Layout.getChildAt(i);
@@ -170,9 +176,25 @@ public class PlusButtonActivity extends AppCompatActivity {
             if (view.getAlpha()==1) {
                 categories.remove((String) view.getTag());
                 view.setAlpha(0.4f);
+                categoryNames.setText("");
+                for(String category : categories){
+                    categoryNamesString.append(category + "," + " ");
+                }
+                try {
+                    categoryNamesString.setLength(categoryNamesString.length() - 2);
+                } catch (StringIndexOutOfBoundsException e){
+                    categoryNamesString.setLength(0);
+                }
+                categoryNames.setText(categoryNamesString);
+                categoryNamesString.setLength(0);
             } else {
                 view.setAlpha(1f);
                 categories.add((String) view.getTag());
+                if(categories.size() != 1) {
+                    categoryNames.append(",");
+                    categoryNames.append(" ");
+                }
+                categoryNames.append((String) view.getTag());
             }
         }
     };

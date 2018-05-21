@@ -38,6 +38,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private TextView createRoomText;
     private Room room;
     private TextView categoryNames;
+    private StringBuilder categoryNamesString;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -65,6 +66,8 @@ public class CreateNewRoom extends AppCompatActivity {
         cat3Layout = (LinearLayout) findViewById(R.id.cat_3);
         createRoomText = (TextView) findViewById(R.id.create);
         roomNameEditText = (EditText) findViewById(R.id.roomName);
+
+        categoryNamesString = new StringBuilder();
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -178,19 +181,26 @@ public class CreateNewRoom extends AppCompatActivity {
                 view.setAlpha(0.4f);
                 categoryNames.setText("");
                 for(String category : categories){
-                    categoryNames.append(category);
-                    categoryNames.append(" ");
+                    categoryNamesString.append(category + "," + " ");
                 }
-
+                try {
+                    categoryNamesString.setLength(categoryNamesString.length() - 2);
+                } catch (StringIndexOutOfBoundsException e){
+                    categoryNamesString.setLength(0);
+                }
+                categoryNames.setText(categoryNamesString);
+                categoryNamesString.setLength(0);
             } else {
                 if (categories.size() < 3) {
                     view.setAlpha(1f);
                     categories.add((String) view.getTag());
-                    categoryNames.append((String) view.getTag() + " ");
+                    if(categories.size() != 1) {
+                        categoryNames.append(",");
+                        categoryNames.append(" ");
+                    }
+                    categoryNames.append((String) view.getTag());
                 }
             }
-
         }
     };
-
 }
