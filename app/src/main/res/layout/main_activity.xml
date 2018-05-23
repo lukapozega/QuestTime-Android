@@ -104,15 +104,16 @@
         android:layout_marginRight="14dp"
         >
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/roomListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@android:color/transparent"
             android:dividerHeight="8dp"
+            android:scrollbars="vertical"
             >
 
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

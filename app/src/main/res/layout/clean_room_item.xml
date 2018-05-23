@@ -3,9 +3,10 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="74dp"
     android:background="@drawable/list_item"
-    android:paddingTop="4dp"
-    android:paddingLeft="18dp"
-    android:paddingBottom="4dp">
+    android:paddingStart="18dp"
+    android:clipToPadding="true"
+    android:clipChildren="true"
+    >
 
     <LinearLayout
         android:layout_width="0dp"
@@ -84,7 +85,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:layout_marginEnd="24dp">
+        android:layout_marginEnd="15dp">
 
         <ImageView
             android:layout_width="0dp"
@@ -109,5 +110,16 @@
             android:alpha="0.7"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/questionIndicator"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/question_indicator"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_black"
+        />
 
 </LinearLayout>

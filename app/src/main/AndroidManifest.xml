@@ -59,18 +59,18 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".AnswerActivity"
             android:theme="@style/TransparentTheme"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".PeopleActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity android:name=".SearchResultsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity android:name=".ExitRoomActivity"
                   android:theme="@style/TransparentTheme"
             android:screenOrientation="portrait"/>
         <activity android:name=".ResultActivity"
             android:theme="@style/TransparentTheme"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
 
 
 

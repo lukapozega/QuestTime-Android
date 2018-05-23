@@ -1,5 +1,7 @@
 package com.example.android.questtime;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ public class ExitRoomActivity extends AppCompatActivity {
     private Button stayBtn;
 
     private String roomKey;
+    private int position;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -45,6 +48,7 @@ public class ExitRoomActivity extends AppCompatActivity {
         stayBtn = (Button) findViewById(R.id.stayBtn);
 
         roomKey = getIntent().getStringExtra("key");
+        position = getIntent().getIntExtra("position", 0);
 
         leaveTxt.setPaintFlags(leaveTxt.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
@@ -68,6 +72,9 @@ public class ExitRoomActivity extends AppCompatActivity {
 
                     }
                 });
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("position", position);
+                setResult(Activity.RESULT_OK, resultIntent);
                 finish();
             }
         });
@@ -76,6 +83,8 @@ public class ExitRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mp.start();
+                Intent resultIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, resultIntent);
                 finish();
             }
         });

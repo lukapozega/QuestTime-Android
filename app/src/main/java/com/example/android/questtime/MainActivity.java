@@ -1,12 +1,18 @@
 package com.example.android.questtime;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -28,18 +34,21 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
+    final static int DELETE_REQUEST_CODE = 123;
+
     private ImageView settingsBtn;
     private ImageView addRoomBtn;
     private TextView questionsLeftNumber;
     private TextView questionsLeftTodayTextView;
-    private ListView roomListView;
+    private RecyclerView roomListView;
     private TextView noRoomsTxt;
 
     private RotateAnimation settingsRotateAnimation;
     private RotateAnimation addRotateAnimation;
 
     private ArrayList<Room> userRooms = new ArrayList<>();
-    private RoomAdapter adapter;
+    private RecyclerRoomAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private int brojPitanja = 0;
     private Room addRoom;
@@ -57,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private SharedPreferences sharedPreferences;
     private boolean sound;
+
+    private Parcelable recyclerViewState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +96,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         noRoomsTxt = (TextView) findViewById(R.id.no_rooms_txt);
 
         roomListView = findViewById(R.id.roomListView);
-        adapter = new RoomAdapter(this, userRooms );
-        roomListView.setAdapter(adapter);
-
-        roomListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        roomListView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        roomListView.setLayoutManager(layoutManager);
+        adapter = new RecyclerRoomAdapter(this, userRooms, new ItemClickListenerInterface() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(View v, int position) {
                 mp.start();
-                Room room = (Room) roomListView.getItemAtPosition(i);
+                Room room = (Room) userRooms.get(position);
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 intent.putExtra("key", room.getKey());
                 intent.putExtra("name", room.getRoomName());
@@ -104,25 +115,31 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 }
                 startActivity(intent);
             }
-        });
 
-        roomListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onLongItemClick(View v, int position) {
                 mp.start();
-                Room room = (Room) roomListView.getItemAtPosition(i);
+                Room room = (Room) userRooms.get(position);
                 Intent intent = new Intent(MainActivity.this, ExitRoomActivity.class);
                 intent.putExtra("key", room.getKey());
-                startActivity(intent);
-                return true;
+                intent.putExtra("position", position);
+                startActivityForResult(intent, DELETE_REQUEST_CODE);
             }
         });
 
-        settingsRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        roomListView.addItemDecoration(new VerticalSpaceItemDecoration(10));
+
+        roomListView.setAdapter(adapter);
+
+        ucitajSobe();
+
+        settingsRotateAnimation = new RotateAnimation(0f, 180f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         settingsRotateAnimation.setRepeatCount(0);
         settingsRotateAnimation.setDuration(700);
 
-        addRotateAnimation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        addRotateAnimation = new RotateAnimation(0f, 180f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         addRotateAnimation.setRepeatCount(0);
         addRotateAnimation.setDuration(700);
 
@@ -148,12 +165,21 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        recyclerViewState = roomListView.getLayoutManager().onSaveInstanceState();
+        refresh();
+    }
+
+    public void refresh() {
+        ucitajSobe();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void ucitajSobe() {
         brojPitanja = 0;
         userRooms.clear();
         mDatabase.child("users").child(mAuth.getUid()).child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -192,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
                                         dataSnapshot2.child("difficulty").getValue().toString(),
                                         categories,
+                                        (int) dataSnapshot2.child("members").getChildrenCount(),
                                         snapshot.getKey(),
                                         dataSnapshot2.child("privateKey").getValue().toString(),
                                         dataSnapshot2.child("type").getValue().toString(),
@@ -200,17 +227,23 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
                                         dataSnapshot2.child("difficulty").getValue().toString(),
                                         categories,
+                                        (int) dataSnapshot2.child("members").getChildrenCount(),
                                         snapshot.getKey(),
                                         dataSnapshot2.child("type").getValue().toString(),
                                         answered);
                             }
                             if(addRoom.getZastavica() == -1){
                                 userRooms.add(0, addRoom);
+                                adapter.notifyItemInserted(0);
                             } else {
                                 userRooms.add(addRoom);
+                                adapter.notifyItemInserted(userRooms.size() - 1);
                             }
-                            adapter.notifyDataSetChanged();
-                            noRoomsTxt.setVisibility(View.GONE);
+                            if(userRooms.isEmpty()){
+                                noRoomsTxt.setVisibility(View.VISIBLE);
+                            } else {
+                                noRoomsTxt.setVisibility(View.GONE);
+                            }
                         }
 
                         @Override
@@ -219,9 +252,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         }
                     });
                 }
-                if(userRooms.isEmpty()){
-                    noRoomsTxt.setVisibility(View.VISIBLE);
-                }
+
                 swipeRefreshLayout.setRefreshing(false);
             }
 
@@ -233,8 +264,11 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     @Override
-    public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
-        onResume();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == DELETE_REQUEST_CODE){
+            if(resultCode == Activity.RESULT_OK){
+                adapter.removeItem(data.getIntExtra("position", 0));
+            }
+        }
     }
 }
