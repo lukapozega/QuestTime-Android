@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     final static int DELETE_REQUEST_CODE = 123;
     final static int ADD_NEW_ACTIVITY = 234;
-    final static int CREATE_NEW_ROOM = 345;
+    final static int PUBLIC_ROOM_ADDED = 987;
 
     private ImageView settingsBtn;
     private ImageView addRoomBtn;
@@ -171,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        recyclerViewState = roomListView.getLayoutManager().onSaveInstanceState();
         refresh();
     }
 
@@ -272,17 +271,17 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 adapter.removeItem(data.getIntExtra("position", 0));
             }
         }
-        if(requestCode == ADD_NEW_ACTIVITY){
-            if(resultCode == Activity.RESULT_OK){
+        if(requestCode == ADD_NEW_ACTIVITY) {
+            if (resultCode == Activity.RESULT_OK) {
                 final String roomId = data.getStringExtra("roomId");
                 mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         List<String> categories = new ArrayList<>();
-                        for (DataSnapshot snapshot: dataSnapshot.child("categories").getChildren()) {
+                        for (DataSnapshot snapshot : dataSnapshot.child("categories").getChildren()) {
                             categories.add(snapshot.getValue().toString());
                         }
-                        try{
+                        try {
                             addRoom = new Room(dataSnapshot.child("roomName").getValue().toString(),
                                     dataSnapshot.child("difficulty").getValue().toString(),
                                     categories,
@@ -291,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                     dataSnapshot.child("privateKey").getValue().toString(),
                                     dataSnapshot.child("type").getValue().toString(),
                                     answered);
-                        } catch (NullPointerException e){
+                        } catch (NullPointerException e) {
                             addRoom = new Room(dataSnapshot.child("roomName").getValue().toString(),
                                     dataSnapshot.child("difficulty").getValue().toString(),
                                     categories,
@@ -310,6 +309,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
                     }
                 });
+            }
+            if (resultCode == PUBLIC_ROOM_ADDED) {
+                layoutManager.removeAllViews();
+                ucitajSobe();
             }
         }
     }

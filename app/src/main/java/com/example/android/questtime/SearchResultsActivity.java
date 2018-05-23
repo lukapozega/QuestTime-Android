@@ -1,5 +1,7 @@
 package com.example.android.questtime;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class SearchResultsActivity extends AppCompatActivity {
+
+    final static int PUBLIC_ROOMS_ADDED = 987;
 
     private ListView roomList;
     private SearchRoomAdapter adapter;
@@ -97,5 +101,12 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent resultIntent = new Intent();
+        setResult(PUBLIC_ROOMS_ADDED);
+        super.onBackPressed();
     }
 }

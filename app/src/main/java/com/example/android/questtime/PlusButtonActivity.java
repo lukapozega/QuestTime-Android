@@ -125,8 +125,9 @@ public class PlusButtonActivity extends AppCompatActivity {
                         Intent intent = new Intent(PlusButtonActivity.this, SearchResultsActivity.class);
                         intent.putExtra("searchText", searchRoomsEditText.getText().toString());
                         intent.putStringArrayListExtra("categories", categories);
-
+                        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                         startActivity(intent);
+                        finish();
                     }
                 });
 

@@ -81,5 +81,7 @@ public class JoinPrivateRoom extends AppCompatActivity{
                 });
             }
         });
+
+        setFinishOnTouchOutside(true);
     }
 }
