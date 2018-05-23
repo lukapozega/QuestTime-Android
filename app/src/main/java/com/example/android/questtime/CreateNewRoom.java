@@ -1,5 +1,7 @@
 package com.example.android.questtime;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -109,6 +111,9 @@ public class CreateNewRoom extends AppCompatActivity {
                     mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(key).setValue(true);
                     FirebaseMessaging.getInstance().subscribeToTopic(key);
                     Toast.makeText(CreateNewRoom.this, "Room successfully created!", Toast.LENGTH_SHORT).show();
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("roomId", key);
+                    setResult(Activity.RESULT_OK, resultIntent);
                     finish();
                 }
             });

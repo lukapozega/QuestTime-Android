@@ -71,7 +71,9 @@
         <activity android:name=".ResultActivity"
             android:theme="@style/TransparentTheme"
             android:screenOrientation="portrait"/>
-
+        <activity android:name=".JoinPrivateRoom"
+            android:theme="@style/TransparentTheme"
+            android:screenOrientation="portrait"/>
 
 
 

@@ -1,6 +1,8 @@
 package com.example.android.questtime;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,6 +30,7 @@ import java.util.List;
  */
 
 public class PlusButtonActivity extends AppCompatActivity {
+    final static int CREATE_NEW_ROOM = 345;
 
     private Button joinPrivateRoomButton;
     private Button createNewRoomButton;
@@ -71,6 +74,7 @@ public class PlusButtonActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mp.start();
                 Intent intent = new Intent(PlusButtonActivity.this, CreateNewRoom.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                 startActivity(intent);
                 finish();
             }
@@ -80,46 +84,10 @@ public class PlusButtonActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mp.start();
-                setContentView(R.layout.join_room_popup);
-                privateKeyEnter = (EditText) findViewById(R.id.privateKeyEnter);
-                joinRoom = (Button) findViewById(R.id.joinButton);
-
-                joinRoom.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mp.start();
-                        privateKey = privateKeyEnter.getText().toString();
-                        mDatabase.child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                boolean added = false;
-                                int numberOfUsers;
-                                for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                                    if (snapshot.hasChild("privateKey")) {
-                                        if (privateKey.equals(snapshot.child("privateKey").getValue().toString())) {
-                                            mDatabase.child("rooms").child(snapshot.getKey()).child("members").child(mAuth.getUid()).setValue(System.currentTimeMillis()/1000);
-                                            mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(snapshot.getKey()).setValue(true);
-                                            FirebaseMessaging.getInstance().subscribeToTopic(snapshot.getKey());
-                                            added = true;
-                                        }
-                                    }
-                                }
-                                if(added) {
-                                    Toast.makeText(PlusButtonActivity.this, "You have successfully joined room!", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                } else {
-                                    Toast.makeText(PlusButtonActivity.this, "No room with such private key!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                });
-
+                Intent intent = new Intent(PlusButtonActivity.this, JoinPrivateRoom.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                startActivity(intent);
+                finish();
             }
         });
 

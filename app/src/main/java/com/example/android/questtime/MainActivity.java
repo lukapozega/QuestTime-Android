@@ -35,6 +35,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     final static int DELETE_REQUEST_CODE = 123;
+    final static int ADD_NEW_ACTIVITY = 234;
+    final static int CREATE_NEW_ROOM = 345;
 
     private ImageView settingsBtn;
     private ImageView addRoomBtn;
@@ -151,8 +153,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 mp.start();
                 addRoomBtn.startAnimation(addRotateAnimation);
                 Intent intent = new Intent(MainActivity.this, PlusButtonActivity.class);
-                startActivity(intent);
-
+                startActivityForResult(intent, ADD_NEW_ACTIVITY);
             }
         });
 
@@ -265,10 +266,50 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if(requestCode == DELETE_REQUEST_CODE){
             if(resultCode == Activity.RESULT_OK){
                 adapter.removeItem(data.getIntExtra("position", 0));
+            }
+        }
+        if(requestCode == ADD_NEW_ACTIVITY){
+            if(resultCode == Activity.RESULT_OK){
+                final String roomId = data.getStringExtra("roomId");
+                mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<String> categories = new ArrayList<>();
+                        for (DataSnapshot snapshot: dataSnapshot.child("categories").getChildren()) {
+                            categories.add(snapshot.getValue().toString());
+                        }
+                        try{
+                            addRoom = new Room(dataSnapshot.child("roomName").getValue().toString(),
+                                    dataSnapshot.child("difficulty").getValue().toString(),
+                                    categories,
+                                    (int) dataSnapshot.child("members").getChildrenCount(),
+                                    roomId,
+                                    dataSnapshot.child("privateKey").getValue().toString(),
+                                    dataSnapshot.child("type").getValue().toString(),
+                                    answered);
+                        } catch (NullPointerException e){
+                            addRoom = new Room(dataSnapshot.child("roomName").getValue().toString(),
+                                    dataSnapshot.child("difficulty").getValue().toString(),
+                                    categories,
+                                    (int) dataSnapshot.child("members").getChildrenCount(),
+                                    roomId,
+                                    dataSnapshot.child("type").getValue().toString(),
+                                    answered);
+                        }
+                        userRooms.add(addRoom);
+                        adapter.notifyItemInserted(userRooms.size() - 1);
+                        layoutManager.scrollToPosition(userRooms.indexOf(addRoom));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         }
     }
