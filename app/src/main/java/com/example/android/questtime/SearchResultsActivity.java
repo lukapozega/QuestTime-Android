@@ -105,7 +105,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent resultIntent = new Intent();
         setResult(PUBLIC_ROOMS_ADDED);
         super.onBackPressed();
     }

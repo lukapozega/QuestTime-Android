@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     final static int DELETE_REQUEST_CODE = 123;
     final static int ADD_NEW_ACTIVITY = 234;
     final static int PUBLIC_ROOM_ADDED = 987;
+    final static int NEW_QUESTION = 345;
+    final static int QUESTION_UNANSWERED = 456;
 
     private ImageView settingsBtn;
     private ImageView addRoomBtn;
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 } else {
                     intent.putExtra("type", room.getType());
                 }
-                startActivity(intent);
+                startActivityForResult(intent, NEW_QUESTION);
             }
 
             @Override
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
 
-        roomListView.addItemDecoration(new VerticalSpaceItemDecoration(10));
+        roomListView.addItemDecoration(new VerticalSpaceItemDecoration(20));
 
         roomListView.setAdapter(adapter);
 
@@ -175,12 +177,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     public void refresh() {
+        layoutManager.removeAllViews();
         ucitajSobe();
         swipeRefreshLayout.setRefreshing(false);
     }
 
     public void ucitajSobe() {
         brojPitanja = 0;
+        questionsLeftNumber.setText("0");
         userRooms.clear();
         mDatabase.child("users").child(mAuth.getUid()).child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -311,6 +315,12 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 });
             }
             if (resultCode == PUBLIC_ROOM_ADDED) {
+                layoutManager.removeAllViews();
+                ucitajSobe();
+            }
+        }
+        if(requestCode == NEW_QUESTION){
+            if(resultCode == QUESTION_UNANSWERED){
                 layoutManager.removeAllViews();
                 ucitajSobe();
             }

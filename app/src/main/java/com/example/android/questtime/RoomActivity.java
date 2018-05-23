@@ -32,6 +32,8 @@ import java.util.Set;
 
 public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
+    final static int QUESTION_UNANSWERED = 456;
+
     private static final String TAG = "tag";
     ListView questionsList;
     ArrayList<Question> questions = new ArrayList<>();
@@ -58,6 +60,8 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private MediaPlayer mp;
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    private int neodgovorenoPitanje = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +103,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                     intent.putExtra("category", question.getCategory());
                     intent.putExtra("roomId", roomKey);
                     startActivity(intent);
+                    neodgovorenoPitanje = -1;
                 } else {
                     mDatabase.child("rooms").child(roomKey).child("questions").child(question.getId()).child("answers")
                             .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -222,5 +227,13 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
         onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(neodgovorenoPitanje == -1) {
+            setResult(QUESTION_UNANSWERED);
+        }
+        super.onBackPressed();
     }
 }
