@@ -65,9 +65,7 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
     public void onBindViewHolder(final RecyclerRoomAdapter.ViewHolder holder, final int position) {
 
                 Room room = roomsList.get(position);
-                if(room.getZastavica() == -1){
-                    holder.indicator.setVisibility(View.VISIBLE);
-                } else {
+                if(room.getZastavica() != -1) {
                     holder.indicator.setVisibility(View.GONE);
                 }
                 holder.roomName.setText(room.getRoomName());

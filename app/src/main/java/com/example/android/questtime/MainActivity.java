@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                             } else {
                                 noRoomsTxt.setVisibility(View.GONE);
                             }
+                            layoutManager.scrollToPosition(0);
                         }
 
                         @Override
