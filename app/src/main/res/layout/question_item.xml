@@ -2,10 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="74dp"
-    android:background="@drawable/edittext_background"
-    android:paddingTop="4dp"
-    android:paddingLeft="18dp"
-    android:paddingBottom="4dp">
+    android:background="@drawable/list_item"
+    >
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -18,11 +16,11 @@
             android:id="@+id/question_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="jbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsdjbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsdjbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsdjbdfbsjvjsdh sjdh svdjsdvsdjvs "
             android:fontFamily="@font/roboto_black"
             android:textSize="12sp"
-            android:layout_marginLeft="4dp"
+            android:layout_marginStart="10dp"
             android:maxLines="2"
+            android:text="jfieafjeifjajfjeaijfia"
             android:ellipsize="end"
             />
 
@@ -67,7 +65,17 @@
         android:text="10"
         android:textSize="30sp"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="12dp"
         android:fontFamily="@font/roboto_black"/>
+
+    <TextView
+        android:id="@+id/roomQuestionIndicator"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/question_indicator"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:fontFamily="@font/roboto_black"
+        />
 
 </LinearLayout>

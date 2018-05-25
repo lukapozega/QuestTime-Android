@@ -9,6 +9,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,9 +37,12 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     final static int QUESTION_UNANSWERED = 456;
 
     private static final String TAG = "tag";
-    ListView questionsList;
+    RecyclerView questionsList;
+
     ArrayList<Question> questions = new ArrayList<>();
-    QuestionAdapter adapter;
+    RecyclerQuestionAdapter adapter;
+    RecyclerView.LayoutManager manager;
+
     TextView roomNameTitle;
     TextView roomKeyTextView;
     String roomKey;
@@ -67,6 +72,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_activity);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.questionSwipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -88,14 +94,15 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         lock = (ImageView) findViewById(R.id.lock);
 
         questionsList = findViewById(R.id.questions_list_view);
-        adapter = new QuestionAdapter(this, questions);
-        questionsList.setAdapter(adapter);
+        questionsList.setHasFixedSize(true);
+        manager = new LinearLayoutManager(this);
+        questionsList.setLayoutManager(manager);
 
-        questionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adapter = new RecyclerQuestionAdapter(this, questions, new ItemClickListenerInterface() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(View v, int position) {
                 mp.start();
-                final Question question = (Question) questionsList.getItemAtPosition(i);
+                final Question question = (Question) questions.get(position);
                 if (question.getPoints() == -1) {
                     Intent intent = new Intent(RoomActivity.this, AnswerActivity.class);
                     intent.putExtra("key", question.getId());
@@ -107,32 +114,42 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                 } else {
                     mDatabase.child("rooms").child(roomKey).child("questions").child(question.getId()).child("answers")
                             .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            final String myAnswer = dataSnapshot.child(mAuth.getUid()).getValue().toString();
-                            final int numberOfAnswers = (int) dataSnapshot.getChildrenCount();
-                            Intent intentResult = new Intent(RoomActivity.this, ResultActivity.class);
-                            intentResult.putExtra("key", question.getId());
-                            intentResult.putExtra("points", String.valueOf(question.getPoints()));
-                            intentResult.putExtra("category", question.getCategory());
-                            intentResult.putExtra("roomId", roomKey);
-                            intentResult.putExtra("myAnswer", myAnswer);
-                            intentResult.putExtra("numberOfAnswers", numberOfAnswers);
-                            startActivity(intentResult);
-                        }
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    final String myAnswer = dataSnapshot.child(mAuth.getUid()).getValue().toString();
+                                    final int numberOfAnswers = (int) dataSnapshot.getChildrenCount();
+                                    Intent intentResult = new Intent(RoomActivity.this, ResultActivity.class);
+                                    intentResult.putExtra("key", question.getId());
+                                    intentResult.putExtra("points", String.valueOf(question.getPoints()));
+                                    intentResult.putExtra("category", question.getCategory());
+                                    intentResult.putExtra("roomId", roomKey);
+                                    intentResult.putExtra("myAnswer", myAnswer);
+                                    intentResult.putExtra("numberOfAnswers", numberOfAnswers);
+                                    startActivity(intentResult);
+                                }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
+                                }
+                            });
                 }
             }
+
+            @Override
+            public void onLongItemClick(View v, int position) {
+
+            }
         });
+
+        questionsList.addItemDecoration(new VerticalSpaceItemDecoration(20));
+        questionsList.setAdapter(adapter);
 
         roomKey = getIntent().getStringExtra("key");
         roomName = getIntent().getStringExtra("name");
         roomType = getIntent().getStringExtra("type");
+
+        ucitajPitanja();
 
         if(roomType.equals("public")){
             roomKeyTextView.setVisibility(View.GONE);
@@ -167,9 +184,8 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+
+    public void ucitajPitanja(){
         questions.clear();
         mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -198,10 +214,11 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 if(!questions.contains(addQuestion)) {
                                     questions.add(addQuestion);
                                 }
-                                Collections.sort(questions);
-                                adapter.notifyDataSetChanged();
-                                noQuestionsTxt.setVisibility(View.GONE);
                             }
+                            Collections.sort(questions);
+                            adapter.notifyDataSetChanged();
+                            noQuestionsTxt.setVisibility(View.GONE);
+                            manager.scrollToPosition(0);
                         }
 
                         @Override
@@ -226,7 +243,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        onResume();
+        ucitajPitanja();
     }
 
     @Override

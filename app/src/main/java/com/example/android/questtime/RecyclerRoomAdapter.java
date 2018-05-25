@@ -136,16 +136,6 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
         return roomsList.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        Room room = roomsList.get(position);
-        if(room.getZastavica() == -1){
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-
     public void removeItem(int position){
         roomsList.remove(position);
         notifyItemRemoved(position);

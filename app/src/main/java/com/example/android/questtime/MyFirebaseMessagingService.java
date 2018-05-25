@@ -39,24 +39,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [START receive_message]
     @Override
     public void onMessageReceived(final RemoteMessage remoteMessage) {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        roomId = remoteMessage.getData().get("roomId");
-        mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                type = dataSnapshot.child("type").getValue().toString();
-                name = dataSnapshot.child("roomName").getValue().toString();
-                if(type.equals("private")){
-                    privateKey = dataSnapshot.child("privateKey").getValue().toString();
-                }
-                sendNotification(remoteMessage.getNotification().getBody());
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        sendNotification(remoteMessage.getNotification().getBody());
 
 
 
@@ -91,14 +75,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     private void sendNotification(String messageBody) {
 
-        Intent intent = new Intent(this, RoomActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("key", roomId);
-        intent.putExtra("name", name);
-        intent.putExtra("type", type);
-        if(type.equals("private")){
-            intent.putExtra("privateKey", privateKey);
-        }
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 

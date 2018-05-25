@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private SharedPreferences sharedPreferences;
     private boolean sound;
 
-    private Parcelable recyclerViewState;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
