@@ -1,5 +1,6 @@
 package com.example.android.questtime;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -26,6 +27,8 @@ import java.util.Random;
 
 public class ResultActivity extends AppCompatActivity {
 
+    static final int QUESTION_ANSWERED = 567;
+
     private String questionId;
     private String category;
     private Question question;
@@ -40,6 +43,7 @@ public class ResultActivity extends AppCompatActivity {
     private LinearLayout percentLayout;
     private int numberOfAnswers;
     private Map<String, Integer> answersMap = new HashMap<>();
+    private int position;
 
     float percentage;
     int i;
@@ -59,6 +63,7 @@ public class ResultActivity extends AppCompatActivity {
         roomId = getIntent().getStringExtra("roomId");
         myAnswer = getIntent().getStringExtra("myAnswer");
         numberOfAnswers = getIntent().getIntExtra("numberOfAnswers", 0);
+        position = getIntent().getIntExtra("position", 0);
 
         //TREBA POPUNIT OVA ČETIRI VIEW-A
         answers = findViewById(R.id.answers_result);
@@ -150,5 +155,14 @@ public class ResultActivity extends AppCompatActivity {
 
         setFinishOnTouchOutside(true);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("position", position);
+        resultIntent.putExtra("points", points);
+        setResult(Activity.RESULT_OK, resultIntent);
+        super.onBackPressed();
     }
 }

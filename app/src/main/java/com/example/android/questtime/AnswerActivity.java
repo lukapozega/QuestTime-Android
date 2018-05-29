@@ -1,5 +1,6 @@
 package com.example.android.questtime;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class AnswerActivity extends AppCompatActivity {
+    static final int QUESTION_ANSWERED = 567;
 
     private String questionId;
     private String category;
@@ -34,6 +36,7 @@ public class AnswerActivity extends AppCompatActivity {
     private String roomId;
     int nextPoints;
     int saljiBodove;
+    int position;
 
     private MediaPlayer mp;
 
@@ -51,6 +54,7 @@ public class AnswerActivity extends AppCompatActivity {
         category = getIntent().getStringExtra("category");
         points = Integer.parseInt(getIntent().getStringExtra("points"));
         roomId = getIntent().getStringExtra("roomId");
+        position = getIntent().getIntExtra("position", 0);
 
         answers = findViewById(R.id.answers);
         questionText = findViewById(R.id.quesText);
@@ -125,7 +129,10 @@ public class AnswerActivity extends AppCompatActivity {
                                     intentResult.putExtra("roomId", roomId);
                                     intentResult.putExtra("myAnswer", myAnswer);
                                     intentResult.putExtra("numberOfAnswers", numberOfAnswers);
+                                    intentResult.putExtra("position", position);
+                                    intentResult.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                                     startActivity(intentResult);
+                                    finish();
                                 }
 
                                 @Override

@@ -60,6 +60,10 @@ public class Question implements Comparable<Question>{
         return wrong;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return super.equals(id);

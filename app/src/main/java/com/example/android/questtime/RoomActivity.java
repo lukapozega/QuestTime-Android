@@ -1,5 +1,6 @@
 package com.example.android.questtime;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -34,7 +35,8 @@ import java.util.Set;
 
 public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
-    final static int QUESTION_UNANSWERED = 456;
+    static final int QUESTION_UNANSWERED = 456;
+    static final int QUESTION_ANSWERED = 567;
 
     private static final String TAG = "tag";
     RecyclerView questionsList;
@@ -109,7 +111,8 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                     intent.putExtra("points", String.valueOf(question.getPoints()));
                     intent.putExtra("category", question.getCategory());
                     intent.putExtra("roomId", roomKey);
-                    startActivity(intent);
+                    intent.putExtra("position", position);
+                    startActivityForResult(intent, QUESTION_ANSWERED);
                     neodgovorenoPitanje = -1;
                 } else {
                     mDatabase.child("rooms").child(roomKey).child("questions").child(question.getId()).child("answers")
@@ -252,5 +255,19 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
             setResult(QUESTION_UNANSWERED);
         }
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == QUESTION_ANSWERED){
+            if(resultCode == Activity.RESULT_OK){
+                int position = data.getIntExtra("position", 0);
+                int points = data.getIntExtra("points", 0);
+                Question question = questions.get(position);
+                question.setPoints(points);
+
+                adapter.notifyItemChanged(position, question);
+            }
+        }
     }
 }
