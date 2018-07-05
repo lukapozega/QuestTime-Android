@@ -1,8 +1,7 @@
 package com.example.android.questtime;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Paint;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,18 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by fgrebenac on 3/19/18.
@@ -53,6 +46,8 @@ public class PlusButtonActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
+    private SharedPreferences sharedPreferences;
+
     private MediaPlayer mp;
 
     @Override
@@ -61,6 +56,8 @@ public class PlusButtonActivity extends AppCompatActivity {
         setContentView(R.layout.add_room_popup);
 
         mp = MediaPlayer.create(this, R.raw.sound);
+
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
 
         joinPrivateRoomButton = (Button) findViewById(R.id.joinPrivateRoomBtn);
         joinPublicRoomButton = (Button) findViewById(R.id.joinPublicRoomBtn);
@@ -72,7 +69,9 @@ public class PlusButtonActivity extends AppCompatActivity {
         createNewRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 Intent intent = new Intent(PlusButtonActivity.this, CreateNewRoom.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                 startActivity(intent);
@@ -83,7 +82,9 @@ public class PlusButtonActivity extends AppCompatActivity {
         joinPrivateRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 Intent intent = new Intent(PlusButtonActivity.this, JoinPrivateRoom.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                 startActivity(intent);
@@ -94,7 +95,9 @@ public class PlusButtonActivity extends AppCompatActivity {
         joinPublicRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 setContentView(R.layout.join_public_room_popup);
                 searchBtn = (Button) findViewById(R.id.searchBtn);
                 searchRoomsEditText = (EditText) findViewById(R.id.searchEditText);
@@ -121,7 +124,9 @@ public class PlusButtonActivity extends AppCompatActivity {
                 searchBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mp.start();
+                        if (sharedPreferences.getBoolean("Sound", true)) {
+                            mp.start();
+                        }
                         Intent intent = new Intent(PlusButtonActivity.this, SearchResultsActivity.class);
                         intent.putExtra("searchText", searchRoomsEditText.getText().toString());
                         intent.putStringArrayListExtra("categories", categories);
@@ -141,7 +146,9 @@ public class PlusButtonActivity extends AppCompatActivity {
     View.OnClickListener catClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            mp.start();
+            if (sharedPreferences.getBoolean("Sound", true)) {
+                mp.start();
+            }
             if (view.getAlpha()==1) {
                 categories.remove((String) view.getTag());
                 view.setAlpha(0.4f);

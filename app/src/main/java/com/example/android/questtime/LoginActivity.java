@@ -1,7 +1,7 @@
 package com.example.android.questtime;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +29,7 @@ public class LoginActivity extends AppCompatActivity{
     private Button loginBtn;
     private EditText emailLoginInput;
     private EditText passwordLoginInput;
+    private SharedPreferences sharedPreferences;
 
     private MediaPlayer mp;
 
@@ -43,6 +43,8 @@ public class LoginActivity extends AppCompatActivity{
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
 
         /*
         Checking if user is already signed in. If so, proceed to MainActivity
@@ -62,7 +64,9 @@ public class LoginActivity extends AppCompatActivity{
         registerNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 try{
                     intent.putExtra("email", emailLoginInput.getText().toString());
@@ -76,8 +80,9 @@ public class LoginActivity extends AppCompatActivity{
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 login();
             }
         });
@@ -85,7 +90,9 @@ public class LoginActivity extends AppCompatActivity{
         forgotPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 Intent intent = new Intent(LoginActivity.this, PasswordResetActivity.class);
                 startActivity(intent);
             }

@@ -2,6 +2,7 @@ package com.example.android.questtime;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ public class ExitRoomActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
+    private SharedPreferences sharedPreferences;
+
     private MediaPlayer mp;
 
     @Override
@@ -42,6 +45,8 @@ public class ExitRoomActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
 
         leaveTxt = (TextView) findViewById(R.id.leaveTxt);
         leaveBtn = (Button) findViewById(R.id.leaveBtn);
@@ -55,7 +60,9 @@ public class ExitRoomActivity extends AppCompatActivity {
         leaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 mDatabase.child("rooms").child(roomKey).child("members").child(mAuth.getUid()).removeValue();
                 mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(roomKey).removeValue();
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(roomKey);
@@ -82,7 +89,9 @@ public class ExitRoomActivity extends AppCompatActivity {
         stayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 Intent resultIntent = new Intent();
                 setResult(Activity.RESULT_CANCELED, resultIntent);
                 finish();

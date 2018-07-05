@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -45,6 +46,8 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     String roomName;
     String roomPrivateKey;
 
+    SharedPreferences sharedPreferences;
+
     String roomType;
     int points;
     double joined;
@@ -79,6 +82,8 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         mp = MediaPlayer.create(this, R.raw.sound);
 
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
@@ -97,7 +102,9 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         adapter = new RecyclerQuestionAdapter(this, questions, new ItemClickListenerInterface() {
             @Override
             public void onItemClick(View v, int position) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 final Question question = (Question) questions.get(position);
                 if (question.getPoints() == -1) {
                     Intent intent = new Intent(RoomActivity.this, AnswerActivity.class);
@@ -173,7 +180,9 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
                 intent.putExtra("roomKey", roomKey);
                 startActivity(intent);

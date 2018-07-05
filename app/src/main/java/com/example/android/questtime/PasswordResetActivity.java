@@ -1,5 +1,6 @@
 package com.example.android.questtime;
 
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,8 @@ public class PasswordResetActivity extends AppCompatActivity {
     private EditText emailInput;
     private Button sendEmailBtn;
 
+    private SharedPreferences sharedPreferences;
+
     private MediaPlayer mp;
 
     @Override
@@ -34,6 +37,8 @@ public class PasswordResetActivity extends AppCompatActivity {
 
         mp = MediaPlayer.create(this, R.raw.sound);
 
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+
         emailInput = (EditText) findViewById(R.id.passwordResetEmail);
         sendEmailBtn = (Button) findViewById(R.id.sendEmailBtn);
 
@@ -43,7 +48,9 @@ public class PasswordResetActivity extends AppCompatActivity {
         sendEmailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 sendEmail();
             }
         });

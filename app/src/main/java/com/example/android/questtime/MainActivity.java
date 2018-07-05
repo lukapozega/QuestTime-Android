@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         mp = MediaPlayer.create(this, R.raw.sound);
 
-
         sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
@@ -99,7 +98,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         adapter = new RecyclerRoomAdapter(this, userRooms, new ItemClickListenerInterface() {
             @Override
             public void onItemClick(View v, int position) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 Room room = (Room) userRooms.get(position);
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 intent.putExtra("key", room.getKey());
@@ -115,7 +116,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             @Override
             public void onLongItemClick(View v, int position) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 Room room = (Room) userRooms.get(position);
                 Intent intent = new Intent(MainActivity.this, ExitRoomActivity.class);
                 intent.putExtra("key", room.getKey());
@@ -145,7 +148,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         addRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 addRoomBtn.startAnimation(addRotateAnimation);
                 Intent intent = new Intent(MainActivity.this, PlusButtonActivity.class);
                 startActivityForResult(intent, ADD_NEW_ACTIVITY);
@@ -155,7 +160,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 settingsBtn.startAnimation(settingsRotateAnimation);
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);

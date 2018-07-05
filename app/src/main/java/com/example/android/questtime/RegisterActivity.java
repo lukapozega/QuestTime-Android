@@ -1,9 +1,9 @@
 package com.example.android.questtime;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,6 +37,8 @@ public class RegisterActivity extends AppCompatActivity{
 
     private MediaPlayer mp;
 
+    private SharedPreferences sharedPreferences;
+
     User user;
 
     @Override
@@ -48,6 +50,8 @@ public class RegisterActivity extends AppCompatActivity{
         extras = getIntent().getExtras();
 
         mp = MediaPlayer.create(this, R.raw.sound);
+
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -66,7 +70,9 @@ public class RegisterActivity extends AppCompatActivity{
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 try {
 
                     if (registerPassword.getText().toString().equals(repeatRegisterPassword.getText().toString()) && registerPassword.getText().toString().length() >= 6) {

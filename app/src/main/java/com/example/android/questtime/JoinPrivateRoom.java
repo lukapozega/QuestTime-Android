@@ -2,6 +2,7 @@ package com.example.android.questtime;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,6 +29,8 @@ public class JoinPrivateRoom extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private MediaPlayer mp;
 
+    private SharedPreferences sharedPreferences;
+
     private String privateKey;
 
     @Override
@@ -41,12 +44,16 @@ public class JoinPrivateRoom extends AppCompatActivity{
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+
         mp = MediaPlayer.create(this, R.raw.sound);
 
         joinRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                if (sharedPreferences.getBoolean("Sound", true)) {
+                    mp.start();
+                }
                 privateKey = privateKeyEnter.getText().toString();
                 mDatabase.child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

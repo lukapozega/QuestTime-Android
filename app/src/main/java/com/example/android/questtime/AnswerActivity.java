@@ -1,12 +1,10 @@
 package com.example.android.questtime;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class AnswerActivity extends AppCompatActivity {
@@ -38,6 +35,8 @@ public class AnswerActivity extends AppCompatActivity {
     int saljiBodove;
     int position;
 
+    private SharedPreferences sharedPreferences;
+
     private MediaPlayer mp;
 
     @Override
@@ -46,6 +45,8 @@ public class AnswerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_answer);
 
         mp = MediaPlayer.create(this, R.raw.sound);
+
+        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -95,7 +96,9 @@ public class AnswerActivity extends AppCompatActivity {
     private View.OnClickListener submitAnswer = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            mp.start();
+            if (sharedPreferences.getBoolean("Sound", true)) {
+                mp.start();
+            }
             final TextView answer = (TextView) view;
             final DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
             dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());
