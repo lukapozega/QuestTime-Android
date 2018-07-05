@@ -6,20 +6,14 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
         mp = MediaPlayer.create(this, R.raw.sound);
+
 
         sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
 
@@ -324,4 +319,5 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         }
     }
+
 }
