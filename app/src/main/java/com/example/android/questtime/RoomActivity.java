@@ -180,9 +180,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                mp.start();
                 Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
                 intent.putExtra("roomKey", roomKey);
                 startActivity(intent);
@@ -203,7 +201,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                             .child(snapshot.getKey().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot1) {
-
                             created = Double.parseDouble(snapshot.child("timestamp").getValue().toString());
                             try{
                                 bodovi = Integer.parseInt(snapshot.child("points").child(mAuth.getUid()).getValue().toString());
@@ -249,6 +246,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
+        manager.removeAllViews();
         ucitajPitanja();
     }
 

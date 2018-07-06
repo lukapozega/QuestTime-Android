@@ -70,6 +70,7 @@
     <TextView
         android:id="@+id/roomQuestionIndicator"
         android:layout_width="20dp"
+        android:visibility="gone"
         android:layout_height="match_parent"
         android:background="@drawable/question_indicator"
         android:textAllCaps="false"

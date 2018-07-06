@@ -2,11 +2,10 @@ package com.example.android.questtime;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.Format;
@@ -58,8 +57,8 @@ public class RecyclerQuestionAdapter extends RecyclerView.Adapter<RecyclerQuesti
     @Override
     public void onBindViewHolder(RecyclerQuestionAdapter.ViewHolder holder, int position) {
         Question question = questions.get(position);
-        if(question.getPoints() != -1){
-            holder.indicator.setVisibility(View.GONE);
+        if(question.getPoints() == -1){
+            holder.indicator.setVisibility(View.VISIBLE);
         }
         holder.questionText.setText(question.getText());
         Date date = new Date((long)question.getTimestamp()*1000);
