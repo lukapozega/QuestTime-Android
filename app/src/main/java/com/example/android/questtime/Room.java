@@ -16,7 +16,7 @@ public class Room {
     private int numberOfUsers;
     private String key;
     private String privateKey;
-    private int zastavica;
+    private int answered;
 
     public Room(String roomName, String difficulty, String type, List<String> categories, String privateKey) {
         this.roomName = roomName;
@@ -26,7 +26,7 @@ public class Room {
         this.privateKey = privateKey;
     }
 
-    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers, String key, String privateKey, String type, int zastavica) {
+    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers, String key, String privateKey, String type, int answered) {
         this.roomName = roomName;
         this.difficulty = difficulty;
         this.categories = categories;
@@ -34,7 +34,7 @@ public class Room {
         this.key = key;
         this.privateKey = privateKey;
         this.type = type;
-        this.zastavica = zastavica;
+        this.answered = answered;
     }
 
     public Room(String roomName, String difficulty, List<String> categories, String key, List<String> userIds){
@@ -45,14 +45,14 @@ public class Room {
         this.userIds = userIds;
     }
 
-    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers, String key, String type, int zastavica){
+    public Room(String roomName, String difficulty, List<String> categories, int numberOfUsers, String key, String type, int answered){
         this.roomName = roomName;
         this.difficulty = difficulty;
         this.categories = categories;
         this.numberOfUsers = numberOfUsers;
         this.key = key;
         this.type = type;
-        this.zastavica = zastavica;
+        this.answered = answered;
 
     }
 
@@ -112,13 +112,23 @@ public class Room {
         this.userIds = userIds;
     }
 
-    public int getZastavica() {
-        return zastavica;
+    public int getAnswered() {
+        return answered;
     }
 
-    public void setZastavica(int zastavica) {
-        this.zastavica = zastavica;
+    public void setAnswered(int answered) {
+        this.answered = answered;
     }
 
+    @Override
+    public int hashCode() {
+        return key.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Room room = (Room) obj;
+        return this.key.equals(room.getKey());
+    }
 
 }
