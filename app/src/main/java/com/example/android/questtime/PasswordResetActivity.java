@@ -25,7 +25,7 @@ public class PasswordResetActivity extends AppCompatActivity {
     private EditText emailInput;
     private Button sendEmailBtn;
 
-    private SharedPreferences sharedPreferences;
+    private ClickSound cs;
 
     private MediaPlayer mp;
 
@@ -35,9 +35,9 @@ public class PasswordResetActivity extends AppCompatActivity {
         setContentView(R.layout.forgot_password_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        mp = MediaPlayer.create(this, R.raw.sound);
 
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+
+        cs = new ClickSound(this);
 
         emailInput = (EditText) findViewById(R.id.passwordResetEmail);
         sendEmailBtn = (Button) findViewById(R.id.sendEmailBtn);
@@ -48,9 +48,7 @@ public class PasswordResetActivity extends AppCompatActivity {
         sendEmailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 sendEmail();
             }
         });

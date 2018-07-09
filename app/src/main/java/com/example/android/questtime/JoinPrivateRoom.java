@@ -29,7 +29,7 @@ public class JoinPrivateRoom extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private MediaPlayer mp;
 
-    private SharedPreferences sharedPreferences;
+    private ClickSound cs;
 
     private String privateKey;
 
@@ -44,16 +44,14 @@ public class JoinPrivateRoom extends AppCompatActivity{
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+        cs = new ClickSound(this);
 
-        mp = MediaPlayer.create(this, R.raw.sound);
+
 
         joinRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 privateKey = privateKeyEnter.getText().toString();
                 mDatabase.child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

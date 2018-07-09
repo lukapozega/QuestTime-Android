@@ -2,9 +2,7 @@ package com.example.android.questtime;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -58,10 +56,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    private MediaPlayer mp;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private SharedPreferences sharedPreferences;
+    private ClickSound cs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +66,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         setContentView(R.layout.main_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        mp = MediaPlayer.create(this, R.raw.sound);
-
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+        cs = new ClickSound(this);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -96,9 +91,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         adapter = new RecyclerRoomAdapter(this, userRooms, new ItemClickListenerInterface() {
             @Override
             public void onItemClick(View v, int position) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 Room room = (Room) userRooms.get(position);
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 intent.putExtra("key", room.getKey());
@@ -114,9 +107,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             @Override
             public void onLongItemClick(View v, int position) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 Room room = (Room) userRooms.get(position);
                 Intent intent = new Intent(MainActivity.this, ExitRoomActivity.class);
                 intent.putExtra("key", room.getKey());
@@ -129,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         roomListView.setAdapter(adapter);
 
+        swipeRefreshLayout.setRefreshing(true);
         loadRooms();
 
         rotateAnimation = new RotateAnimation(0f, 180f,
@@ -139,9 +131,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         addRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 addRoomBtn.startAnimation(rotateAnimation);
                 Intent intent = new Intent(MainActivity.this, PlusButtonActivity.class);
                 startActivityForResult(intent, ADD_NEW_ACTIVITY);
@@ -151,9 +141,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 settingsBtn.startAnimation(rotateAnimation);
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);

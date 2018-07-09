@@ -32,7 +32,7 @@ public class ExitRoomActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    private SharedPreferences sharedPreferences;
+    private ClickSound cs;
 
     private MediaPlayer mp;
 
@@ -41,12 +41,12 @@ public class ExitRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exit_room_activity);
 
-        mp = MediaPlayer.create(this, R.raw.sound);
+
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+        cs = new ClickSound(this);
 
         leaveTxt = (TextView) findViewById(R.id.leaveTxt);
         leaveBtn = (Button) findViewById(R.id.leaveBtn);
@@ -60,9 +60,7 @@ public class ExitRoomActivity extends AppCompatActivity {
         leaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 mDatabase.child("rooms").child(roomKey).child("members").child(mAuth.getUid()).removeValue();
                 mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(roomKey).removeValue();
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(roomKey);
@@ -89,9 +87,7 @@ public class ExitRoomActivity extends AppCompatActivity {
         stayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 Intent resultIntent = new Intent();
                 setResult(Activity.RESULT_CANCELED, resultIntent);
                 finish();

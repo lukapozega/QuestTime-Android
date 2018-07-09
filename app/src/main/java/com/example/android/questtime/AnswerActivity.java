@@ -1,8 +1,7 @@
 package com.example.android.questtime;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -35,18 +34,14 @@ public class AnswerActivity extends AppCompatActivity {
     int saljiBodove;
     int position;
 
-    private SharedPreferences sharedPreferences;
-
-    private MediaPlayer mp;
+    private ClickSound cs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
 
-        mp = MediaPlayer.create(this, R.raw.sound);
-
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+        cs = new ClickSound(this);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -96,9 +91,7 @@ public class AnswerActivity extends AppCompatActivity {
     private View.OnClickListener submitAnswer = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (sharedPreferences.getBoolean("Sound", true)) {
-                mp.start();
-            }
+            cs.start();
             final TextView answer = (TextView) view;
             final DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
             dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());
@@ -133,9 +126,12 @@ public class AnswerActivity extends AppCompatActivity {
                                     intentResult.putExtra("myAnswer", myAnswer);
                                     intentResult.putExtra("numberOfAnswers", numberOfAnswers);
                                     intentResult.putExtra("position", position);
-                                    intentResult.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-                                    startActivity(intentResult);
+                                    Intent resultIntent = new Intent();
+                                    resultIntent.putExtra("position", position);
+                                    resultIntent.putExtra("points", saljiBodove);
+                                    setResult(Activity.RESULT_OK, resultIntent);
                                     finish();
+                                    startActivity(intentResult);
                                 }
 
                                 @Override
@@ -151,8 +147,7 @@ public class AnswerActivity extends AppCompatActivity {
 
                 }
             });
-
-            finish();
         }
     };
+
 }

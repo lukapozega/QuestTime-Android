@@ -2,7 +2,6 @@ package com.example.android.questtime;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -42,7 +41,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private Room room;
     private TextView categoryNames;
     private StringBuilder categoryNamesString;
-    private SharedPreferences sharedPreferences;
+    private ClickSound cs;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -61,7 +60,7 @@ public class CreateNewRoom extends AppCompatActivity {
         setContentView(R.layout.create_new_room_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        mp = MediaPlayer.create(this, R.raw.sound);
+        
         categoryNames = (TextView) findViewById(R.id.category_names);
         difficultyLayout = (LinearLayout) findViewById(R.id.difficulty);
         typeLayout = (LinearLayout) findViewById(R.id.type);
@@ -73,7 +72,7 @@ public class CreateNewRoom extends AppCompatActivity {
 
         categoryNamesString = new StringBuilder();
 
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+        cs = new ClickSound(this);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -81,9 +80,7 @@ public class CreateNewRoom extends AppCompatActivity {
         createRoomText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (sharedPreferences.getBoolean("Sound", true)) {
-                        mp.start();
-                    }
+                    cs.start();
                     roomName = roomNameEditText.getText().toString();
 
                     for (int i=0; i<8; ++i) {
@@ -160,9 +157,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private View.OnClickListener diffClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (sharedPreferences.getBoolean("Sound", true)) {
-                mp.start();
-            }
+            cs.start();
             for (int i=0; i<3;++i) {
                 View v = difficultyLayout.getChildAt(i);
                 v.setPadding(padding,padding,padding,padding);
@@ -175,9 +170,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private View.OnClickListener typeClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (sharedPreferences.getBoolean("Sound", true)) {
-                mp.start();
-            }
+            cs.start();
             for (int i=0; i<2;++i) {
                 TextView v = (TextView) typeLayout.getChildAt(i);
                 v.setTextColor(Color.parseColor("#3a86aa"));
@@ -190,9 +183,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private View.OnClickListener catClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (sharedPreferences.getBoolean("Sound", true)) {
-                mp.start();
-            }
+            cs.start();
             if (view.getAlpha()==1) {
                 categories.remove((String) view.getTag());
                 view.setAlpha(0.4f);

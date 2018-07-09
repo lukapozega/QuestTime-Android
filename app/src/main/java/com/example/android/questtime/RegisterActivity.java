@@ -37,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity{
 
     private MediaPlayer mp;
 
-    private SharedPreferences sharedPreferences;
+    private ClickSound cs;
 
     User user;
 
@@ -49,9 +49,9 @@ public class RegisterActivity extends AppCompatActivity{
 
         extras = getIntent().getExtras();
 
-        mp = MediaPlayer.create(this, R.raw.sound);
 
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+
+        cs = new ClickSound(this);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -70,9 +70,7 @@ public class RegisterActivity extends AppCompatActivity{
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 try {
 
                     if (registerPassword.getText().toString().equals(repeatRegisterPassword.getText().toString()) && registerPassword.getText().toString().length() >= 6) {

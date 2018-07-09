@@ -1,11 +1,9 @@
 package com.example.android.questtime;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -13,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,7 +45,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     String roomName;
     String roomPrivateKey;
 
-    SharedPreferences sharedPreferences;
+    private ClickSound cs;
 
     String roomType;
     int points;
@@ -80,9 +79,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         swipeRefreshLayout.setDistanceToTriggerSync(20);// in dips
         swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
 
-        mp = MediaPlayer.create(this, R.raw.sound);
-
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+        cs = new ClickSound(this);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -102,9 +99,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         adapter = new RecyclerQuestionAdapter(this, questions, new ItemClickListenerInterface() {
             @Override
             public void onItemClick(View v, int position) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 final Question question = (Question) questions.get(position);
                 if (question.getPoints() == -1) {
                     Intent intent = new Intent(RoomActivity.this, AnswerActivity.class);
@@ -260,13 +255,17 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("jedan","dva");
         if(requestCode == QUESTION_ANSWERED){
-            if(resultCode == Activity.RESULT_OK){
+            //Log.i(data.getIntExtra("position", -1)+"ahaha","jedan");
+            Log.i(resultCode+"", "hehe");
+            if(resultCode == RESULT_OK){
+                Log.i("jedan","tri");
+                Log.i(data.getIntExtra("position", 0) +"", data.getIntExtra("points", 0)+"");
                 int position = data.getIntExtra("position", 0);
                 int points = data.getIntExtra("points", 0);
                 Question question = questions.get(position);
                 question.setPoints(points);
-
                 adapter.notifyItemChanged(position, question);
             }
         }

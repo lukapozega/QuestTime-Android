@@ -65,7 +65,6 @@ public class ResultActivity extends AppCompatActivity {
         numberOfAnswers = getIntent().getIntExtra("numberOfAnswers", 0);
         position = getIntent().getIntExtra("position", 0);
 
-        //TREBA POPUNIT OVA ČETIRI VIEW-A
         answers = findViewById(R.id.answers_result);
         questionText = findViewById(R.id.questionText_result);
         correct = findViewById(R.id.correct_wrong);
@@ -159,10 +158,6 @@ public class ResultActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("position", position);
-        resultIntent.putExtra("points", points);
-        setResult(Activity.RESULT_OK, resultIntent);
-        super.onBackPressed();
+        finish();
     }
 }

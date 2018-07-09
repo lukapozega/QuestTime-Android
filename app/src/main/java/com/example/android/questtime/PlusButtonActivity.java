@@ -1,7 +1,6 @@
 package com.example.android.questtime;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,7 +37,6 @@ public class PlusButtonActivity extends AppCompatActivity {
 
     private ArrayList<String> categories = new ArrayList();
 
-
     private LinearLayout cat1Layout;
     private LinearLayout cat2Layout;
     private LinearLayout cat3Layout;
@@ -46,7 +44,7 @@ public class PlusButtonActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
-    private SharedPreferences sharedPreferences;
+    private ClickSound cs;
 
     private MediaPlayer mp;
 
@@ -55,9 +53,7 @@ public class PlusButtonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_room_popup);
 
-        mp = MediaPlayer.create(this, R.raw.sound);
-
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+        cs = new ClickSound(this);
 
         joinPrivateRoomButton = (Button) findViewById(R.id.joinPrivateRoomBtn);
         joinPublicRoomButton = (Button) findViewById(R.id.joinPublicRoomBtn);
@@ -69,9 +65,7 @@ public class PlusButtonActivity extends AppCompatActivity {
         createNewRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 Intent intent = new Intent(PlusButtonActivity.this, CreateNewRoom.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                 startActivity(intent);
@@ -82,9 +76,7 @@ public class PlusButtonActivity extends AppCompatActivity {
         joinPrivateRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 Intent intent = new Intent(PlusButtonActivity.this, JoinPrivateRoom.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                 startActivity(intent);
@@ -95,9 +87,7 @@ public class PlusButtonActivity extends AppCompatActivity {
         joinPublicRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 setContentView(R.layout.join_public_room_popup);
                 searchBtn = (Button) findViewById(R.id.searchBtn);
                 searchRoomsEditText = (EditText) findViewById(R.id.searchEditText);
@@ -124,9 +114,7 @@ public class PlusButtonActivity extends AppCompatActivity {
                 searchBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (sharedPreferences.getBoolean("Sound", true)) {
-                            mp.start();
-                        }
+                        cs.start();
                         Intent intent = new Intent(PlusButtonActivity.this, SearchResultsActivity.class);
                         intent.putExtra("searchText", searchRoomsEditText.getText().toString());
                         intent.putStringArrayListExtra("categories", categories);
@@ -146,9 +134,7 @@ public class PlusButtonActivity extends AppCompatActivity {
     View.OnClickListener catClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (sharedPreferences.getBoolean("Sound", true)) {
-                mp.start();
-            }
+            cs.start();
             if (view.getAlpha()==1) {
                 categories.remove((String) view.getTag());
                 view.setAlpha(0.4f);

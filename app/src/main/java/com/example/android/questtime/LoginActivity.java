@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity{
     private Button loginBtn;
     private EditText emailLoginInput;
     private EditText passwordLoginInput;
-    private SharedPreferences sharedPreferences;
+    private ClickSound cs;
 
     private MediaPlayer mp;
 
@@ -39,12 +39,12 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.login_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        mp = MediaPlayer.create(this, R.raw.sound);
+
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
-        sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
+        cs = new ClickSound(this);
 
         /*
         Checking if user is already signed in. If so, proceed to MainActivity
@@ -64,9 +64,7 @@ public class LoginActivity extends AppCompatActivity{
         registerNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 try{
                     intent.putExtra("email", emailLoginInput.getText().toString());
@@ -80,9 +78,7 @@ public class LoginActivity extends AppCompatActivity{
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 login();
             }
         });
@@ -90,9 +86,7 @@ public class LoginActivity extends AppCompatActivity{
         forgotPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sharedPreferences.getBoolean("Sound", true)) {
-                    mp.start();
-                }
+                cs.start();
                 Intent intent = new Intent(LoginActivity.this, PasswordResetActivity.class);
                 startActivity(intent);
             }
