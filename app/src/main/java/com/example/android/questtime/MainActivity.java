@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -409,8 +408,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 userRooms.add(r);
                 adapter.notifyItemMoved(selectedPosition,userRooms.size()-1);
                 adapter.notifyItemChanged(userRooms.size()-1);
-                layoutManager.scrollToPosition(0);
             }
+            layoutManager.scrollToPosition(0);
+            loadRooms();
         }
     }
 
