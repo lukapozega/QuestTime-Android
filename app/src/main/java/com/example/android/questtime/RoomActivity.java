@@ -49,6 +49,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     private double created;
     private int points;
     private Question question;
+    private int selectedPosition;
 
     private TextView noQuestionsTxt;
 
@@ -59,8 +60,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     private FirebaseAuth mAuth;
 
     private SwipeRefreshLayout swipeRefreshLayout;
-
-    private int neodgovorenoPitanje = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +88,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         roomKey = getIntent().getStringExtra("key");
         roomName = getIntent().getStringExtra("name");
         roomType = getIntent().getStringExtra("type");
+        selectedPosition = getIntent().getIntExtra("selectedPosition",0);
 
         roomNameTitle.setText(roomName);
         if(roomType.equals("public")){
@@ -141,7 +141,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                     intent.putExtra("roomId", roomKey);
                     intent.putExtra("position", position);
                     startActivityForResult(intent, QUESTION_ANSWERED);
-                    neodgovorenoPitanje = -1;
                 } else {
                     mDatabase.child("rooms").child(roomKey).child("questions").child(question.getId()).child("answers")
                             .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -175,42 +174,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         questionsList.setAdapter(adapter);
 
-        roomKey = getIntent().getStringExtra("key");
-        roomName = getIntent().getStringExtra("name");
-        roomType = getIntent().getStringExtra("type");
-
-        ucitajPitanja();
-
-        if(roomType.equals("public")){
-            roomKeyTextView.setVisibility(View.GONE);
-            lock.setVisibility(View.GONE);
-        } else {
-            roomPrivateKey = getIntent().getStringExtra("privateKey");
-            roomKeyTextView.setText(roomPrivateKey);
-
-            roomKeyTextView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData cd = ClipData.newPlainText("Key", roomKeyTextView.getText());
-                    cm.setPrimaryClip(cd);
-                    Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
-        }
-
-        roomNameTitle.setText(roomName);
-
-        peopleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cs.start();
-                Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
-                intent.putExtra("roomKey", roomKey);
-                startActivity(intent);
-            }
-        });
     }
 
     public void loadQuestions(){
@@ -273,8 +236,18 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onBackPressed() {
-        if(neodgovorenoPitanje == -1) {
-            setResult(QUESTION_UNANSWERED);
+        boolean answeredAll = true;
+        for (Question q: questions) {
+            if (q.getPoints() == -1) {
+                answeredAll = false;
+            }
+        }
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("selectedPosition", selectedPosition);
+        if(answeredAll) {
+            setResult(QUESTION_ANSWERED,resultIntent);
+        } else {
+            setResult(QUESTION_UNANSWERED,resultIntent);
         }
         super.onBackPressed();
     }

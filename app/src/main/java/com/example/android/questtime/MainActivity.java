@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     final static int PUBLIC_ROOM_ADDED = 987;
     final static int NEW_QUESTION = 345;
     final static int QUESTION_UNANSWERED = 456;
+    static final int QUESTION_ANSWERED = 567;
 
     private ImageView settingsBtn;
     private ImageView addRoomBtn;
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 intent.putExtra("key", room.getKey());
                 intent.putExtra("name", room.getRoomName());
+                intent.putExtra("selectedPosition", position);
                 if(room.getType().equals("private")){
                     intent.putExtra("type", room.getType());
                     intent.putExtra("privateKey", room.getPrivateKey());
@@ -358,23 +361,23 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         for (DataSnapshot snapshot : dataSnapshot.child("categories").getChildren()) {
                             categories.add(snapshot.getValue().toString());
                         }
-                        try {
+                        if (dataSnapshot.hasChild("privateKey")) {
                             addRoom = new Room(dataSnapshot.child("roomName").getValue().toString(),
                                     dataSnapshot.child("difficulty").getValue().toString(),
                                     categories,
                                     (int) dataSnapshot.child("members").getChildrenCount(),
-                                    roomId,
+                                    dataSnapshot.getKey(),
                                     dataSnapshot.child("privateKey").getValue().toString(),
                                     dataSnapshot.child("type").getValue().toString(),
-                                    answered);
-                        } catch (NullPointerException e) {
+                                    1);
+                        } else {
                             addRoom = new Room(dataSnapshot.child("roomName").getValue().toString(),
                                     dataSnapshot.child("difficulty").getValue().toString(),
                                     categories,
                                     (int) dataSnapshot.child("members").getChildrenCount(),
-                                    roomId,
+                                    dataSnapshot.getKey(),
                                     dataSnapshot.child("type").getValue().toString(),
-                                    answered);
+                                    1);
                         }
                         userRooms.add(addRoom);
                         adapter.notifyItemInserted(userRooms.size() - 1);
@@ -392,9 +395,21 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         }
         if(requestCode == NEW_QUESTION){
-            if(resultCode == QUESTION_UNANSWERED){
-                layoutManager.removeAllViews();
-                ucitajSobe();
+            int selectedPosition = data.getIntExtra("selectedPosition",0);
+            Room r = userRooms.get(selectedPosition);
+            if(resultCode == QUESTION_UNANSWERED && r.getAnswered()==1){
+                r.setAnswered(-1);
+                userRooms.remove(selectedPosition);
+                userRooms.add(0, r);
+                adapter.notifyItemMoved(selectedPosition,0);
+                adapter.notifyItemChanged(0);
+            } else if (resultCode==QUESTION_ANSWERED && r.getAnswered()==-1) {
+                r.setAnswered(1);
+                userRooms.remove(selectedPosition);
+                userRooms.add(r);
+                adapter.notifyItemMoved(selectedPosition,userRooms.size()-1);
+                adapter.notifyItemChanged(userRooms.size()-1);
+                layoutManager.scrollToPosition(0);
             }
         }
     }
