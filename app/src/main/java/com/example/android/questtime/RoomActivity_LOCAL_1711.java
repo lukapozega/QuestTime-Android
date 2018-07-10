@@ -175,42 +175,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         questionsList.setAdapter(adapter);
 
-        roomKey = getIntent().getStringExtra("key");
-        roomName = getIntent().getStringExtra("name");
-        roomType = getIntent().getStringExtra("type");
-
-        ucitajPitanja();
-
-        if(roomType.equals("public")){
-            roomKeyTextView.setVisibility(View.GONE);
-            lock.setVisibility(View.GONE);
-        } else {
-            roomPrivateKey = getIntent().getStringExtra("privateKey");
-            roomKeyTextView.setText(roomPrivateKey);
-
-            roomKeyTextView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    ClipboardManager cm = (ClipboardManager)getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData cd = ClipData.newPlainText("Key", roomKeyTextView.getText());
-                    cm.setPrimaryClip(cd);
-                    Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
-        }
-
-        roomNameTitle.setText(roomName);
-
-        peopleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cs.start();
-                Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
-                intent.putExtra("roomKey", roomKey);
-                startActivity(intent);
-            }
-        });
     }
 
     public void loadQuestions(){

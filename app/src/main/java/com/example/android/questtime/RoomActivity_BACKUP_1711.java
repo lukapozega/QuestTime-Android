@@ -175,6 +175,8 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         questionsList.setAdapter(adapter);
 
+<<<<<<< HEAD
+=======
         roomKey = getIntent().getStringExtra("key");
         roomName = getIntent().getStringExtra("name");
         roomType = getIntent().getStringExtra("type");
@@ -211,6 +213,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                 startActivity(intent);
             }
         });
+>>>>>>> 6f4f03d22a1a2d2349458b5dbf44fadae5ac395f
     }
 
     public void loadQuestions(){
