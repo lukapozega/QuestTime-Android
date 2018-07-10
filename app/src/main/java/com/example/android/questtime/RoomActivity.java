@@ -174,7 +174,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                cs.start();
                 Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
                 intent.putExtra("roomKey", roomKey);
                 startActivity(intent);
