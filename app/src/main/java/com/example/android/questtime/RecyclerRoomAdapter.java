@@ -63,10 +63,11 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
 
     @Override
     public void onBindViewHolder(final RecyclerRoomAdapter.ViewHolder holder, final int position) {
-
                 Room room = roomsList.get(position);
                 if(room.getAnswered() != -1) {
                     holder.indicator.setVisibility(View.GONE);
+                } else {
+                    holder.indicator.setVisibility(View.VISIBLE);
                 }
                 holder.roomName.setText(room.getRoomName());
                 holder.people.setText("People: " + room.getNumberOfUsers());

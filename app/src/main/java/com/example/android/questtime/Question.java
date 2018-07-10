@@ -66,16 +66,13 @@ public class Question implements Comparable<Question>{
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(id);
+        Question question = (Question) obj;
+        return (question.getId().equals(this.id));
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        for (int i = 0; i < id.length(); i++) {
-            hash = hash*31 + id.charAt(i);
-        }
-        return hash;
+        return this.id.hashCode();
     }
 
     @Override

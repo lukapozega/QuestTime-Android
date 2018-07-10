@@ -18,8 +18,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Random;
 
 public class AnswerActivity extends AppCompatActivity {
-    static final int QUESTION_ANSWERED = 567;
 
+    int i;
+    int nextPoints;
+    int sendingPoints;
+    int position;
     private String questionId;
     private String category;
     private Question question;
@@ -28,13 +31,70 @@ public class AnswerActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private LinearLayout answers;
     private TextView questionText;
-    int i;
     private String roomId;
-    int nextPoints;
-    int saljiBodove;
-    int position;
-
     private ClickSound cs;
+
+    private View.OnClickListener submitAnswer = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            cs.start();
+            final TextView answer = (TextView) view;
+            final DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
+            dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());
+            mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child("questions").child(questionId).hasChild("next_points")) {
+                        nextPoints = Integer.parseInt( dataSnapshot.child("questions").child(questionId).child("next_points").getValue().toString());
+                    } else {
+                        nextPoints = (int)dataSnapshot.child("members").getChildrenCount();
+                    }
+                    if(answer.getText().equals(question.getCorrect())) {
+                        sendingPoints = nextPoints;
+                        dbReference.child("points").child(mAuth.getUid()).setValue(nextPoints);
+                        dbReference.child("next_points").setValue(--nextPoints);
+                    } else {
+                        dbReference.child("points").child(mAuth.getUid()).setValue(0);
+                        sendingPoints = 0;
+                    }
+
+                    mDatabase.child("rooms").child(roomId).child("questions").child(question.getId()).child("answers")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    final String myAnswer = dataSnapshot.child(mAuth.getUid()).getValue().toString();
+                                    final int numberOfAnswers = (int) dataSnapshot.getChildrenCount();
+                                    Intent intentResult = new Intent(AnswerActivity.this, ResultActivity.class);
+                                    intentResult.putExtra("key", questionId);
+                                    intentResult.putExtra("points", String.valueOf(sendingPoints));
+                                    intentResult.putExtra("category", category);
+                                    intentResult.putExtra("roomId", roomId);
+                                    intentResult.putExtra("myAnswer", myAnswer);
+                                    intentResult.putExtra("numberOfAnswers", numberOfAnswers);
+                                    intentResult.putExtra("position", position);
+                                    Intent resultIntent = new Intent();
+                                    resultIntent.putExtra("position", position);
+                                    resultIntent.putExtra("points", sendingPoints);
+                                    setResult(Activity.RESULT_OK, resultIntent);
+                                    finish();
+                                    startActivity(intentResult);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,67 +147,5 @@ public class AnswerActivity extends AppCompatActivity {
         setFinishOnTouchOutside(true);
 
     }
-
-    private View.OnClickListener submitAnswer = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            cs.start();
-            final TextView answer = (TextView) view;
-            final DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
-            dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());
-            mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    try {
-                        nextPoints = Integer.parseInt( dataSnapshot.child("questions").child(questionId).child("next_points").getValue().toString());
-                    } catch (NullPointerException e){
-                        nextPoints = (int)dataSnapshot.child("members").getChildrenCount();
-                    }
-                    if(answer.getText().equals(question.getCorrect())) {
-                        saljiBodove = nextPoints;
-                        dbReference.child("points").child(mAuth.getUid()).setValue(nextPoints);
-                        dbReference.child("next_points").setValue(--nextPoints);
-                    } else {
-                        dbReference.child("points").child(mAuth.getUid()).setValue(0);
-                        saljiBodove = 0;
-                    }
-
-                    mDatabase.child("rooms").child(roomId).child("questions").child(question.getId()).child("answers")
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    final String myAnswer = dataSnapshot.child(mAuth.getUid()).getValue().toString();
-                                    final int numberOfAnswers = (int) dataSnapshot.getChildrenCount();
-                                    Intent intentResult = new Intent(AnswerActivity.this, ResultActivity.class);
-                                    intentResult.putExtra("key", questionId);
-                                    intentResult.putExtra("points", String.valueOf(saljiBodove));
-                                    intentResult.putExtra("category", category);
-                                    intentResult.putExtra("roomId", roomId);
-                                    intentResult.putExtra("myAnswer", myAnswer);
-                                    intentResult.putExtra("numberOfAnswers", numberOfAnswers);
-                                    intentResult.putExtra("position", position);
-                                    Intent resultIntent = new Intent();
-                                    resultIntent.putExtra("position", position);
-                                    resultIntent.putExtra("points", saljiBodove);
-                                    setResult(Activity.RESULT_OK, resultIntent);
-                                    finish();
-                                    startActivity(intentResult);
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
-    };
 
 }
