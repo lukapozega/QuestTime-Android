@@ -164,7 +164,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                     ClipData cd = ClipData.newPlainText("Key", roomKeyTextView.getText());
                     cm.setPrimaryClip(cd);
                     Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
-
                     return true;
                 }
             });
