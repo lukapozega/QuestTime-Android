@@ -15,6 +15,96 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="title">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/roboto_black</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="rotatingButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_marginTop">7dp</item>
+    </style>
+
+    <style name="topLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="bigNumber">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_below">@id/top</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:fontFamily">@font/roboto_black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">80sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="questionsLeft">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_below">@id/questionsLeftNumber</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:fontFamily">@font/roboto_black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="separator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">4dp</item>
+        <item name="android:layout_below">@id/questionsLeftTodayTextView</item>
+        <item name="android:layout_marginLeft">80dp</item>
+        <item name="android:layout_marginRight">80dp</item>
+        <item name="android:background">@drawable/separator_background</item>
+    </style>
+
+    <style name="emptyView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">25dp</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:alpha">0.85</item>
+    </style>
+
+    <style name="refresh">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_below">@id/mainSeparator</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">14dp</item>
+        <item name="android:layout_marginRight">14dp</item>
+    </style>
+
+    <style name="recycler">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">8dp</item>
     </style>
 
 </resources>

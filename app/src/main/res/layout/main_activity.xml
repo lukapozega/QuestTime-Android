@@ -6,111 +6,58 @@
     android:orientation="vertical">
 
 
-    <ImageView
-        android:id="@+id/settingsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="15dp"
-        android:src="@mipmap/settings" />
+    <LinearLayout
+        android:id="@+id/top"
+        style="@style/topLayout">
 
-    <TextView
-        android:id="@+id/questTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="@font/roboto_black"
-        android:layout_marginTop="15dp"
-        android:text="@string/app_name"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/settingsBtn"
+            android:layout_marginStart="12dp"
+            android:src="@mipmap/settings"
+            style="@style/rotatingButton" />
 
-    <ImageView
-        android:id="@+id/addRoomBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="15dp"
-        android:src="@mipmap/add" />
+        <TextView
+            android:id="@+id/questTime"
+            android:text="@string/app_name"
+            style="@style/title" />
+
+        <ImageView
+            android:id="@+id/addRoomBtn"
+            style="@style/rotatingButton"
+            android:layout_marginEnd="12dp"
+            android:src="@mipmap/add" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/questionsLeftNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/questTime"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="@font/roboto_black"
-        android:gravity="center"
         android:text="0"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="80sp"
-        android:textStyle="bold" />
+        style="@style/bigNumber" />
 
     <TextView
         android:id="@+id/questionsLeftTodayTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/questionsLeftNumber"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/roboto_black"
-        android:gravity="center"
         android:text="@string/questions_left"
-        android:textAllCaps="true"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        style="@style/questionsLeft" />
 
 
     <View
         android:id="@+id/mainSeparator"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_below="@id/questionsLeftTodayTextView"
-        android:layout_marginLeft="80dp"
-        android:layout_marginRight="80dp"
-        android:background="@drawable/separator_background">
+        style="@style/separator">
 
     </View>
 
     <TextView
         android:id="@+id/no_rooms_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:text="@string/no_rooms_yet"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
-        android:layout_margin="25dp"
-        android:visibility="gone"
-        android:alpha="0.85"
-        />
+        style="@style/emptyView" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/mainSeparator"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
-        >
+        style="@style/refresh">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/roomListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="8dp"
-            >
+            style="@style/recycler">
 
         </android.support.v7.widget.RecyclerView>
 
