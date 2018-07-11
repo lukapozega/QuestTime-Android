@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
                 Color.RED, Color.CYAN);
-        swipeRefreshLayout.setDistanceToTriggerSync(20);// in dips
-        swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
+        swipeRefreshLayout.setDistanceToTriggerSync(20);
+        swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         roomListView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         roomListView.setLayoutManager(layoutManager);
-        adapter = new RecyclerRoomAdapter(this, userRooms, new ItemClickListenerInterface() {
+        adapter = new RecyclerRoomAdapter(userRooms, new ItemClickListenerInterface() {
             @Override
             public void onItemClick(View v, int position) {
                 cs.start();
@@ -323,7 +323,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                             } else {
                                 noRoomsTxt.setVisibility(View.GONE);
                             }
-                            layoutManager.scrollToPosition(0);
                         }
 
                         @Override

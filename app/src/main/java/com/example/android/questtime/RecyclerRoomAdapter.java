@@ -1,6 +1,6 @@
 package com.example.android.questtime;
 
-import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +16,6 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
 
     private ArrayList<Room> roomsList;
     private ItemClickListenerInterface clickListener;
-    private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView roomName;
@@ -24,6 +23,7 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
         LinearLayout categories;
         ImageView difficulty;
         TextView indicator;
+        ImageView underline;
 
         public ViewHolder(View view) {
             super(view);
@@ -32,11 +32,11 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
             categories = (LinearLayout) view.findViewById(R.id.category_layout);
             difficulty = (ImageView) view.findViewById(R.id.difficulty_icon);
             indicator = (TextView) view.findViewById(R.id.questionIndicator);
+            underline = (ImageView) view.findViewById(R.id.underline);
         }
     }
 
-    public RecyclerRoomAdapter(Context context, ArrayList<Room> roomsList, ItemClickListenerInterface clickListener){
-        this.context = context;
+    public RecyclerRoomAdapter(ArrayList<Room> roomsList, ItemClickListenerInterface clickListener){
         this.roomsList = roomsList;
         this.clickListener = clickListener;
     }
@@ -81,6 +81,7 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
                     case "hard":
                         holder.difficulty.setImageResource(R.drawable.circle_red);
                 }
+                holder.underline.setBackgroundColor(Color.parseColor(keyToHex(room.getKey())));
                 List<Integer> categoryIcons = new ArrayList<>();
                 for (String category: room.getCategories()) {
                     switch (category) {
@@ -140,5 +141,14 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
     public void removeItem(int position){
         roomsList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public String keyToHex(String i){
+        int a,b,c;
+        a=(((int) i.charAt(i.length()-1))*1234)%255;
+        b=(((int) i.charAt(i.length()-2))*1234)%255;
+        c=(((int) i.charAt(i.length()-3))*1234)%255;
+        String hex = String.format("#%02x%02x%02x", a, b, c);
+        return hex;
     }
 }
