@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="74dp"
+    android:layout_height="68dp"
     android:background="@drawable/list_item"
     android:paddingStart="18dp"
     android:clipToPadding="true"
@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="6dp">
+        android:layout_marginBottom="8dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -27,8 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/room_name"
-                android:fontFamily="@font/roboto_black"
-                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:singleLine="true"
                 />
 
@@ -44,15 +44,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginTop="0dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/difficulty"
                 android:layout_marginEnd="4dp"
-                android:fontFamily="@font/roboto_black"
                 android:textSize="12sp"
                 android:layout_gravity="center"/>
 
@@ -63,15 +61,23 @@
                 android:src="@drawable/circle_green"
                 android:adjustViewBounds="true"
                 android:layout_marginEnd="24dp"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="2dp"
                 android:padding="4dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/user"
+                android:adjustViewBounds="true"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="1dp"
+                android:alpha="0.8"/>
 
             <TextView
                 android:id="@+id/numberOfUsers"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/people"
-                android:fontFamily="@font/roboto_black"
                 android:textSize="12sp"
                 android:gravity="center"/>
 
@@ -88,38 +94,21 @@
         android:layout_marginEnd="15dp">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:src="@drawable/art"
-            android:layout_margin="4dp"
-            android:alpha="0.7"/>
+            style="@style/categoryIcon" />
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:src="@drawable/art"
-            android:layout_margin="4dp"
-            android:alpha="0.7"/>
+            style="@style/categoryIcon"/>
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
             android:src="@drawable/art"
-            android:layout_margin="4dp"
-            android:alpha="0.7"/>
+            style="@style/categoryIcon"/>
 
     </LinearLayout>
 
-    <TextView
+    <View
         android:id="@+id/questionIndicator"
         android:layout_width="20dp"
         android:layout_height="match_parent"
-        android:background="@drawable/question_indicator"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:fontFamily="@font/roboto_black"
-        />
+        android:background="@drawable/question_indicator" />
 
 </LinearLayout>

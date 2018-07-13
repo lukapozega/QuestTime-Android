@@ -313,6 +313,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 if (addRoom.getAnswered()==-1) {
                                     userRooms.add(0, addRoom);
                                     adapter.notifyItemInserted(0);
+                                    layoutManager.scrollToPosition(0);
                                 } else {
                                     userRooms.add(addRoom);
                                     adapter.notifyItemInserted(userRooms.size() - 1);
@@ -409,7 +410,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 adapter.notifyItemChanged(userRooms.size()-1);
             }
             layoutManager.scrollToPosition(0);
-            loadRooms();
         }
     }
 

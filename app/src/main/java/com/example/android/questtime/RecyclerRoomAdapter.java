@@ -22,7 +22,7 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
         TextView people;
         LinearLayout categories;
         ImageView difficulty;
-        TextView indicator;
+        View indicator;
         ImageView underline;
 
         public ViewHolder(View view) {
@@ -31,7 +31,7 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
             people = (TextView) view.findViewById(R.id.numberOfUsers);
             categories = (LinearLayout) view.findViewById(R.id.category_layout);
             difficulty = (ImageView) view.findViewById(R.id.difficulty_icon);
-            indicator = (TextView) view.findViewById(R.id.questionIndicator);
+            indicator = (View) view.findViewById(R.id.questionIndicator);
             underline = (ImageView) view.findViewById(R.id.underline);
         }
     }
@@ -70,7 +70,7 @@ public class RecyclerRoomAdapter extends RecyclerView.Adapter<RecyclerRoomAdapte
                     holder.indicator.setVisibility(View.VISIBLE);
                 }
                 holder.roomName.setText(room.getRoomName());
-                holder.people.setText("People: " + room.getNumberOfUsers());
+                holder.people.setText(String.valueOf(room.getNumberOfUsers()));
                 switch (room.getDifficulty()) {
                     case "easy":
                         holder.difficulty.setImageResource(R.drawable.circle_green);
