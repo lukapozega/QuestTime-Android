@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,7 +42,7 @@ public class AnswerActivity extends AppCompatActivity {
             cs.start();
             final TextView answer = (TextView) view;
             final DatabaseReference dbReference = mDatabase.child("rooms").child(roomId).child("questions").child(questionId);
-            dbReference.child("answers").child(mAuth.getUid()).setValue(answer.getText());
+            dbReference.child("answers").child(mAuth.getUid()).setValue(TextUtils.htmlEncode(answer.getText().toString()));
             mDatabase.child("rooms").child(roomId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -49,7 +51,7 @@ public class AnswerActivity extends AppCompatActivity {
                     } else {
                         nextPoints = (int)dataSnapshot.child("members").getChildrenCount();
                     }
-                    if(answer.getText().equals(question.getCorrect())) {
+                    if(answer.getText().toString().equals(Html.fromHtml(question.getCorrect()).toString())) {
                         sendingPoints = nextPoints;
                         dbReference.child("points").child(mAuth.getUid()).setValue(nextPoints);
                         dbReference.child("next_points").setValue(--nextPoints);
@@ -125,15 +127,15 @@ public class AnswerActivity extends AppCompatActivity {
                         questionId,
                         dataSnapshot.child("correct_answer").getValue().toString(),
                         wrongAnswers);
-                questionText.setText(question.getText());
+                questionText.setText(Html.fromHtml(question.getText()).toString());
                 Random random = new Random();
                 int k = random.nextInt(4);
                 TextView answer = (TextView) answers.getChildAt(k%4);
-                answer.setText(question.getCorrect());
+                answer.setText(Html.fromHtml(question.getCorrect()).toString());
                 answer.setOnClickListener(submitAnswer);
                 for (i = 1; i < 4; ++i){
                     answer = (TextView) answers.getChildAt((k+i)%4);
-                    answer.setText(wrongAnswers[i-1]);
+                    answer.setText(Html.fromHtml(wrongAnswers[i-1]).toString());
                     answer.setOnClickListener(submitAnswer);
                 }
             }

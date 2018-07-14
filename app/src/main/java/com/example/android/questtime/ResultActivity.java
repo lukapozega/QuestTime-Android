@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,8 +13,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -62,11 +61,11 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot answer : dataSnapshot.getChildren()){
-                    Integer count = answersMap.get(answer.getValue().toString());
+                    Integer count = answersMap.get(Html.fromHtml(answer.getValue().toString()).toString());
                     if(count == null){
-                        answersMap.put(answer.getValue().toString(), 1);
+                        answersMap.put(Html.fromHtml(answer.getValue().toString()).toString(), 1);
                     } else {
-                        answersMap.put(answer.getValue().toString(), count +1);
+                        answersMap.put(Html.fromHtml(answer.getValue().toString()).toString(), count +1);
                     }
                 }
             }
@@ -98,14 +97,14 @@ public class ResultActivity extends AppCompatActivity {
                 }
 
                 score.setText(String.valueOf(points));
-                questionText.setText(question.getText());
+                questionText.setText(Html.fromHtml(question.getText()).toString());
 
                 Random random = new Random();
                 int k = random.nextInt(4);
                 LinearLayout answer = (LinearLayout) answers.getChildAt(k%4);
                 TextView answerText = (TextView) answer.getChildAt(0);
                 TextView percent = (TextView) answer.getChildAt(1);
-                answerText.setText(question.getCorrect());
+                answerText.setText(Html.fromHtml(question.getCorrect()).toString());
                 answerText.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#36B305")));
                 answerText.setTextColor(Color.WHITE);
                 try {
@@ -119,7 +118,7 @@ public class ResultActivity extends AppCompatActivity {
                     answer = (LinearLayout) answers.getChildAt((k+i)%4);
                     answerText = (TextView) answer.getChildAt(0);
                     percent = (TextView) answer.getChildAt(1);
-                    answerText.setText(wrongAnswers[i-1]);
+                    answerText.setText(Html.fromHtml(wrongAnswers[i-1]).toString());
                     try {
                         percentage = (float)answersMap.get(answerText.getText())/ numberOfAnswers * 100.0f;
                     } catch (NullPointerException e){

@@ -2,6 +2,7 @@ package com.example.android.questtime;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class RecyclerQuestionAdapter extends RecyclerView.Adapter<RecyclerQuesti
         } else {
             holder.indicator.setVisibility(View.GONE);
         }
-        holder.questionText.setText(question.getText());
+        holder.questionText.setText(Html.fromHtml(question.getText()).toString());
         Date date = new Date((long)question.getTimestamp()*1000);
         Format format = new SimpleDateFormat("dd. MM. yyyy HH:mm");
         holder.timeText.setText(format.format(date));
