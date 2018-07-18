@@ -25,7 +25,7 @@
         <item name="android:fontFamily">@font/roboto_black</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">20sp</item>
+
         <item name="android:layout_weight">1</item>
     </style>
 
@@ -113,6 +113,57 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_margin">6dp</item>
         <item name="android:alpha">0.7</item>
+    </style>
+
+    <style name="roomKeyLayout">
+        <item name="android:layout_below">@id/roomTop</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="lock">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">14dp</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:padding">1dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="roomKey">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_toEndOf">@id/lock</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">@font/roboto_black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="roomSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">4dp</item>
+        <item name="android:layout_below">@id/keyLayout</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginLeft">120dp</item>
+        <item name="android:layout_marginRight">120dp</item>
+        <item name="android:background">@drawable/separator_background</item>
+    </style>
+
+    <style name="noQuestions">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_margin">25dp</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:alpha">0.85</item>
     </style>
 
 </resources>

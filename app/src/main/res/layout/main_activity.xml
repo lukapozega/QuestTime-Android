@@ -19,7 +19,8 @@
         <TextView
             android:id="@+id/questTime"
             android:text="@string/app_name"
-            style="@style/title" />
+            style="@style/title"
+            android:textSize="20sp"/>
 
         <ImageView
             android:id="@+id/addRoomBtn"

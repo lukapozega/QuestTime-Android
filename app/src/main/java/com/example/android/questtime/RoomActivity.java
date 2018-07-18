@@ -79,7 +79,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        peopleButton = (ImageView) findViewById(R.id.peopleBtn);
+        peopleButton = (ImageView) findViewById(R.id.peopleButton);
         roomNameTitle = (TextView) findViewById(R.id.roomNameTitle);
         roomKeyTextView = (TextView) findViewById(R.id.roomKey);
         noQuestionsTxt = (TextView) findViewById(R.id.no_questions_txt);
