@@ -1,11 +1,14 @@
 package com.example.android.questtime;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,8 +38,6 @@ public class RegisterActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    private MediaPlayer mp;
-
     private ClickSound cs;
 
     User user;
@@ -47,20 +48,14 @@ public class RegisterActivity extends AppCompatActivity{
         setContentView(R.layout.register_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
+        initViews();
+
         extras = getIntent().getExtras();
-
-
-
         cs = new ClickSound(this);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        registerUsername = (EditText) findViewById(R.id.registerUsername);
-        registerEmail = (EditText) findViewById(R.id.registerEmail);
-        registerPassword = (EditText) findViewById(R.id.registerPassword);
-        repeatRegisterPassword = (EditText) findViewById(R.id.repeatRegisterPassword);
-        registerBtn = (Button) findViewById(R.id.registerBtn);
 
         if(extras != null){
             String loginEmail = extras.getString("email");
@@ -71,34 +66,42 @@ public class RegisterActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 cs.start();
-                try {
-
-                    if (registerPassword.getText().toString().equals(repeatRegisterPassword.getText().toString()) && registerPassword.getText().toString().length() >= 6) {
-                        register();
-                        user = new User(registerUsername.getText().toString(), registerEmail.getText().toString());
-                    } else if(registerPassword.getText().toString().length() < 6) {
-                        Toast.makeText(RegisterActivity.this, "Password must be at least 6 characters.",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "Passwords do not match.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IllegalArgumentException e){
-                    if(registerUsername.getText().toString().isEmpty()){
-                        Toast.makeText(RegisterActivity.this, "Please enter your username.",
-                                Toast.LENGTH_SHORT).show();
-                    } else if(registerEmail.getText().toString().isEmpty()){
-                        Toast.makeText(RegisterActivity.this, "Please enter valid email address.",
-                                Toast.LENGTH_SHORT).show();
-                    } else if(registerPassword.getText().toString().isEmpty()){
-                        Toast.makeText(RegisterActivity.this, "Password must be at least 6 characters.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
+                if(validateInput()) {
+                    register();
+                    user = new User(registerUsername.getText().toString(), registerEmail.getText().toString());
                 }
             }
         });
 
+    }
+
+    private void initViews() {
+        registerUsername = findViewById(R.id.registerUsername);
+        registerEmail = findViewById(R.id.registerEmail);
+        registerPassword = findViewById(R.id.registerPassword);
+        repeatRegisterPassword = findViewById(R.id.repeatRegisterPassword);
+        registerBtn = findViewById(R.id.registerBtn);
+    }
+
+    private boolean validateInput() {
+        boolean flag = true;
+        if(registerPassword.getText().toString().length() < 6) {
+            flag = false;
+            registerPassword.setError("Password must be at least 6 characters.");
+        }
+        if(!repeatRegisterPassword.getText().toString().equals(registerPassword.getText().toString())) {
+            flag = false;
+            repeatRegisterPassword.setError("Passwords do not match.");
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(registerEmail.getText()).matches()) {
+            flag = false;
+            registerEmail.setError("Please enter valid email address.");
+        }
+        if(registerUsername.getText().toString().isEmpty()) {
+            flag = false;
+            registerUsername.setError("Please enter your username.");
+        }
+        return flag;
     }
 
     /**
@@ -117,9 +120,7 @@ public class RegisterActivity extends AppCompatActivity{
                             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                             startActivity(intent);
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(RegisterActivity.this, "User registration failed. Please try again.",
-                                    Toast.LENGTH_SHORT).show();
+                            showError();
                         }
                     }
                 });
@@ -131,5 +132,14 @@ public class RegisterActivity extends AppCompatActivity{
         super.onBackPressed();
 
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
+
+    private void showError() {
+        new AlertDialog.Builder(this)
+                .setTitle("Registration")
+                .setMessage("User registration failed! Please try again.")
+                .setPositiveButton("OK", null)
+                .create()
+                .show();
     }
 }

@@ -1,8 +1,6 @@
 package com.example.android.questtime;
 
 
-import com.google.firebase.auth.FirebaseUser;
-
 /**
  * This class represents one user, and is used for constructing a new user when registering to an application.
  */

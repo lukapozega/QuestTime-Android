@@ -37,8 +37,8 @@
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="MAINACTIVITY"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
+                <action android:name="MAINACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name=".PasswordResetActivity"
@@ -52,7 +52,7 @@
         <activity
             android:name=".SettingsActivity"
             android:theme="@style/TransparentTheme"
-            android:screenOrientation="portrait"/>
+           />
 
         <service android:name=".MyFirebaseInstanceIdService">
             <intent-filter>

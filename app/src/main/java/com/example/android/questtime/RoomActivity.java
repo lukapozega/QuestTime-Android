@@ -69,8 +69,8 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.questionSwipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
-                Color.RED, Color.CYAN);
+        swipeRefreshLayout.setColorSchemeColors(Color.CYAN, Color.BLUE, Color.GREEN,
+                Color.RED);
         swipeRefreshLayout.setDistanceToTriggerSync(20);// in dips
         swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
 

@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeColors(Color.GRAY, Color.GREEN, Color.BLUE,
-                Color.RED, Color.CYAN);
+        swipeRefreshLayout.setColorSchemeColors(Color.CYAN, Color.BLUE, Color.GREEN,
+                Color.RED);
         swipeRefreshLayout.setDistanceToTriggerSync(20);
         swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
 
@@ -159,92 +159,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     public void refresh() {
         loadRooms();
-    }
-
-    public void ucitajSobe() {
-        numberOfQuestions = 0;
-        questionsLeftNumber.setText("0");
-        userRooms.clear();
-        mDatabase.child("users").child(mAuth.getUid()).child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(final DataSnapshot dataSnapshot) {
-                for (final DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    mDatabase.child("rooms").child(snapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot2) {
-                            joined = Double.parseDouble(dataSnapshot2.child("members").child(mAuth.getUid()).getValue().toString());
-                            List<String> categories = new ArrayList<>();
-                            for (DataSnapshot snapshot1: dataSnapshot2.child("categories").getChildren()) {
-                                categories.add(snapshot1.getValue().toString());
-                            }
-                            answered = 1;
-                            for (DataSnapshot questions : dataSnapshot2.child("questions").getChildren()){
-                                created = Double.parseDouble(questions.child("timestamp").getValue().toString());
-                                try{
-                                    points = Integer.parseInt(questions.child("points").child(mAuth.getUid()).getValue().toString());
-                                } catch (NullPointerException e){
-                                    if(created > joined) {
-                                        if(created*1000 < System.currentTimeMillis()){
-                                            answered = -1;
-                                        }
-                                        numberOfQuestions++;
-                                        questionsLeftNumber.setText(String.valueOf(numberOfQuestions));
-                                        if(numberOfQuestions == 1){
-                                            questionsLeftTodayTextView.setText("QUESTION LEFT TODAY");
-                                        } else {
-                                            questionsLeftTodayTextView.setText("QUESTIONS LEFT TODAY");
-                                        }
-                                    }
-                                }
-                            }
-                            try{
-                                addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
-                                        dataSnapshot2.child("difficulty").getValue().toString(),
-                                        categories,
-                                        (int) dataSnapshot2.child("members").getChildrenCount(),
-                                        snapshot.getKey(),
-                                        dataSnapshot2.child("privateKey").getValue().toString(),
-                                        dataSnapshot2.child("type").getValue().toString(),
-                                        answered);
-                            } catch (NullPointerException e){
-                                addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
-                                        dataSnapshot2.child("difficulty").getValue().toString(),
-                                        categories,
-                                        (int) dataSnapshot2.child("members").getChildrenCount(),
-                                        snapshot.getKey(),
-                                        dataSnapshot2.child("type").getValue().toString(),
-                                        answered);
-                            }
-                            if(addRoom.getAnswered() == -1){
-                                userRooms.add(0, addRoom);
-                                adapter.notifyItemInserted(0);
-                            } else {
-                                userRooms.add(addRoom);
-                                adapter.notifyItemInserted(userRooms.size() - 1);
-                            }
-                            if(userRooms.isEmpty()){
-                                noRoomsTxt.setVisibility(View.VISIBLE);
-                            } else {
-                                noRoomsTxt.setVisibility(View.GONE);
-                            }
-                            layoutManager.scrollToPosition(0);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public void loadRooms() {
