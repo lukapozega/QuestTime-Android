@@ -23,7 +23,7 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/boja" />
 
-        <activity android:name=".LoginActivity"
+        <activity android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,61 +31,61 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.register.RegisterActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity"
+        <activity android:name=".ui.rooms.RoomsActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="MAINACTIVITY"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".PasswordResetActivity"
+        <activity android:name=".ui.password_reset.PasswordResetActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".CreateNewRoom"
+        <activity android:name=".ui.join_room.CreateNewRoom"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".PlusButtonActivity"
+            android:name=".ui.join_room.PlusButtonActivity"
             android:theme="@style/TransparentTheme"
             />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:theme="@style/TransparentTheme"
            />
 
-        <service android:name=".MyFirebaseInstanceIdService">
+        <service android:name=".data.firebase.MyFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".RoomActivity"
+        <activity android:name=".ui.room.RoomActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="ROOMACTIVITY"></action>
                 <category android:name="android.intent.category.DEFAULT"></category>
             </intent-filter>
         </activity>
-        <activity android:name=".AnswerActivity"
+        <activity android:name=".ui.question_interaction.AnswerActivity"
             android:theme="@style/TransparentTheme"
             />
 
-        <activity android:name=".PeopleActivity"
+        <activity android:name=".ui.people.PeopleActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".SearchResultsActivity"
+        <activity android:name=".ui.join_room.search.SearchResultsActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ExitRoomActivity"
+        <activity android:name=".ui.room.leave_room.ExitRoomActivity"
                   android:theme="@style/TransparentTheme"
             />
-        <activity android:name=".ResultActivity"
+        <activity android:name=".ui.question_interaction.ResultActivity"
             android:theme="@style/TransparentTheme"
             />
-        <activity android:name=".JoinPrivateRoom"
+        <activity android:name=".ui.join_room.JoinPrivateRoom"
             android:theme="@style/TransparentTheme"
             />
         <service
-            android:name=".MyFirebaseMessagingService">
+            android:name=".data.firebase.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
