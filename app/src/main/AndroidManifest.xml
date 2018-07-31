@@ -48,7 +48,7 @@
         <activity
             android:name=".PlusButtonActivity"
             android:theme="@style/TransparentTheme"
-            android:screenOrientation="portrait"/>
+            />
         <activity
             android:name=".SettingsActivity"
             android:theme="@style/TransparentTheme"
@@ -69,7 +69,7 @@
         </activity>
         <activity android:name=".AnswerActivity"
             android:theme="@style/TransparentTheme"
-            android:screenOrientation="portrait"/>
+            />
 
         <activity android:name=".PeopleActivity"
             android:screenOrientation="portrait"/>
@@ -77,13 +77,13 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ExitRoomActivity"
                   android:theme="@style/TransparentTheme"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".ResultActivity"
             android:theme="@style/TransparentTheme"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".JoinPrivateRoom"
             android:theme="@style/TransparentTheme"
-            android:screenOrientation="portrait"/>
+            />
         <service
             android:name=".MyFirebaseMessagingService">
             <intent-filter>
