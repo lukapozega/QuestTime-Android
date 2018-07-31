@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.android.questtime.R;
 import com.example.android.questtime.data.models.Room;
+import com.example.android.questtime.utils.media.MediaUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,12 +37,12 @@ public class SearchRoomAdapter extends ArrayAdapter<Room> {
 
     private Room currentRoom;
     private FirebaseAuth mAuth;
+    private Context context;
     private DatabaseReference mDatabase;
-
-    private MediaPlayer mp;
 
     public SearchRoomAdapter(Context context, ArrayList<Room> rooms) {
         super(context, 0, rooms);
+        this.context = context;
     }
 
 
@@ -54,8 +55,6 @@ public class SearchRoomAdapter extends ArrayAdapter<Room> {
         }
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        mp = MediaPlayer.create(getContext(), R.raw.sound);
 
         currentRoom = getItem(position);
 
@@ -77,7 +76,7 @@ public class SearchRoomAdapter extends ArrayAdapter<Room> {
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mp.start();
+                MediaUtils.playButtonClick(context);
                 mDatabase.child("rooms").child(getItem(position).getKey()).child("members").child(mAuth.getUid()).setValue(System.currentTimeMillis()/1000);
                 mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(getItem(position).getKey()).setValue(true);
                 FirebaseMessaging.getInstance().subscribeToTopic(getItem(position).getKey());

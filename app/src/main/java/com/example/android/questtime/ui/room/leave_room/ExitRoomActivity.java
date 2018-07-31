@@ -1,9 +1,9 @@
 package com.example.android.questtime.ui.room.leave_room;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.android.questtime.utils.media.ClickSound;
 import com.example.android.questtime.R;
+import com.example.android.questtime.utils.media.MediaUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,20 +32,16 @@ public class ExitRoomActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-
-    private ClickSound cs;
-
-    private MediaPlayer mp;
+    private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exit_room_activity);
 
+        context = this;
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        cs = new ClickSound(this);
 
         leaveTxt = (TextView) findViewById(R.id.leaveTxt);
         leaveBtn = (Button) findViewById(R.id.leaveBtn);
@@ -59,7 +55,7 @@ public class ExitRoomActivity extends AppCompatActivity {
         leaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 mDatabase.child("rooms").child(roomKey).child("members").child(mAuth.getUid()).removeValue();
                 mDatabase.child("users").child(mAuth.getUid()).child("rooms").child(roomKey).removeValue();
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(roomKey);
@@ -86,7 +82,7 @@ public class ExitRoomActivity extends AppCompatActivity {
         stayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 Intent resultIntent = new Intent();
                 setResult(Activity.RESULT_CANCELED, resultIntent);
                 finish();

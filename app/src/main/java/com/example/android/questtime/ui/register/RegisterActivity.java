@@ -1,5 +1,6 @@
 package com.example.android.questtime.ui.register;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,10 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.android.questtime.utils.media.ClickSound;
 import com.example.android.questtime.ui.rooms.RoomsActivity;
 import com.example.android.questtime.R;
 import com.example.android.questtime.data.models.User;
+import com.example.android.questtime.utils.media.MediaUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity{
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    private ClickSound cs;
+    private Context context;
 
     User user;
 
@@ -50,9 +51,8 @@ public class RegisterActivity extends AppCompatActivity{
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
         initViews();
-
+        context = this;
         extras = getIntent().getExtras();
-        cs = new ClickSound(this);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity{
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 if(validateInput()) {
                     register();
                     user = new User(registerUsername.getText().toString(), registerEmail.getText().toString());
@@ -131,7 +131,6 @@ public class RegisterActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 

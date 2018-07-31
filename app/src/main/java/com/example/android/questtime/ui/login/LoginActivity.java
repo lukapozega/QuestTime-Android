@@ -1,5 +1,6 @@
 package com.example.android.questtime.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,11 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.android.questtime.utils.media.ClickSound;
 import com.example.android.questtime.ui.rooms.RoomsActivity;
 import com.example.android.questtime.ui.password_reset.PasswordResetActivity;
 import com.example.android.questtime.R;
 import com.example.android.questtime.ui.register.RegisterActivity;
+import com.example.android.questtime.utils.media.MediaUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,7 +34,7 @@ public class LoginActivity extends AppCompatActivity{
     private Button loginBtn;
     private EditText emailLoginInput;
     private EditText passwordLoginInput;
-    private ClickSound cs;
+    private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,12 +42,9 @@ public class LoginActivity extends AppCompatActivity{
         setContentView(R.layout.login_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-
-
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-
-        cs = new ClickSound(this);
+        context = this;
 
         /*
         Checking if user is already signed in. If so, proceed to RoomsActivity
@@ -66,7 +64,7 @@ public class LoginActivity extends AppCompatActivity{
         registerNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 try{
                     intent.putExtra("email", emailLoginInput.getText().toString());
@@ -80,7 +78,7 @@ public class LoginActivity extends AppCompatActivity{
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 login();
             }
         });
@@ -88,7 +86,7 @@ public class LoginActivity extends AppCompatActivity{
         forgotPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 Intent intent = new Intent(LoginActivity.this, PasswordResetActivity.class);
                 startActivity(intent);
             }

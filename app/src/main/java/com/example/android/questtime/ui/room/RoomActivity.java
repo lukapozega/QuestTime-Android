@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.questtime.ui.question_interaction.AnswerActivity;
-import com.example.android.questtime.utils.media.ClickSound;
+import com.example.android.questtime.utils.media.MediaUtils;
 import com.example.android.questtime.utils.recycler.ItemClickListenerInterface;
 import com.example.android.questtime.ui.people.PeopleActivity;
 import com.example.android.questtime.R;
@@ -50,8 +50,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     private String roomName;
     private String roomPrivateKey;
 
-    private ClickSound cs;
-
     private String roomType;
     private double joined;
     private double created;
@@ -68,6 +66,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     private FirebaseAuth mAuth;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +74,13 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         setContentView(R.layout.room_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
+        context = this;
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.questionSwipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(Color.CYAN, Color.BLUE, Color.GREEN,
                 Color.RED);
         swipeRefreshLayout.setDistanceToTriggerSync(20);// in dips
         swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);// LARGE also can be used
-
-        cs = new ClickSound(this);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -120,7 +118,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         peopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 Intent intent = new Intent(RoomActivity.this, PeopleActivity.class);
                 intent.putExtra("roomKey", roomKey);
                 startActivity(intent);
@@ -139,7 +137,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         adapter = new RecyclerQuestionAdapter(this, questions, new ItemClickListenerInterface() {
             @Override
             public void onItemClick(View v, int position) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 question = (Question) questions.get(position);
                 if (question.getPoints() == -1) {
                     Intent intent = new Intent(RoomActivity.this, AnswerActivity.class);

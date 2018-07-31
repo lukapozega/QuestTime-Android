@@ -1,6 +1,7 @@
 package com.example.android.questtime.ui.rooms;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,15 +15,15 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.questtime.utils.media.ClickSound;
-import com.example.android.questtime.ui.room.leave_room.ExitRoomActivity;
-import com.example.android.questtime.utils.recycler.ItemClickListenerInterface;
-import com.example.android.questtime.ui.join_room.PlusButtonActivity;
 import com.example.android.questtime.R;
-import com.example.android.questtime.ui.room.RoomActivity;
-import com.example.android.questtime.ui.settings.SettingsActivity;
-import com.example.android.questtime.utils.recycler.VerticalSpaceItemDecoration;
 import com.example.android.questtime.data.models.Room;
+import com.example.android.questtime.ui.join_room.CreateOrJoinActivity;
+import com.example.android.questtime.ui.room.RoomActivity;
+import com.example.android.questtime.ui.room.leave_room.ExitRoomActivity;
+import com.example.android.questtime.ui.settings.SettingsActivity;
+import com.example.android.questtime.utils.media.MediaUtils;
+import com.example.android.questtime.utils.recycler.ItemClickListenerInterface;
+import com.example.android.questtime.utils.recycler.VerticalSpaceItemDecoration;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,10 +66,8 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-
     private SwipeRefreshLayout swipeRefreshLayout;
-
-    private ClickSound cs;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +75,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
         setContentView(R.layout.main_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        cs = new ClickSound(this);
-
+        context = this;
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(Color.CYAN, Color.BLUE, Color.GREEN,
@@ -101,7 +99,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
         adapter = new RecyclerRoomAdapter(userRooms, new ItemClickListenerInterface() {
             @Override
             public void onItemClick(View v, int position) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 Room room = (Room) userRooms.get(position);
                 Intent intent = new Intent(RoomsActivity.this, RoomActivity.class);
                 intent.putExtra("key", room.getKey());
@@ -118,7 +116,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
 
             @Override
             public void onLongItemClick(View v, int position) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 Room room = (Room) userRooms.get(position);
                 Intent intent = new Intent(RoomsActivity.this, ExitRoomActivity.class);
                 intent.putExtra("key", room.getKey());
@@ -142,9 +140,9 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
         addRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 addRoomBtn.startAnimation(rotateAnimation);
-                Intent intent = new Intent(RoomsActivity.this, PlusButtonActivity.class);
+                Intent intent = new Intent(RoomsActivity.this, CreateOrJoinActivity.class);
                 startActivityForResult(intent, ADD_NEW_ACTIVITY);
             }
         });
@@ -152,7 +150,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 settingsBtn.startAnimation(rotateAnimation);
                 Intent intent = new Intent(RoomsActivity.this, SettingsActivity.class);
                 startActivity(intent);

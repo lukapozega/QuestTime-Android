@@ -1,8 +1,8 @@
 package com.example.android.questtime.ui.join_room;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.android.questtime.utils.media.ClickSound;
 import com.example.android.questtime.R;
+import com.example.android.questtime.utils.media.MediaUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,9 +28,8 @@ public class JoinPrivateRoom extends AppCompatActivity{
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    private MediaPlayer mp;
 
-    private ClickSound cs;
+    private Context context;
 
     private String privateKey;
 
@@ -39,20 +38,17 @@ public class JoinPrivateRoom extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.join_room_popup);
 
+        context = this;
         privateKeyEnter = (EditText) findViewById(R.id.privateKeyEnter);
         joinRoom = (Button) findViewById(R.id.joinButton);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
-        cs = new ClickSound(this);
-
-
-
         joinRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 privateKey = privateKeyEnter.getText().toString();
                 mDatabase.child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

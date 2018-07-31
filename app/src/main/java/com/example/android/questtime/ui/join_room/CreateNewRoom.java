@@ -1,9 +1,9 @@
 package com.example.android.questtime.ui.join_room;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,9 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.questtime.utils.media.ClickSound;
 import com.example.android.questtime.R;
 import com.example.android.questtime.data.models.Room;
+import com.example.android.questtime.utils.media.MediaUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -44,12 +44,10 @@ public class CreateNewRoom extends AppCompatActivity {
     private Room room;
     private TextView categoryNames;
     private StringBuilder categoryNamesString;
-    private ClickSound cs;
+    private Context context;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-
-    private MediaPlayer mp;
 
     int padding;
 
@@ -63,7 +61,7 @@ public class CreateNewRoom extends AppCompatActivity {
         setContentView(R.layout.create_new_room_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-        
+        context = this;
         categoryNames = (TextView) findViewById(R.id.category_names);
         difficultyLayout = (LinearLayout) findViewById(R.id.difficulty);
         typeLayout = (LinearLayout) findViewById(R.id.type);
@@ -75,15 +73,13 @@ public class CreateNewRoom extends AppCompatActivity {
 
         categoryNamesString = new StringBuilder();
 
-        cs = new ClickSound(this);
-
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         createRoomText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    cs.start();
+                    MediaUtils.playButtonClick(context);
                     roomName = roomNameEditText.getText().toString();
 
                     for (int i=0; i<8; ++i) {
@@ -160,7 +156,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private View.OnClickListener diffClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            cs.start();
+            MediaUtils.playButtonClick(context);
             for (int i=0; i<3;++i) {
                 View v = difficultyLayout.getChildAt(i);
                 v.setPadding(padding,padding,padding,padding);
@@ -173,7 +169,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private View.OnClickListener typeClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            cs.start();
+            MediaUtils.playButtonClick(context);
             for (int i=0; i<2;++i) {
                 TextView v = (TextView) typeLayout.getChildAt(i);
                 v.setTextColor(Color.parseColor("#3a86aa"));
@@ -186,7 +182,7 @@ public class CreateNewRoom extends AppCompatActivity {
     private View.OnClickListener catClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            cs.start();
+            MediaUtils.playButtonClick(context);
             if (view.getAlpha()==1) {
                 categories.remove((String) view.getTag());
                 view.setAlpha(0.4f);

@@ -28,7 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_popup);
 
         sharedPreferences = getSharedPreferences("com.example.android.questtime", MODE_PRIVATE);
-        AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
         logoutBtn = (Button) findViewById(R.id.logoutBtn);
         soundSwitch = (Switch) findViewById(R.id.soundSwitch);

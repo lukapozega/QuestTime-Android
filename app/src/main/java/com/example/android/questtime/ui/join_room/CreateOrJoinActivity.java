@@ -1,7 +1,7 @@
 package com.example.android.questtime.ui.join_room;
 
+import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +11,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.android.questtime.utils.media.ClickSound;
 import com.example.android.questtime.R;
 import com.example.android.questtime.ui.join_room.search.SearchResultsActivity;
+import com.example.android.questtime.utils.media.MediaUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Created by fgrebenac on 3/19/18.
  */
 
-public class PlusButtonActivity extends AppCompatActivity {
+public class CreateOrJoinActivity extends AppCompatActivity {
     final static int CREATE_NEW_ROOM = 345;
 
     private Button joinPrivateRoomButton;
@@ -47,17 +47,14 @@ public class PlusButtonActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
-    private ClickSound cs;
-
-    private MediaPlayer mp;
+    private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_room_popup);
 
-        cs = new ClickSound(this);
-
+        context = this;
         joinPrivateRoomButton = (Button) findViewById(R.id.joinPrivateRoomBtn);
         joinPublicRoomButton = (Button) findViewById(R.id.joinPublicRoomBtn);
         createNewRoomButton = (Button) findViewById(R.id.createNewRoomBtn);
@@ -68,8 +65,8 @@ public class PlusButtonActivity extends AppCompatActivity {
         createNewRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
-                Intent intent = new Intent(PlusButtonActivity.this, CreateNewRoom.class);
+                MediaUtils.playButtonClick(context);
+                Intent intent = new Intent(CreateOrJoinActivity.this, CreateNewRoom.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                 startActivity(intent);
                 finish();
@@ -79,8 +76,8 @@ public class PlusButtonActivity extends AppCompatActivity {
         joinPrivateRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
-                Intent intent = new Intent(PlusButtonActivity.this, JoinPrivateRoom.class);
+                MediaUtils.playButtonClick(context);
+                Intent intent = new Intent(CreateOrJoinActivity.this, JoinPrivateRoom.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                 startActivity(intent);
                 finish();
@@ -90,7 +87,7 @@ public class PlusButtonActivity extends AppCompatActivity {
         joinPublicRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 setContentView(R.layout.join_public_room_popup);
                 searchBtn = (Button) findViewById(R.id.searchBtn);
                 searchRoomsEditText = (EditText) findViewById(R.id.searchEditText);
@@ -117,8 +114,8 @@ public class PlusButtonActivity extends AppCompatActivity {
                 searchBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        cs.start();
-                        Intent intent = new Intent(PlusButtonActivity.this, SearchResultsActivity.class);
+                        MediaUtils.playButtonClick(context);
+                        Intent intent = new Intent(CreateOrJoinActivity.this, SearchResultsActivity.class);
                         intent.putExtra("searchText", searchRoomsEditText.getText().toString());
                         intent.putStringArrayListExtra("categories", categories);
                         intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
@@ -137,7 +134,7 @@ public class PlusButtonActivity extends AppCompatActivity {
     View.OnClickListener catClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            cs.start();
+            MediaUtils.playButtonClick(context);
             if (view.getAlpha()==1) {
                 categories.remove((String) view.getTag());
                 view.setAlpha(0.4f);

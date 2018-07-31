@@ -1,6 +1,6 @@
 package com.example.android.questtime.ui.password_reset;
 
-import android.media.MediaPlayer;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.android.questtime.utils.media.ClickSound;
 import com.example.android.questtime.R;
+import com.example.android.questtime.utils.media.MediaUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,9 +26,7 @@ public class PasswordResetActivity extends AppCompatActivity {
     private EditText emailInput;
     private Button sendEmailBtn;
 
-    private ClickSound cs;
-
-    private MediaPlayer mp;
+    private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,10 +34,7 @@ public class PasswordResetActivity extends AppCompatActivity {
         setContentView(R.layout.forgot_password_activity);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
-
-
-        cs = new ClickSound(this);
-
+        context = this;
         emailInput = (EditText) findViewById(R.id.passwordResetEmail);
         sendEmailBtn = (Button) findViewById(R.id.sendEmailBtn);
 
@@ -49,7 +44,7 @@ public class PasswordResetActivity extends AppCompatActivity {
         sendEmailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cs.start();
+                MediaUtils.playButtonClick(context);
                 sendEmail();
             }
         });
