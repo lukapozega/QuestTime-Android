@@ -62,7 +62,6 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
     private double joined;
     private double created;
     private int answered;
-    private int points;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -186,9 +185,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
                             answered = 1;
                             for (DataSnapshot questions : dataSnapshot2.child("questions").getChildren()){
                                 created = Double.parseDouble(questions.child("timestamp").getValue().toString());
-                                if (questions.child("points").hasChild(mAuth.getUid())) {
-                                    points = Integer.parseInt(questions.child("points").child(mAuth.getUid()).getValue().toString());
-                                } else {
+                                if (!questions.child("points").hasChild(mAuth.getUid())) {
                                     if(created > joined) {
                                         if(created*1000 < System.currentTimeMillis()){
                                             answered = -1;
