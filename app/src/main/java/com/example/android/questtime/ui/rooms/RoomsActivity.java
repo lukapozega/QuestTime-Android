@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -32,7 +33,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
@@ -53,6 +58,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
     private RotateAnimation rotateAnimation;
 
     private ArrayList<Room> userRooms = new ArrayList<>();
+    private HashMap<String,String> questionsLeft = new HashMap<>();
     private RecyclerRoomAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -62,6 +68,9 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
     private double joined;
     private double created;
     private int answered;
+    private String left;
+    private Iterator<Map.Entry<String,String>> iterator;
+    private long lastUpdated;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -81,6 +90,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
                 Color.RED);
         swipeRefreshLayout.setDistanceToTriggerSync(20);
         swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
+        swipeRefreshLayout.setEnabled(false);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -164,12 +174,22 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
     }
 
     public void refresh() {
-        loadRooms();
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(lastUpdated);
+        Calendar cal1 = Calendar.getInstance();
+        cal.setTimeInMillis(System.currentTimeMillis());
+        if (cal.get(Calendar.DAY_OF_WEEK)!=cal1.get(Calendar.DAY_OF_WEEK)) {
+            loadRooms();
+        } else {
+            refreshRooms();
+        }
+        lastUpdated = System.currentTimeMillis();
     }
 
     public void loadRooms() {
         numberOfQuestions = 0;
         questionsLeftNumber.setText("0");
+        lastUpdated = System.currentTimeMillis();
         mDatabase.child("users").child(mAuth.getUid()).child("rooms").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -183,6 +203,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
                                 categories.add(snapshot1.getValue().toString());
                             }
                             answered = 1;
+                            left = "false";
                             for (DataSnapshot questions : dataSnapshot2.child("questions").getChildren()){
                                 created = Double.parseDouble(questions.child("timestamp").getValue().toString());
                                 if (!questions.child("points").hasChild(mAuth.getUid())) {
@@ -191,6 +212,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
                                             answered = -1;
                                         } else {
                                             numberOfQuestions++;
+                                            left = questions.getKey();
                                         }
                                         questionsLeftNumber.setText(String.valueOf(numberOfQuestions));
                                         if(numberOfQuestions == 1){
@@ -200,6 +222,9 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
                                         }
                                     }
                                 }
+                            }
+                            if (answered==1 && !left.equals("false")) {
+                                questionsLeft.put(snapshot.getKey(),left);
                             }
                             if (dataSnapshot2.hasChild("privateKey")) {
                                 addRoom = new Room(dataSnapshot2.child("roomName").getValue().toString(),
@@ -226,6 +251,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
                                     userRooms.remove(position);
                                     userRooms.add(0, addRoom);
                                     adapter.notifyItemMoved(position,0);
+                                    layoutManager.scrollToPosition(0);
                                 }
                             } else {
                                 if (addRoom.getAnswered()==-1) {
@@ -250,8 +276,8 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
                         }
                     });
                 }
-
                 swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setEnabled(true);
             }
 
             @Override
@@ -259,6 +285,47 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
 
             }
         });
+    }
+
+    public void refreshRooms() {
+        iterator = questionsLeft.entrySet().iterator();
+        while (iterator.hasNext()) {
+            final Map.Entry<String,String> entry = iterator.next();
+            mDatabase.child("rooms").child(entry.getKey()).child("questions").child(entry.getValue()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot3) {
+                    created = Double.parseDouble(dataSnapshot3.child("timestamp").getValue().toString());
+                    if (created*1000 < System.currentTimeMillis()) {
+                        int position = 0;
+                        for (Room userRoom : userRooms) {
+                            if (userRoom.getKey().equals(entry.getKey())) {
+                                position = userRooms.indexOf(userRoom);
+                            }
+                        }
+                        Log.i(entry.getKey(), entry.getValue().toString());
+                        userRooms.get(position).setAnswered(-1);
+                        userRooms.remove(position);
+                        userRooms.add(0, addRoom);
+                        adapter.notifyItemMoved(position, 0);
+                        layoutManager.scrollToPosition(0);
+                        numberOfQuestions--;
+                        iterator.remove();
+                        questionsLeftNumber.setText(String.valueOf(numberOfQuestions));
+                        if (numberOfQuestions == 1) {
+                            questionsLeftTodayTextView.setText("QUESTION LEFT TODAY");
+                        } else {
+                            questionsLeftTodayTextView.setText("QUESTIONS LEFT TODAY");
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
