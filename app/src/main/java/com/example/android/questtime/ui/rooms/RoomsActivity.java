@@ -112,7 +112,6 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
                 Intent intent = new Intent(RoomsActivity.this, RoomActivity.class);
                 intent.putExtra("key", room.getKey());
                 intent.putExtra("name", room.getRoomName());
-                intent.putExtra("selectedPosition", position);
                 if(room.getType().equals("private")){
                     intent.putExtra("type", room.getType());
                     intent.putExtra("privateKey", room.getPrivateKey());
@@ -379,7 +378,13 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
             }
         }
         if(requestCode == NEW_QUESTION){
-            int selectedPosition = data.getIntExtra("selectedPosition",0);
+            int selectedPosition = 0;
+            String selectedRoom = data.getStringExtra("selectedRoom");
+            for (Room i: userRooms) {
+                if (i.getKey().equals(selectedRoom)) {
+                    selectedPosition = userRooms.indexOf(i);
+                }
+            }
             Room r = userRooms.get(selectedPosition);
             if(resultCode == QUESTION_UNANSWERED && r.getAnswered()==1){
                 r.setAnswered(-1);

@@ -57,7 +57,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     private double created;
     private int points;
     private Question question;
-    private int selectedPosition;
     private Iterator<Question> iterator;
 
     private TextView noQuestionsTxt;
@@ -97,7 +96,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         roomKey = getIntent().getStringExtra("key");
         roomName = getIntent().getStringExtra("name");
         roomType = getIntent().getStringExtra("type");
-        selectedPosition = getIntent().getIntExtra("selectedPosition",0);
 
         roomNameTitle.setText(roomName);
         if(roomType.equals("public")){
@@ -210,8 +208,9 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                             if (created > joined && created < System.currentTimeMillis()/1000) {
                                 questions.add(addQuestion);
                                 Collections.sort(questions);
-                                noQuestionsTxt.setVisibility(View.GONE);
+                                adapter.notifyDataSetChanged();
                                 manager.scrollToPosition(0);
+                                noQuestionsTxt.setVisibility(View.GONE);
                             } else if (created > joined) {
                                 questionsLeft.add(addQuestion);
                             }
@@ -226,7 +225,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                 if(questions.isEmpty()){
                     noQuestionsTxt.setVisibility(View.VISIBLE);
                 }
-                adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
 
@@ -277,7 +275,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         }
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("selectedPosition", selectedPosition);
+        resultIntent.putExtra("selectedRoom", roomKey);
         if(answeredAll) {
             setResult(QUESTION_ANSWERED,resultIntent);
         } else {
