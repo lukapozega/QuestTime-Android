@@ -15,14 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.questtime.R;
+import com.example.android.questtime.data.models.Question;
+import com.example.android.questtime.ui.people.PeopleActivity;
 import com.example.android.questtime.ui.question_interaction.AnswerActivity;
+import com.example.android.questtime.ui.question_interaction.ResultActivity;
 import com.example.android.questtime.utils.media.MediaUtils;
 import com.example.android.questtime.utils.recycler.ItemClickListenerInterface;
-import com.example.android.questtime.ui.people.PeopleActivity;
-import com.example.android.questtime.R;
-import com.example.android.questtime.ui.question_interaction.ResultActivity;
 import com.example.android.questtime.utils.recycler.VerticalSpaceItemDecoration;
-import com.example.android.questtime.data.models.Question;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
@@ -41,6 +42,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     private RecyclerView questionsList;
 
     private ArrayList<Question> questions = new ArrayList<>();
+    private ArrayList<Question> questionsLeft = new ArrayList<>();
     private RecyclerQuestionAdapter adapter;
     private RecyclerView.LayoutManager manager;
 
@@ -56,6 +58,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     private int points;
     private Question question;
     private int selectedPosition;
+    private Iterator<Question> iterator;
 
     private TextView noQuestionsTxt;
 
@@ -205,13 +208,12 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                                     snapshot.getKey(),
                                     snapshot.child("category").getValue().toString());
                             if (created > joined && created < System.currentTimeMillis()/1000) {
-                                if(!questions.contains(addQuestion)) {
-                                    questions.add(addQuestion);
-                                    Collections.sort(questions);
-                                    adapter.notifyDataSetChanged();
-                                    noQuestionsTxt.setVisibility(View.GONE);
-                                    manager.scrollToPosition(0);
-                                }
+                                questions.add(addQuestion);
+                                Collections.sort(questions);
+                                noQuestionsTxt.setVisibility(View.GONE);
+                                manager.scrollToPosition(0);
+                            } else if (created > joined) {
+                                questionsLeft.add(addQuestion);
                             }
                         }
 
@@ -224,6 +226,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                 if(questions.isEmpty()){
                     noQuestionsTxt.setVisibility(View.VISIBLE);
                 }
+                adapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
 
@@ -237,7 +240,32 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        loadQuestions();
+        refreshQuestions();
+    }
+
+    public void refreshQuestions () {
+        iterator = questionsLeft.iterator();
+        while (iterator.hasNext()) {
+            final Question q = iterator.next();
+            mDatabase.child("rooms").child(roomKey).child("questions").child(q.getId()).child("timestamp").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    created = Double.parseDouble(dataSnapshot.getValue().toString());
+                    if (created<System.currentTimeMillis()/1000) {
+                        questions.add(0,q);
+                        adapter.notifyItemInserted(0);
+                        manager.scrollToPosition(0);
+                        iterator.remove();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

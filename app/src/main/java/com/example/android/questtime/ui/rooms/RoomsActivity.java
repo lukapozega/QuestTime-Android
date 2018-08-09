@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -302,11 +301,12 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
                                 position = userRooms.indexOf(userRoom);
                             }
                         }
-                        Log.i(entry.getKey(), entry.getValue().toString());
-                        userRooms.get(position).setAnswered(-1);
+                        Room roomToMove = userRooms.get(position);
+                        roomToMove.setAnswered(-1);
                         userRooms.remove(position);
-                        userRooms.add(0, addRoom);
+                        userRooms.add(0, roomToMove);
                         adapter.notifyItemMoved(position, 0);
+                        adapter.notifyItemChanged(0);
                         layoutManager.scrollToPosition(0);
                         numberOfQuestions--;
                         iterator.remove();

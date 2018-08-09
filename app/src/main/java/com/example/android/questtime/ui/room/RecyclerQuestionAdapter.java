@@ -6,11 +6,13 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.example.android.questtime.utils.recycler.ItemClickListenerInterface;
 import com.example.android.questtime.R;
 import com.example.android.questtime.data.models.Question;
+import com.example.android.questtime.utils.recycler.ItemClickListenerInterface;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -22,6 +24,8 @@ public class RecyclerQuestionAdapter extends RecyclerView.Adapter<RecyclerQuesti
     private ArrayList<Question> questions;
     private ItemClickListenerInterface clickListener;
     private Context context;
+
+    private int lastPosition = -1;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView questionText;
@@ -82,5 +86,16 @@ public class RecyclerQuestionAdapter extends RecyclerView.Adapter<RecyclerQuesti
     @Override
     public int getItemCount() {
         return questions.size();
+    }
+
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition)
+        {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 }
