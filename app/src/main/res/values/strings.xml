@@ -37,4 +37,6 @@
     <string name="no_filter">No rooms match your filter.</string>
     <string name="default_notification_channel_id">Channel ID</string>
     <string name="no_categories_selected">No categories selected</string>
+    <string name="no_connection">You are not connected to the Internet</string>
+    <string name="oops">Oops!</string>
 </resources>

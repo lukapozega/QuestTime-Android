@@ -5,6 +5,22 @@
     android:background="@drawable/background"
     android:orientation="vertical">
 
+    <LinearLayout style="@style/no_connection_layout"
+        android:id="@+id/no_connection">
+
+        <ImageView
+            android:src="@drawable/no_connection"
+            style="@style/no_connection_image" />
+
+        <TextView
+            android:text="@string/oops"
+            style="@style/oops" />
+
+        <TextView
+            android:text="@string/no_connection"
+            style="@style/no_connection_text" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/top"

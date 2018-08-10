@@ -4,16 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.questtime.R;
 import com.example.android.questtime.data.models.Room;
@@ -53,6 +57,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
     private TextView questionsLeftTodayTextView;
     private RecyclerView roomListView;
     private TextView noRoomsTxt;
+    private LinearLayout noConnection;
 
     private RotateAnimation rotateAnimation;
 
@@ -68,6 +73,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
     private double created;
     private int answered;
     private String left;
+    private boolean connection = true;
     private Iterator<Map.Entry<String,String>> iterator;
     private long lastUpdated;
 
@@ -94,6 +100,7 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        noConnection = (LinearLayout) findViewById(R.id.no_connection);
         settingsBtn = (ImageView) findViewById(R.id.settingsBtn);
         addRoomBtn = (ImageView) findViewById(R.id.addRoomBtn);
         questionsLeftNumber = (TextView) findViewById(R.id.questionsLeftNumber);
@@ -136,8 +143,14 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
 
         roomListView.setAdapter(adapter);
 
-        swipeRefreshLayout.setRefreshing(true);
-        loadRooms();
+        if (isNetworkConnected()) {
+            swipeRefreshLayout.setRefreshing(true);
+            loadRooms();
+        } else {
+            noConnection.setVisibility(View.VISIBLE);
+            connection=false;
+            swipeRefreshLayout.setEnabled(true);
+        }
 
         rotateAnimation = new RotateAnimation(0f, 180f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -168,7 +181,24 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        refresh();
+        Log.i("1","1");
+        if (isNetworkConnected()) {
+            Log.i("1","2");
+            if (!connection) {
+                Log.i("1","3");
+                swipeRefreshLayout.setEnabled(false);
+                loadRooms();
+                noConnection.setVisibility(View.GONE);
+                connection=true;
+            } else {
+                refresh();
+            }
+        } else {
+            swipeRefreshLayout.setRefreshing(false);
+            if (noConnection.getVisibility()==View.GONE) {
+                Toast.makeText(RoomsActivity.this, R.string.no_connection, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void refresh() {
@@ -401,6 +431,12 @@ public class RoomsActivity extends AppCompatActivity implements SwipeRefreshLayo
             }
             layoutManager.scrollToPosition(0);
         }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
     }
 
 }
