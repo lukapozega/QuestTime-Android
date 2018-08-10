@@ -219,6 +219,9 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 questionsList.setLayoutManager(manager);
                                 adapter.notifyDataSetChanged();
                                 manager.scrollToPosition(0);
+                                if(questions.isEmpty()){
+                                    noQuestionsTxt.setVisibility(View.VISIBLE);
+                                }
                             }
                         }
 
@@ -227,9 +230,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
 
                         }
                     });
-                }
-                if(questions.isEmpty()){
-                    noQuestionsTxt.setVisibility(View.VISIBLE);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
