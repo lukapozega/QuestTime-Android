@@ -80,7 +80,7 @@ public class RecyclerQuestionAdapter extends RecyclerView.Adapter<RecyclerQuesti
         } else {
             holder.pointsText.setText("");
         }
-
+        setAnimation(holder.itemView, position);
     }
 
     @Override
@@ -90,10 +90,12 @@ public class RecyclerQuestionAdapter extends RecyclerView.Adapter<RecyclerQuesti
 
     private void setAnimation(View viewToAnimate, int position)
     {
-        // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition)
         {
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
+            if (position < 10) {
+                animation.setStartOffset(position * 30);
+            }
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }

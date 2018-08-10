@@ -56,6 +56,7 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
     private double joined;
     private double created;
     private int points;
+    private int counter;
     private Question question;
     private Iterator<Question> iterator;
 
@@ -132,7 +133,6 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         manager = new LinearLayoutManager(this);
         questionsList = findViewById(R.id.questions_list_view);
         questionsList.setHasFixedSize(true);
-        questionsList.setLayoutManager(manager);
         questionsList.addItemDecoration(new VerticalSpaceItemDecoration(20));
 
         adapter = new RecyclerQuestionAdapter(this, questions, new ItemClickListenerInterface() {
@@ -187,6 +187,8 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
         mDatabase.child("rooms").child(roomKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
+                counter = 0;
+                final int numberOfQuestions = (int) dataSnapshot.child("questions").getChildrenCount();
                 for (final DataSnapshot snapshot: dataSnapshot.child("questions").getChildren()) {
                     joined = Double.parseDouble(dataSnapshot.child("members").child(mAuth.getUid()).getValue().toString());
                     mDatabase.child("questions")
@@ -208,11 +210,15 @@ public class RoomActivity extends AppCompatActivity implements SwipeRefreshLayou
                             if (created > joined && created < System.currentTimeMillis()/1000) {
                                 questions.add(addQuestion);
                                 Collections.sort(questions);
-                                adapter.notifyDataSetChanged();
-                                manager.scrollToPosition(0);
                                 noQuestionsTxt.setVisibility(View.GONE);
                             } else if (created > joined) {
                                 questionsLeft.add(addQuestion);
+                            }
+                            counter++;
+                            if (counter==numberOfQuestions) {
+                                questionsList.setLayoutManager(manager);
+                                adapter.notifyDataSetChanged();
+                                manager.scrollToPosition(0);
                             }
                         }
 
