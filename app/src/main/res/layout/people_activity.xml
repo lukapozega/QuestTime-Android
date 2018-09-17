@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    >
+
+    <TextView
+        android:id="@+id/peopleTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/people"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:fontFamily="@font/roboto_black"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/separator_background"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_below="@id/peopleTxt"
+        />
+
+    <!-- gold medal layout -->
+
+    <LinearLayout
+        android:id="@+id/gold_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/peopleTxt"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        >
+
+        <ImageView
+            android:id="@+id/gold_medal"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/medal_gold"
+            />
+
+        <TextView
+            android:id="@+id/gold_name"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gold_medal"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
+            android:text="1. player"
+            android:textStyle="bold"
+            android:textSize="23sp"
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/gold_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/peopleTxt"
+        android:layout_centerHorizontal="true"
+        android:text="0"
+        android:gravity="center"
+        android:layout_alignTop="@id/gold_layout"
+        android:layout_alignBottom="@id/gold_layout"
+        android:layout_alignStart="@id/gold_layout"
+        android:layout_alignEnd="@id/gold_layout"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        />
+
+    <!-- silver medal layout -->
+
+    <LinearLayout
+        android:id="@+id/silver_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/peopleTxt"
+        android:gravity="center"
+        android:layout_alignBottom="@id/gold_layout"
+        >
+
+        <ImageView
+            android:id="@+id/silver_medal"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@mipmap/medal_silver"
+            />
+
+        <TextView
+            android:id="@+id/silver_name"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="2. player"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:maxLength="10"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/silver_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/peopleTxt"
+        android:layout_centerHorizontal="true"
+        android:text="0"
+        android:gravity="center"
+        android:layout_alignTop="@id/silver_layout"
+        android:layout_alignBottom="@id/silver_layout"
+        android:layout_alignStart="@id/silver_layout"
+        android:layout_alignEnd="@id/silver_layout"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        />
+
+    <!-- bronze medal layout -->
+
+    <LinearLayout
+        android:id="@+id/bronze_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/peopleTxt"
+        android:gravity="center"
+        android:layout_alignBottom="@id/gold_layout"
+        >
+
+        <ImageView
+            android:id="@+id/bronze_medal"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@mipmap/medal_bronze"
+            />
+
+        <TextView
+            android:id="@+id/bronze_name"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="3. player"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:maxLength="10"
+            android:layout_gravity="end"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bronze_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/peopleTxt"
+        android:layout_centerHorizontal="true"
+        android:text="0"
+        android:gravity="center"
+        android:layout_alignTop="@id/bronze_layout"
+        android:layout_alignBottom="@id/bronze_layout"
+        android:layout_alignStart="@id/bronze_layout"
+        android:layout_alignEnd="@id/bronze_layout"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        />
+
+
+
+    <View
+        android:id="@+id/medalSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/separator_background"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_below="@id/gold_layout"
+        android:layout_marginTop="15dp"
+        />
+
+    <ListView
+        android:id="@+id/peopleListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/medalSeparator"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        />
+
+
+
+</RelativeLayout>

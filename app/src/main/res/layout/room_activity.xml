@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+
+    <!--<RelativeLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/roomNameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:fontFamily="@font/roboto_black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            />
+
+        <ImageView
+            android:id="@+id/peopleBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/people"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="4dp"/>
+
+    </RelativeLayout>-->
+
+    <LinearLayout
+        android:id="@+id/roomTop"
+        style="@style/topLayout">
+
+        <ImageView
+            android:id="@+id/settingsBtn"
+            android:layout_marginStart="12dp"
+            android:src="@mipmap/settings"
+            style="@style/rotatingButton"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/roomNameTitle"
+            android:text="@string/room_name"
+            style="@style/title"
+            android:textSize="22sp"/>
+
+        <ImageView
+            android:id="@+id/peopleButton"
+            style="@style/rotatingButton"
+            android:layout_marginEnd="12dp"
+            android:src="@mipmap/people" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/keyLayout"
+        style="@style/roomKeyLayout">
+
+        <ImageView
+            android:id="@+id/lock"
+            android:src="@drawable/lock"
+            style="@style/lock" />
+
+        <TextView
+            android:id="@+id/roomKey"
+            android:text="62AJVcyw"
+            style="@style/roomKey" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/mainSeparator"
+        style="@style/roomSeparator">
+
+    </View>
+
+    <TextView
+        android:id="@+id/no_questions_txt"
+        android:text="@string/no_questions_yet"
+        style="@style/noQuestions" />
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/questionSwipeLayout"
+        style="@style/refresh"
+        android:layout_below="@id/mainSeparator"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/questions_list_view"
+            style="@style/recycler"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

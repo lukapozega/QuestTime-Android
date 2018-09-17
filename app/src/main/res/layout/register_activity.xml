@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:weightSum="5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:weightSum="5"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:src="@drawable/logo"
+            android:textColor="@android:color/white"
+            android:textSize="100sp"
+            android:fontFamily="@font/roboto_black"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:text="@string/app_name"
+            android:gravity="center"
+            android:textSize="50sp"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/roboto_black"
+            android:textStyle="bold"
+            />
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/separator_background"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        >
+
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_weight="3"
+        android:weightSum="8">
+
+        <EditText
+            android:id="@+id/registerUsername"
+            android:hint="@string/username_hint"
+            android:inputType="text"
+            style="@style/edittextStyle"
+            />
+
+        <EditText
+            android:id="@+id/registerEmail"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email_hint"
+            style="@style/edittextStyle"
+            />
+
+        <EditText
+            android:id="@+id/registerPassword"
+            android:inputType="textPassword"
+            android:hint="@string/password_hint"
+            style="@style/edittextStyle"
+            />
+
+        <EditText
+            android:id="@+id/repeatRegisterPassword"
+            android:inputType="textPassword"
+            android:hint="@string/repeat_password_hint"
+            style="@style/edittextStyle"
+            />
+
+        <Button
+            android:id="@+id/registerBtn"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            android:layout_marginTop="16dp"
+            android:textSize="12pt"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:fontFamily="@font/roboto_black"
+            android:textStyle="bold"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            />
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/no_connection_layout"
+        android:id="@+id/no_connection">
+
+        <ImageView
+            android:src="@drawable/no_connection"
+            style="@style/no_connection_image" />
+
+        <TextView
+            android:text="@string/oops"
+            style="@style/oops" />
+
+        <TextView
+            android:text="@string/no_connection"
+            style="@style/no_connection_text" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/top"
+        style="@style/topLayout">
+
+        <ImageView
+            android:id="@+id/settingsBtn"
+            android:layout_marginStart="12dp"
+            android:src="@mipmap/settings"
+            style="@style/rotatingButton" />
+
+        <TextView
+            android:id="@+id/questTime"
+            android:text="@string/app_name"
+            style="@style/title"
+            android:textSize="20sp"/>
+
+        <ImageView
+            android:id="@+id/addRoomBtn"
+            style="@style/rotatingButton"
+            android:layout_marginEnd="12dp"
+            android:src="@mipmap/add" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/questionsLeftNumber"
+        android:text="0"
+        style="@style/bigNumber" />
+
+    <TextView
+        android:id="@+id/questionsLeftTodayTextView"
+        android:text="@string/questions_left"
+        style="@style/questionsLeft" />
+
+
+    <View
+        android:id="@+id/mainSeparator"
+        style="@style/separator">
+
+    </View>
+
+    <TextView
+        android:id="@+id/no_rooms_txt"
+        android:text="@string/no_rooms_yet"
+        style="@style/emptyView" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        style="@style/refresh">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/roomListView"
+            style="@style/recycler">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

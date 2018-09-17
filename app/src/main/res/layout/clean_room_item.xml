@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="68dp"
+    android:background="@drawable/list_item"
+    android:paddingStart="18dp"
+    android:clipToPadding="true"
+    android:clipChildren="true"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/roomNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/room_name"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:singleLine="true"
+                />
+
+            <ImageView
+                android:id="@+id/underline"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/room_underline"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/difficulty"
+                android:layout_marginEnd="4dp"
+                android:textSize="12sp"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/difficulty_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/circle_green"
+                android:adjustViewBounds="true"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="2dp"
+                android:padding="4dp"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/user"
+                android:adjustViewBounds="true"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="1dp"
+                android:alpha="0.8"/>
+
+            <TextView
+                android:id="@+id/numberOfUsers"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/people"
+                android:textSize="12sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/category_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginEnd="15dp">
+
+        <ImageView
+            android:src="@drawable/art"
+            style="@style/categoryIcon" />
+        <ImageView
+            android:src="@drawable/art"
+            style="@style/categoryIcon"/>
+        <ImageView
+            android:src="@drawable/art"
+            style="@style/categoryIcon"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/questionIndicator"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/question_indicator" />
+
+</LinearLayout>

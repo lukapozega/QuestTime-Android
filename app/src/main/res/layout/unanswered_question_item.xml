@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="74dp"
+    android:background="@drawable/unanswered_question_background"
+    android:paddingTop="4dp"
+    android:paddingLeft="18dp"
+    android:paddingBottom="4dp">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="0dp">
+
+        <TextView
+            android:id="@+id/question_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="jbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsdjbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsdjbdfbsjvjsdh sjdh svdjsdvsdjvs dkdsdjbdfbsjvjsdh sjdh svdjsdvsdjvs "
+            android:fontFamily="@font/roboto_black"
+            android:textSize="12sp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="25dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="0dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="6dp">
+
+            <ImageView
+                android:id="@+id/difficulty_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/calendar"
+                android:adjustViewBounds="true"
+                android:layout_marginEnd="0dp"
+                android:layout_marginTop="1dp"
+                android:padding="0dp" />
+
+            <TextView
+                android:id="@+id/questionDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date"
+                android:fontFamily="@font/roboto_black"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

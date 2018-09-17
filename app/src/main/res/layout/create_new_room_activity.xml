@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_room"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:fontFamily="@font/roboto_black"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@drawable/separator_background"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        />
+
+    <EditText
+        android:id="@+id/roomName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:textStyle="bold"
+        android:hint="@string/room_name_hint"
+        android:background="@drawable/edittext_background"
+        android:padding="8dp"
+        android:fontFamily="@font/roboto_black"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="36dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/difficulty"
+            android:fontFamily="@font/roboto_black"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:gravity="center_vertical"
+            android:layout_marginStart="36dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/difficulty"
+            android:layout_weight="1"
+            android:paddingStart="18dp"
+            android:paddingEnd="36dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/circle_green"
+                android:scaleType="fitCenter"
+                android:padding="12dp"
+                android:tag="easy"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/circle_yellow"
+                android:scaleType="fitCenter"
+                android:padding="12dp"
+                android:tag="medium"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/circle_red"
+                android:scaleType="fitCenter"
+                android:padding="12dp"
+                android:tag="hard"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/type"
+            android:fontFamily="@font/roboto_black"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:gravity="center_vertical"
+            android:layout_marginStart="36dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/type"
+            android:layout_weight="1"
+            android:paddingStart="18dp"
+            android:paddingEnd="36dp"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/private_string"
+                android:scaleType="fitCenter"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_black"
+                android:textStyle="bold"
+                android:textColor="#3a86aa"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/public_string"
+                android:scaleType="fitCenter"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_black"
+                android:textStyle="bold"
+                android:textColor="#3a86aa" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_categories"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/roboto_black"
+        android:layout_marginTop="30dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:id="@+id/cat_1"
+        android:paddingRight="48dp"
+        android:paddingLeft="48dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/animals"
+            android:tag="Animals"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/art"
+            android:tag="Art"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/celebrities"
+            android:tag="Celebrities"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/entertainment"
+            android:tag="Entertainment"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:id="@+id/cat_2"
+        android:paddingRight="48dp"
+        android:paddingLeft="48dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/general"
+            android:tag="General Knowledge"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/geography"
+            android:tag="Geography"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/history"
+            android:tag="History"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/mythology"
+            android:tag="Mythology"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="26dp"
+        android:id="@+id/cat_3"
+        android:paddingRight="48dp"
+        android:paddingLeft="48dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/politics"
+            android:tag="Politics"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/science"
+            android:tag="Science"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/sports"
+            android:tag="Sports"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0.4"
+            android:src="@drawable/vehicles"
+            android:tag="Vehicles"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/category_names"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:hint="@string/no_categories_selected"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/create"
+        android:text="@string/create_room"
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:fontFamily="@font/roboto_black"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        />
+
+</LinearLayout>
